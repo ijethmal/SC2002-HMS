@@ -25,10 +25,10 @@ temporary, delete later:
 
 Isha:
 
-Vasumathi:
+Vasumathi: UML Class Diagram
 
-Kavvya:
+Kavya: UML Class Diagram
 
-Roopa: 
+Roopa: UML Class Diagram
 
 Thri: 
