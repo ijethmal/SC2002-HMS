@@ -1,15 +1,14 @@
 public class Patient {
+    private String id;
+    private String password;
 
-    String name;
-    int age;
-
-    public Patient(String name, int age) {
-        this.name = name;
-        this.age = age;
+    public Patient(String id, String password) {
+        this.id = id;
+        this.password = password;
     }
 
-    public static void main(String[] args) throws Exception {
-        System.out.println("Hello, World!");
+    @Override
+    public String toString() {
+        return "Patient ID: " + id + ", Password: " + password;
     }
 }
-
