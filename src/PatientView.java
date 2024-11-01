@@ -4,6 +4,21 @@ public class PatientView {
         // Initialization logic if needed
     }
 
+    public void displayRegistrationSuccess(String patientId) {
+        System.out.println("Patient registered successfully with ID: " + patientId);
+    }
+
+    public void displayPatientDetails(PatientModel patient) {
+        System.out.println("Patient Details:");
+        System.out.println("ID: " + patient.getPatientId());
+        System.out.println("Name: " + patient.getName());
+        System.out.println("Date of Birth: " + patient.getDob());
+        System.out.println("Gender: " + patient.getGender());
+        System.out.println("Contact Info: " + patient.getContactInfo());
+        System.out.println("Blood Type: " + patient.getBloodType());
+        System.out.println("---------------------------");
+    }
+
     public void displayMedicalRecord(String record) {
         System.out.println(record);
     }
