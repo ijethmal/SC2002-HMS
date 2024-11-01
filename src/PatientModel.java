@@ -19,7 +19,34 @@ public class PatientModel {
         this.bloodType = bloodType;
         this.pastApptRecs = pastApptRecs;
     }
+    // Getter methods
+    public String getPatientId() {
+        return patientId;
+    }
 
+    public String getName() {
+        return name;
+    }
+
+    public Date getDob() {
+        return dob;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public String getContactInfo() {
+        return contactInfo;
+    }
+
+    public String getBloodType() {
+        return bloodType;
+    }
+
+    public List<AppointmentOutcomeRecord> getPastApptRecs() {
+        return pastApptRecs;
+    }
     public void viewMedicalRecord() {
         System.out.println("---- Medical Record ----");
         System.out.println("Patient ID: " + patientId);
