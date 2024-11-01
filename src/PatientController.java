@@ -1,4 +1,4 @@
-public class PatientController {
+public public class PatientController {
     private PatientModel model;
     private PatientView view;
     private RegisterNewPatient registerNewPatient;
@@ -10,11 +10,11 @@ public class PatientController {
     }
 
     public void handleRegisterPatient() {
-        PatientModel newPatient = registerNewPatient.createPAtient();
+        PatientModel newPatient = registerNewPatient.createPatient();
         this.model = newPatient;
-        view.displayRegistraionSuccess(newPatient.getPAtientId());
+        view.displayRegistraionSuccess(newPatient.getPatientId());
         view.displayPatientDetails(newPatient);
-
+    }
     public void handleViewMedicalRecord() {
         model.viewMedicalRecord();
         view.displayMedicalRecord("Displaying medical record...");
@@ -49,4 +49,6 @@ public class PatientController {
         model.viewApptOutcomeRec();
         view.displayAppointmentOutcome("Appointment outcome record displayed.");
     }
+ PatientController() {
+ } 
 }
