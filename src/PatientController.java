@@ -1,11 +1,19 @@
 public class PatientController {
     private PatientModel model;
     private PatientView view;
-
+    private RegisterNewPatient registerNewPatient;
+    
     public PatientController(PatientModel model, PatientView view) {
         this.model = model;
         this.view = view;
+        this.registerNewPatient = registerNewPatient;
     }
+
+    public void handleRegisterPatient() {
+        PatientModel newPatient = registerNewPatient.createPAtient();
+        this.model = newPatient;
+        view.displayRegistraionSuccess(newPatient.getPAtientId());
+        view.displayPatientDetails(newPatient);
 
     public void handleViewMedicalRecord() {
         model.viewMedicalRecord();
