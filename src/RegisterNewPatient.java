@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.UUID;
 
+
 public class RegisterNewPatient {
 
     public PatientModel createPatient() {
@@ -50,4 +51,6 @@ public class RegisterNewPatient {
         }
         return date;
     }
+ RegisterNewPatient() {
+ }
 }
