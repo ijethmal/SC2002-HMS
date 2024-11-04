@@ -31,6 +31,21 @@ public abstract class UserModel {
         this.userId = userId;
     }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
    /* public static void main(String[] args) throws Exception {
         
 }
