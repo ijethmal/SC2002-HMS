@@ -39,11 +39,11 @@ public class DoctorController extends UserController {
     }
 
     public void updateAppOutRecords(Appointment_Management app, String outcome) {
-        ((DoctorModel)model).updateAppOutRecords(app, outcome);
+        ///what is the logic of this?
     }
 
-    public void updateApptOutcome() {
-        ((DoctorModel)model).updateApptOutcome();
+    public void updateApptOutcome(Appointment_Management app, String outcome) {
+        app.setOutcome(outcome);
     }
     
 }
