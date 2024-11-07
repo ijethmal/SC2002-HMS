@@ -15,7 +15,7 @@ public AdministratorModel(String adminId, InventoryModel inventoryModel) {
     this.inventoryModel = inventoryModel; // Initialize with InventoryModel instance
 }
 
-// Staff Management
+// staff 
 public List<Staff> getStaffList() {
     return staffList;
 }
@@ -25,11 +25,19 @@ public void addStaff(Staff staff) {
 public void removeStaff(Staff staff) {
     staffList.remove(staff);
 }
-public void updateStaff(Staff updatedStaff) {
-    // Update staff details based on ID or other unique identifier
+public void updateStaff(String staffId, String newName, String newRole) {
+    for (Staff staff : staffList) {
+        if (staff.getStaffId().equals(staffId)) { 
+            staff.setName(newName);  
+            staff.setRole(newRole);  
+            System.out.println("Staff record updated.");
+            return; 
+        }
+    }
+    System.out.println("Staff ID not found.");
 }
 
-// Appointment Management
+// appointment
 public List<Appointment> getAppointments() {
     return appointmentsList;
 }
@@ -37,7 +45,7 @@ public void setAppointments(List<Appointment> appointments) {
     this.appointmentsList = appointments;
 }
 
-// Inventory Management using InventoryModel
+// inventory 
 public void displayInventory() {
     inventoryModel.showInventory();
 }
