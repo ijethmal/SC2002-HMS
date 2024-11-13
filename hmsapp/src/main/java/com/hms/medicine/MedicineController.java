@@ -2,20 +2,20 @@ package com.hms.medicine;
 
 public class MedicineController {
     private MedicineModel model;
-    private MedicineView view;
+    public MedicineView view;
 
     public MedicineController(MedicineModel model, MedicineView view) {
         this.model = model;
         this.view = view;
     }
 
-    public void updateViewInfo() {
-        view.getMedicineInfo(model.getMedicineInfo());
+    public void updateView() {
+        System.out.println(view.toString(););
     }
 
-    public void updateStock(int newStock) {
+    public void updateStock(double newStock) {
         model.setStock(newStock);
-        updateViewInfo();
+        updateView();
     }
 
     public void checkStockLevels() {

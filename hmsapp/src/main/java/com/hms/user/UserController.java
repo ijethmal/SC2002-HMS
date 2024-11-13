@@ -9,8 +9,6 @@ public abstract class UserController {
         this.view = view;
     }
 
-    //public UserController() {}
-
     public boolean handleLogin(String userId, String password) {
         if (model.getUserId().equals(userId) && model.getPassword().equals(password)) {
             view.displayLoginSuccess();

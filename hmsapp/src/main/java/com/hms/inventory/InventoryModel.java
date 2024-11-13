@@ -1,25 +1,34 @@
 package com.hms.inventory;
 
-public class InventoryModel {
-    private Medicine[] medicines;
+import com.hms.medicine.*;
+import java.util.List;
 
-    public Medicine[] getMedicines() {
+public class InventoryModel {
+    private List<MedicineController> medicines;
+
+    public List<MedicineController> getMedicines() {
         return medicines;
     }
 
+    public void addMedicine(MedicineController medicine) {
+        medicines.add(medicine);
+    }
+
     public void showInventory() {
-        for (Medicine medicine : medicines) {
-            System.out.println(medicine);
+        for (MedicineController medicine : medicines) {
+            System.out.println(medicine.view.toString());
         }
     }
 
-    public void decrementMedicine(Medicine medicine, int qty) {
-        if (medicine.getQuantity() >= qty) {
-            medicine.setQuantity(medicine.getQuantity() - qty);
+    public void decrementMedicine(MedicineController medicine, int qty) {
+        if (medicine.view.getQuantity() > qty) {
+            medicine.updateStock(medicine.view.getQuantity() - qty);
+        } else {
+            System.out.println("Not enough stock");
         }
     }
 
-    public void updateStock(Medicine medicine, int newQty) {
-        medicine.setQuantity(newQty);
+    public void updateStock(MedicineController medicine, int newQty) {
+        medicine.updateStock(newQty);
     }
 }

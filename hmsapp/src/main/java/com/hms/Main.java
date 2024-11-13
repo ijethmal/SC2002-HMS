@@ -30,7 +30,9 @@ public class Main {
 
     public static void main(String[] args) {
 
-        List<MedicineModel> medicineList = new ArrayList<MedicineModel>();
+        InventoryModel inventory = new InventoryModel();
+        InventoryView inventoryView = new InventoryView(inventory);
+        InventoryController inventoryController = new InventoryController(inventory, inventoryView);
         
         // Load the data from the db and create objects from it
         String medicineData = "hmsapp\\db\\Medicine_List.xlsx"; 
@@ -47,10 +49,13 @@ public class Main {
                 double alert = row.getCell(2).getNumericCellValue();
 
                 medicine.setMedicineName(name);
-                medicine.setStockLevel(stock);
-                medicine.setLowStockAlertLine(alert);
+                medicine.setStock(stock);
+                medicine.setLowStockLine(alert);
 
-                medicineList.add(medicine);
+                MedicineView medicineView = new MedicineView(medicine);
+                MedicineController medicineController = new MedicineController(medicine, medicineView);
+
+                inventoryController.addMedicine(medicineController);
                 System.out.println(medicine.getMedicineInfo());  
             }
         } catch (IOException e) {

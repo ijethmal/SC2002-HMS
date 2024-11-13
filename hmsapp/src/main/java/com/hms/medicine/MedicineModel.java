@@ -17,7 +17,7 @@ public class MedicineModel {
         this.lowStockAlertLine = lowStockAlertLine;
     }
 
-    public void setStock(int newStock) {
+    public void setStock(double newStock) {
         this.stockLevel = newStock;
     }
 
@@ -25,7 +25,7 @@ public class MedicineModel {
         this.stockLevel += amount;
     }
 
-    public void setLowStockLine(int newAlertLine) {
+    public void setLowStockLine(double newAlertLine) {
         this.lowStockAlertLine = newAlertLine;
     }
 
@@ -56,13 +56,5 @@ public class MedicineModel {
 
     public double getLowStockAlertLine() {
         return lowStockAlertLine;
-    }
-
-    public void setLowStockAlertLine(double lowStockAlertLine) {
-        this.lowStockAlertLine = lowStockAlertLine;
-    }
-
-    public void setStockLevel(double stockLevel) {
-        this.stockLevel = stockLevel;
     }
 }

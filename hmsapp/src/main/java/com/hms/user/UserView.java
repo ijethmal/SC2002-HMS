@@ -6,11 +6,6 @@ public abstract class UserView {
     protected UserModel model;
     protected UserController controller;
 
-    public UserView() {
-        this.model = new UserModel("temp", "temp", "temp");
-        this.controller = new UserController(model);
-    }
-
     public UserView(UserModel model, UserController controller) {
         this.model = model;
         this.controller = controller;

@@ -1,5 +1,7 @@
 package com.hms.inventory;
 
+import com.hms.medicine.MedicineController;
+
 public class InventoryController {
     private InventoryModel model;
     private InventoryView view;
@@ -9,16 +11,21 @@ public class InventoryController {
         this.view = view;
     }
 
-    public void updateView() {
-        view.showInventory(model.getMedicines());
+    public void addMedicine(MedicineController medicine) {
+        model.addMedicine(medicine);
+        updateView();
     }
 
-    public void decrementMedicine(Medicine medicine, int qty) {
+    public void updateView() {
+        view.showInventory();
+    }
+
+    public void decrementMedicine(MedicineController medicine, int qty) {
         model.decrementMedicine(medicine, qty);
         updateView();
     }
 
-    public void updateStock(Medicine medicine, int newQty) {
+    public void updateStock(MedicineController medicine, int newQty) {
         model.updateStock(medicine, newQty);
         updateView();
     }
