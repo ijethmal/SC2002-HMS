@@ -56,6 +56,7 @@ public class Main {
                 MedicineView medicineView = new MedicineView(medicine);
                 MedicineController medicineController = new MedicineController(medicine, medicineView);
 
+                //add to inventory. the controllers store the model and view so only one list is needed to store controllers
                 inventoryController.addMedicine(medicineController);
             }
         } catch (IOException e) {

@@ -32,6 +32,6 @@ public class MedicineView {
     }
 
     public String toString() {
-        return "Medicine Name: " + model.getMedicineName() + " Quantity: " + model.getStockLevel() + " Low Stock Alert: " + model.getLowStockAlertLine();
+        return "Name: " + model.getMedicineName() + "\nQuantity: " + model.getStockLevel() + "\nLow Stock Alert: " + model.getLowStockAlertLine();
     }
 }

@@ -13,7 +13,6 @@ public class InventoryView {
 
     public void showInventory() {
         List<MedicineController> medicines = model.getMedicines();
-        System.out.println("Medicine Name\tStock\tLow Stock Line");
         for (MedicineController medicine : medicines) {
             System.out.println(medicine.view.toString());
         }
