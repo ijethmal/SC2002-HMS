@@ -4,11 +4,9 @@ import org.apache.xmlbeans.impl.xb.xsdschema.Attribute.Use;
 public abstract class UserView {
 
     protected UserModel model;
-    protected UserController controller;
 
-    public UserView(UserModel model, UserController controller) {
+    public UserView(UserModel model) {
         this.model = model;
-        this.controller = controller;
     }
 
     public void printUserDetails() {
