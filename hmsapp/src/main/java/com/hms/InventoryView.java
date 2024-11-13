@@ -1,9 +1,0 @@
-package com.hms;
-
-public class InventoryView {
-    public void showInventory(Medicine[] medicines) {
-        for (Medicine medicine : medicines) {
-            System.out.println("Medicine: " + medicine.getName() + ", Quantity: " + medicine.getQuantity());
-        }
-    }
-}

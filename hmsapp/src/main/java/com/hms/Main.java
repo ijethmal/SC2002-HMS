@@ -1,6 +1,23 @@
 package com.hms;
 
+import com.hms.medicine.*;
+import com.hms.administrator.*;
+import com.hms.appointment_management.*;
+import com.hms.patient.*;
+import com.hms.prescription.*;
+import com.hms.appointment_management.*;
+import com.hms.appointment_outcome_record.*;
+import com.hms.doctor.*;
+import com.hms.diagnosis.*;
+import com.hms.inventory.*;
+import com.hms.pharmacist.*;
+import com.hms.replenishmentrequest.*;
+import com.hms.staffrecord.*;
+import com.hms.user.*;
+
+
 import java.util.Date;
+import java.util.List;
 import java.util.ArrayList;
 import java.time.LocalDateTime;
 import org.apache.poi.ss.usermodel.*;
@@ -10,10 +27,13 @@ import java.io.FileInputStream;
 import java.io.IOException;
 
 public class Main {
+
     public static void main(String[] args) {
+
+        List<MedicineModel> medicineList = new ArrayList<MedicineModel>();
         
         // Load the data from the db and create objects from it
-        String medicineData = "hmsapp\\db\\Medicine_List.xlsx";
+        String medicineData = "hmsapp\\db\\Medicine_List.xlsx"; 
         try (FileInputStream file = new FileInputStream(new File(medicineData))) {
             Workbook workbook = new XSSFWorkbook(file);
             Sheet sheet = workbook.getSheetAt(0);
@@ -29,10 +49,16 @@ public class Main {
                 medicine.setMedicineName(name);
                 medicine.setStockLevel(stock);
                 medicine.setLowStockAlertLine(alert);
+
+                medicineList.add(medicine);
                 System.out.println(medicine.getMedicineInfo());  
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        //patient objects
+        
+
     }
 }
