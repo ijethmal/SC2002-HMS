@@ -30,11 +30,12 @@ public class Main {
 
     public static void main(String[] args) {
 
+        // create inventory object
         InventoryModel inventory = new InventoryModel();
         InventoryView inventoryView = new InventoryView(inventory);
         InventoryController inventoryController = new InventoryController(inventory, inventoryView);
         
-        // Load the data from the db and create objects from it
+        // Load the medicine data from the db and create objects from it
         String medicineData = "hmsapp\\db\\Medicine_List.xlsx"; 
         try (FileInputStream file = new FileInputStream(new File(medicineData))) {
             Workbook workbook = new XSSFWorkbook(file);
@@ -56,7 +57,6 @@ public class Main {
                 MedicineController medicineController = new MedicineController(medicine, medicineView);
 
                 inventoryController.addMedicine(medicineController);
-                System.out.println(medicine.getMedicineInfo());  
             }
         } catch (IOException e) {
             e.printStackTrace();

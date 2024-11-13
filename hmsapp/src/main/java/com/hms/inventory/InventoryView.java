@@ -12,15 +12,12 @@ public class InventoryView {
     }
 
     public void showInventory() {
-        List<MedicineView> medicines = model.getMedicines();
-        for (MedicineView medicine : medicines) {
-            System.out.println(medicine.toString());
+        List<MedicineController> medicines = model.getMedicines();
+        System.out.println("Medicine Name\tStock\tLow Stock Line");
+        for (MedicineController medicine : medicines) {
+            System.out.println(medicine.view.toString());
         }
-    }
-
-    public void addMedicine(MedicineView medicine){
-        controller.addMedicine(medicine);
-        //note: controller calls showinventory in addMedicine after successful add
+        System.out.println("");
     }
 
 }

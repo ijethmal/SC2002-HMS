@@ -1,10 +1,16 @@
 package com.hms.pharmacist;
+
+import com.hms.user.UserView;
 import com.hms.administrator.AdministratorView;
 import com.hms.inventory.InventoryView;
 
 public class PharmacistView extends UserView {
     
-    protected PharmacistController controller;
+    protected PharmacistModel model;
+
+    public PharmacistView(PharmacistModel model) {
+        super(model);
+    }
 
     public void displayApptOutRec() {
         controller.viewApptOutRec();

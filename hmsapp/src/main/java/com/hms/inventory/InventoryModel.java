@@ -1,10 +1,16 @@
 package com.hms.inventory;
 
 import com.hms.medicine.*;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class InventoryModel {
     private List<MedicineController> medicines;
+
+    public InventoryModel() {
+        this.medicines = new ArrayList<MedicineController>();
+    }
 
     public List<MedicineController> getMedicines() {
         return medicines;
