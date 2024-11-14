@@ -2,6 +2,9 @@ package com.hms.doctor;
 
 import java.util.List;
 
+import com.hms.user.*;
+import com.hms.appointment_management.*;
+
 public class DoctorController extends UserController {
     
     public DoctorController(DoctorModel model, UserView view) {
@@ -23,7 +26,7 @@ public class DoctorController extends UserController {
     }
 
     public void viewApptRequests() {
-        for (Appointment_Management app : ((DoctorModel)model).getAppointments()) {
+        for (Appointment_ManagementController app : ((DoctorModel)model).getAppointments()) {
             if (app.getStatus().equals("Pending")) {
                 System.out.println(app);
             }
@@ -31,7 +34,7 @@ public class DoctorController extends UserController {
     }
 
     public void viewAppts() {
-        for (Appointment_Management app : ((DoctorModel)model).getAppointments()) {
+        for (Appointment_ManagementController app : ((DoctorModel)model).getAppointments()) {
             System.out.println(app);
         }
     }
@@ -40,12 +43,12 @@ public class DoctorController extends UserController {
         ((DoctorModel)model).manageAppRequests();
     }
 
-    public void updateAppOutRecords(Appointment_Management app, String outcome) {
-        ///what is the logic of this?
+    public void updateAppOutRecords(Appointment_ManagementController app, String outcome) {
+        //create logic for this
     }
 
-    public void updateApptOutcome(Appointment_Management app, String outcome) {
-        app.setOutcome(outcome);
+    public void updateApptOutcome(Appointment_ManagementController app, String outcome) {
+        //app.setOutcome(outcome); //fix
     }
     
 }

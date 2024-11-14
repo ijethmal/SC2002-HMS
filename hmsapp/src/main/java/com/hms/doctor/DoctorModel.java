@@ -1,13 +1,15 @@
 package com.hms.doctor;
 
 import java.util.List;
+import com.hms.user.*;
+import com.hms.appointment_management.*;
 
 public class DoctorModel extends UserModel {
     
     //userid from user
     //password from user
     protected String specialization;
-    private List<Appointment_Management> appointments;
+    private List<Appointment_ManagementController> appointments;
     private List<String> schedule;
 
 
@@ -27,11 +29,11 @@ public class DoctorModel extends UserModel {
         this.specialization = specialization;
     }
 
-    public List<Appointment_Management> getAppointments() {
+    public List<Appointment_ManagementController> getAppointments() {
         return appointments;
     }
 
-    public void setAppointments(List<Appointment_Management> appointments) {
+    public void setAppointments(List<Appointment_ManagementController> appointments) {
         this.appointments = appointments;
     }
 
@@ -43,7 +45,7 @@ public class DoctorModel extends UserModel {
         this.schedule = schedule;
     }
 
-    public void updateAppOutRecords(Appointment_Management app, String outcome) {
+    public void updateAppOutRecords(Appointment_ManagementController app, String outcome) {
         //...
     }
 

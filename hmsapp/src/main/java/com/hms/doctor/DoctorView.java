@@ -1,10 +1,15 @@
 package com.hms.doctor;
 
+import com.hms.user.*;
+
 public class DoctorView extends UserView {
     protected DoctorModel model;
-    protected DoctorController controller;
 
-    public void displayRecordsByPatient(String patientId) {
+    public DoctorView(DoctorModel model) {
+        super(model);
+    };
+
+    /*public void displayRecordsByPatient(String patientId) {
         controller.viewRecordsByPatient(patientId);
     }
 
@@ -22,6 +27,6 @@ public class DoctorView extends UserView {
 
     public void ApptOutRecords(Appointment_Management app, String outcome) {
         controller.updateAppOutRecords(app, outcome);
-    }
+    }*/
     
 }
