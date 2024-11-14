@@ -1,7 +1,7 @@
 package com.hms.medicine;
 
 public class MedicineController {
-    private MedicineModel model;
+    public MedicineModel model;
     public MedicineView view;
 
     public MedicineController(MedicineModel model, MedicineView view) {

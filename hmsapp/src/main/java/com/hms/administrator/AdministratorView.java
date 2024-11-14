@@ -1,11 +1,17 @@
 package com.hms.administrator;
 
 import java.util.List;
+import com.hms.appointment_management.*;
+import com.hms.user.*;
+import com.hms.replenishmentrequest.*;
+import com.hms.medicine.*;
 
-public class AdministratorView extends UserView {
+public class AdministratorView extends UserView{
 
-    public AdministratorView(AdministratorModel model, AdministratorController controller) {
-        super(model, controller);
+    private AdministratorModel model;
+
+    public AdministratorView(AdministratorModel model) {
+        this.model = model;
     }
 
     public void displayStaff(List<Staff> staffList) {
@@ -17,9 +23,9 @@ public class AdministratorView extends UserView {
         System.out.println("==================");
     }
 
-    public void displayAppointments(List<Appointment_Management> appointments) {
+    public void displayAppointments(List<Appointment_ManagementController> appointments) {
         System.out.println("=== Appointments ===");
-        for (Appointment_Management appt : appointments) {
+        for (Appointment_ManagementController appt : appointments) {
             System.out.println("Patient ID: " + appt.getPatientId() +
                                ", Doctor ID: " + appt.getDoctorId() +
                                ", Status: " + appt.getStatus() +
@@ -29,17 +35,17 @@ public class AdministratorView extends UserView {
         System.out.println("====================");
     }
 
-    public void displayReplenishmentRequests(List<ReplenishmentRequest> requests) {
+    public void displayReplenishmentRequests(List<ReplenishmentRequestController> requests) {
         System.out.println("=== Replenishment Requests ===");
-        for (ReplenishmentRequest request : requests) {
-            System.out.println("Medicine: " + request.getMedicine().getMedicineName() +
+        for (ReplenishmentRequestController request : requests) {
+            System.out.println("Medicine: " + request.model.getMedicine().model.getMedicineName() +
                                ", Requested Quantity: " + request.getQuantityRequested() +
                                ", Status: " + request.getStatus());
         }
         System.out.println("=============================");
     }
 
-    public void displayInventory(Medicine[] inventory) {
+    public void displayInventory(MedicineController[] inventory) {
         System.out.println("=== Inventory ===");
         for (Medicine medicine : inventory) {
             System.out.println("Medicine Name: " + medicine.getMedicineName() +
@@ -50,11 +56,11 @@ public class AdministratorView extends UserView {
         System.out.println("=================");
     }
 
-    public void displayReplenishmentApproved(Medicine medicine) {
+    public void displayReplenishmentApproved(MedicineController medicine) {
         System.out.println("Replenishment approved for medicine: " + medicine.getMedicineName());
     }
 
-    public void displayMedicineStockUpdated(Medicine medicine) {
+    public void displayMedicineStockUpdated(MedicineController medicine) {
         System.out.println("Stock updated for medicine: " + medicine.getMedicineName() +
                            ", New Stock Level: " + medicine.getStockLevel());
     }
