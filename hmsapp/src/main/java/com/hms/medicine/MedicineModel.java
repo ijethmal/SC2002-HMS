@@ -42,7 +42,7 @@ public class MedicineModel {
                ", Stock Level: " + stockLevel + ", Low Stock Alert: " + lowStockAlertLine;
     }
 
-    protected String getMedicineName() {
+    public String getMedicineName() {
         return medicineName;
     }
 

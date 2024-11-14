@@ -1,7 +1,10 @@
 package com.hms.replenishmentrequest;
+
+import com.hms.medicine.*;
+
 public class ReplenishmentRequestController {
-    private ReplenishmentRequestModel model;
-    private ReplenishmentRequestView view;
+    public ReplenishmentRequestModel model;
+    protected ReplenishmentRequestView view;
 
     public ReplenishmentRequestController(ReplenishmentRequestModel model, ReplenishmentRequestView view) {
         this.model = model;

@@ -1,26 +1,31 @@
 package com.hms.replenishmentrequest;
+
+import com.hms.medicine.*;
+import com.hms.pharmacist.*;
+import com.hms.administrator.*;
+
 public class ReplenishmentRequestModel {
-    private Medicine medicine;
-    private Pharmacist requester;
-    private Administrator admin;
+    private MedicineController medicine;
+    private PharmacistController requester;
+    private AdministratorController admin;
     private Status status;
     private Date requestDate;
     private Date approvalDate;
 
-    public ReplenishmentRequestModel(Medicine medicine, Pharmacist requester) {
+    public ReplenishmentRequestModel(MedicineController medicine, PharmacistController requester) {
         this.medicine = medicine;
         this.requester = requester;
         this.status = Status.PENDING; // Default status
         this.requestDate = new Date(); // Set to current date
     }
 
-    public void approveRequest(Administrator admin) {
+    public void approveRequest(AdministratorController admin) {
         this.status = Status.APPROVED;
         this.admin = admin;
         this.approvalDate = new Date(); // Set to current date
     }
 
-    public void denyRequest(Administrator admin) {
+    public void denyRequest(AdministratorController admin) {
         this.status = Status.DENIED;
         this.admin = admin;
     }
@@ -29,5 +34,9 @@ public class ReplenishmentRequestModel {
         return "Request for " + medicine.getName() + " by " + requester.getName() +
                "\nStatus: " + status + "\nRequested on: " + requestDate +
                "\nApproval Date: " + (approvalDate != null ? approvalDate : "Not yet approved");
+    }
+
+    public MedicineController getMedicine(){
+        return medicine;
     }
 }
