@@ -16,7 +16,7 @@ public class AdministratorModel extends UserModel {
     private List<StaffRecordController> staffList; // List of staff members
     private List<Appointment_ManagementController> appointmentsList; // List of appointments
     private List<ReplenishmentRequestController> replenishmentRequests; // List of replenishment requests
-    private InventoryView inventory; // Inventory object
+    private InventoryController inventory; // Inventory object
 
 
 public AdministratorModel(String adminId, String password) {
@@ -62,7 +62,7 @@ public void updateMedicineStock(MedicineController medicine, int newQty) {
     inventoryModel.updateStock(medicine, newQty);
 }
 
-public List<ReplenishmentRequestModel> getReplenishmentRequests() {
+public List<ReplenishmentRequestController> getReplenishmentRequests() {
     return replenishmentRequests; 
 }
 

@@ -23,4 +23,9 @@ public class MedicineController {
             view.getLowStockAlert("Alert: Stock below threshold for " + model.getMedicineName());
         }
     }
+
+    public void getMedicine(){
+        
+                                    //needa fix replenishment req model
+    }
 }

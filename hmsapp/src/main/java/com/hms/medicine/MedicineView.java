@@ -1,8 +1,5 @@
 package com.hms.medicine;
 
-import com.hms.administrator.AdministratorController;
-import com.hms.administrator.AdministratorModel;
-
 public class MedicineView {
 
     private MedicineModel model;
@@ -19,17 +16,19 @@ public class MedicineView {
         System.out.println(stock);
     }
 
+    /*
     public String getMedicineName() {
         return model.getMedicineName();
     }
 
     public int getMedicineId() {
-        return model.getMedicationId();
+        return model.getMedicineId();
     }
 
     public double getQuantity() {
         return model.getStockLevel();
     }
+        */
 
     public String toString() {
         return "Name: " + model.getMedicineName() + "\nQuantity: " + model.getStockLevel() + "\nLow Stock Alert: " + model.getLowStockAlertLine();

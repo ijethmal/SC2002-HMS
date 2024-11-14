@@ -37,6 +37,10 @@ public class ReplenishmentRequestModel {
     }
 
     public MedicineController getMedicine(){
-        return medicine;
+        return medicine.getMedicineName();
+    }
+
+    public MedicineController getQuantityRequested(){
+        return medicine.getStockLevel();
     }
 }

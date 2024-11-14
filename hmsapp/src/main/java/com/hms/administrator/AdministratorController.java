@@ -7,7 +7,6 @@ import com.hms.replenishmentrequest.*;
 import com.hms.user.*;
 import com.hms.medicine.*;
 
-
 public class AdministratorController extends UserController{
     
     protected AdministratorModel model;
