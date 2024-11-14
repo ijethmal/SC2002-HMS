@@ -1,14 +1,14 @@
 package com.hms.patient;
 
-public public class PatientController {
+import com.hms.user.UserController;
+
+public class PatientController extends UserController {
     private PatientModel model;
     private PatientView view;
     private RegisterNewPatient registerNewPatient;
     
     public PatientController(PatientModel model, PatientView view) {
-        this.model = model;
-        this.view = view;
-        this.registerNewPatient = registerNewPatient;
+        super(model, view);
     }
 
     public void handleRegisterPatient() {

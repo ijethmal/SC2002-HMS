@@ -9,7 +9,7 @@ public class Appointment_ManagementController {
     private Appointment_ManagementView view;
     private static Scanner scanner = new Scanner(System.in);
 
-    public Appointment_ManagementController(Appointment_Management model, Appointment_ManagementView view) {
+    public Appointment_ManagementController(Appointment_ManagementModel model, Appointment_ManagementView view) {
         this.model = model;
         this.view = view;
     }

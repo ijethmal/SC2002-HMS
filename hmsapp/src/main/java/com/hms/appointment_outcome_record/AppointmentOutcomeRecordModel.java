@@ -2,21 +2,24 @@ package com.hms.appointment_outcome_record;
 
 import java.util.Date;
 import java.util.List;
+//generate uuid for medicineid
+import java.util.UUID;
 
 import com.hms.diagnosis.Diagnosis;
+import com.hms.prescription.Prescription;
 
 import java.util.ArrayList;
  
 public class AppointmentOutcomeRecordModel {
-    private String recordID;
+    private int recordID;
     private String patientId;
     private Date dateTime;
     private String typeOfService;
     private Diagnosis[] diagnoses;
     private Prescription[] prescriptions;
 
-    public AppointmentOutcomeRecordModel(String recordID, String patientId, Date dateTime, String typeOfService, Diagnosis[] diagnoses, Prescription[] prescriptions) {
-        this.recordID = recordID;
+    public AppointmentOutcomeRecordModel(String patientId, Date dateTime, String typeOfService, Diagnosis[] diagnoses, Prescription[] prescriptions) {
+        this.recordID = Math.abs(UUID.randomUUID().hashCode() % 100000);
         this.patientId = patientId;
         this.dateTime = dateTime;
         this.typeOfService = typeOfService;

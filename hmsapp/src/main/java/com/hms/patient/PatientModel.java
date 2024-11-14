@@ -1,19 +1,24 @@
 package com.hms.patient;
 
+import com.hms.user.*;
+import com.hms.appointment_outcome_record.*;
+import com.hms.diagnosis.Diagnosis;
+import com.hms.appointment_management.*;
+
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class PatientModel {
-    private String patientId;
+public class PatientModel extends UserModel {
     private String name;
     private Date dob;
     private String gender;
     private String contactInfo;
     private String bloodType;
-    private List<AppointmentOutcomeRecord> pastApptRecs;
+    private List<AppointmentOutcomeRecordControllerView> pastApptRecs;
 
-    public PatientModel(String patientId, String name, Date dob, String gender, String contactInfo, String bloodType, List<AppointmentOutcomeRecord> pastApptRecs) {
-        this.patientId = patientId;
+    public PatientModel(String patientId, String password, String name, Date dob, String gender, String contactInfo, String bloodType, List<AppointmentOutcomeRecordControllerView> pastApptRecs) {
+        super(patientId, password, "Patient");
         this.name = name;
         this.dob = dob;
         this.gender = gender;
@@ -23,7 +28,7 @@ public class PatientModel {
     }
     // Getter methods
     public String getPatientId() {
-        return patientId;
+        return userId;
     }
 
     public String getName() {
@@ -46,12 +51,12 @@ public class PatientModel {
         return bloodType;
     }
 
-    public List<AppointmentOutcomeRecord> getPastApptRecs() {
+    public List<AppointmentOutcomeRecordControllerView> getPastApptRecs() {
         return pastApptRecs;
     }
     public void viewMedicalRecord() {
         System.out.println("---- Medical Record ----");
-        System.out.println("Patient ID: " + patientId);
+        System.out.println("Patient ID: " + userId);
         System.out.println("Name: " + name);
         System.out.println("Date of Birth: " + dob);
         System.out.println("Gender: " + gender);
@@ -60,7 +65,7 @@ public class PatientModel {
         System.out.println("\nPast Appointment Records:");
     
     if (pastApptRecs != null && !pastApptRecs.isEmpty()) {
-        for (AppointmentOutcomeRecord record : pastApptRecs) {
+        for (AppointmentOutcomeRecordControllerView record : pastApptRecs) {
             System.out.println(record); // Assuming the `AppointmentOutcomeRecord` class has a meaningful `toString()` method
         }
                 } else {
@@ -79,9 +84,12 @@ public class PatientModel {
 }
 
 
-    public void scheduleAppointment(Date appointmentDate, String initialStatus, String doctorNotes) {
+    public void scheduleAppointment(String doctorId, Date appointmentDate, String typeOfService, String initialStatus, String doctorNotes) {
         if (appointmentDate != null && appointmentDate.after(new Date())) {
-            AppointmentOutcomeRecord newAppointment = new AppointmentOutcomeRecord(appointmentDate, initialStatus, "Scheduled", doctorNotes);
+            Appointment_ManagementModel newAppointment = new Appointment_ManagementModel(appointmentDate, userId, doctorId, "Pending");
+            Appointment_ManagementView apptView = new Appointment_ManagementView();
+            Appointment_ManagementController apptController = new Appointment_ManagementController(newAppointment, apptView);
+            //AppointmentOutcomeRecordControllerView newAppointment = new AppointmentOutcomeRecordControllerView(appointmentDate, initialStatus, "Scheduled", doctorNotes);
             pastApptRecs.add(newAppointment);
             System.out.println("Appointment scheduled successfully on " + appointmentDate);
         } else {
@@ -91,7 +99,9 @@ public class PatientModel {
 
     public void rescheduleAppointment(int appointmentIndex, Date newDate) {
     if (pastApptRecs != null && appointmentIndex >= 0 && appointmentIndex < pastApptRecs.size()) {
-        AppointmentOutcomeRecord record = pastApptRecs.get(appointmentIndex);
+        AppointmentOutcomeRecordControllerView
+        
+         record = pastApptRecs.get(appointmentIndex);
         
         if (newDate != null && newDate.after(new Date())) {
             record.setAppointmentDate(newDate);

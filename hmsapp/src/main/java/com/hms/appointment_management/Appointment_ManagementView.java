@@ -2,6 +2,8 @@ package com.hms.appointment_management;
 
 public class Appointment_ManagementView {
 
+    public Appointment_ManagementView() {}
+
     public void displayAppointmentDetails(String appointmentDetails) {
         System.out.println(appointmentDetails);
     }

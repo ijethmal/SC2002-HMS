@@ -1,4 +1,5 @@
 package com.hms.user;
+
 public abstract class UserModel {
 
     protected String userId;
@@ -6,7 +7,7 @@ public abstract class UserModel {
     protected String role;
 
     public UserModel (String userId, String password, String role) {
-        this.userId = userId;
+        this.userId =  userId;
         this.password = password;
         this.role = role;
     }
