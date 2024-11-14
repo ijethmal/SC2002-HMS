@@ -22,4 +22,8 @@ public class PrescriptionController {
     public void printPrescriptionDetails() {
         System.out.println(model.toString());
     }
+
+    public setStatus(){
+        
+    }
 }
