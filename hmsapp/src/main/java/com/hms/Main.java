@@ -14,7 +14,7 @@ import com.hms.pharmacist.*;
 import com.hms.replenishmentrequest.*;
 import com.hms.staffrecord.*;
 import com.hms.user.*;
-
+import com.hms.util.SerializationUtil;
 
 import java.util.Date;
 import java.util.List;
@@ -29,14 +29,13 @@ import java.io.IOException;
 public class Main {
 
     public static void main(String[] args) {
-
-        // create inventory object
+        // Create inventory object
         InventoryModel inventory = new InventoryModel();
         InventoryView inventoryView = new InventoryView(inventory);
         InventoryController inventoryController = new InventoryController(inventory, inventoryView);
-        
+
         // Load the medicine data from the db and create objects from it
-        String medicineData = "hmsapp\\db\\Medicine_List.xlsx"; 
+        String medicineData = "hmsapp\\db\\Medicine_List.xlsx";
         try (FileInputStream file = new FileInputStream(new File(medicineData))) {
             Workbook workbook = new XSSFWorkbook(file);
             Sheet sheet = workbook.getSheetAt(0);
@@ -56,15 +55,42 @@ public class Main {
                 MedicineView medicineView = new MedicineView(medicine);
                 MedicineController medicineController = new MedicineController(medicine, medicineView);
 
-                //add to inventory. the controllers store the model and view so only one list is needed to store controllers
+                // Add to inventory. The controllers store the model and view so only one list is needed to store controllers
                 inventoryController.addMedicine(medicineController);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        //load the patients data from the db and create objects from it
-        
+        //load patients from db
+        String patientsData = "hmsapp\\db\\Patient_List.xlsx";
+        try (FileInputStream file = new FileInputStream(new File(patientsData))) {
+            Workbook workbook = new XSSFWorkbook(file);
+            Sheet sheet = workbook.getSheetAt(0);
+            for (Row row : sheet) {
+                if (row.getRowNum() == 0) {
+                    continue;
+                }
+                PatientModel patient = new PatientModel("null", "null", "null", date, "null", "null", "null");
+                String patientId = row.getCell(0).getStringCellValue();
+                String name = row.getCell(1).getStringCellValue();
+                String dobString = row.getCell(2).getStringCellValue();
+                //convert YYYY-MM-DD to date object
+                
 
-    }
+                medicine.setMedicineName(name);
+                medicine.setStock(stock);
+                medicine.setLowStockLine(alert);
+
+                MedicineView medicineView = new MedicineView(medicine);
+                MedicineController medicineController = new MedicineController(medicine, medicineView);
+
+                // Add to inventory. The controllers store the model and view so only one list is needed to store controllers
+                inventoryController.addMedicine(medicineController);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+}
+
 }

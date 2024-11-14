@@ -5,11 +5,12 @@ import com.hms.appointment_outcome_record.*;
 import com.hms.diagnosis.Diagnosis;
 import com.hms.appointment_management.*;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class PatientModel extends UserModel {
+public class PatientModel extends UserModel implements Serializable {
     private String name;
     private Date dob;
     private String gender;
@@ -17,14 +18,14 @@ public class PatientModel extends UserModel {
     private String bloodType;
     private List<AppointmentOutcomeRecordControllerView> pastApptRecs;
 
-    public PatientModel(String patientId, String password, String name, Date dob, String gender, String contactInfo, String bloodType, List<AppointmentOutcomeRecordControllerView> pastApptRecs) {
+    public PatientModel(String patientId, String password, String name, Date dob, String gender, String contactInfo, String bloodType) {
         super(patientId, password, "Patient");
         this.name = name;
         this.dob = dob;
         this.gender = gender;
         this.contactInfo = contactInfo;
         this.bloodType = bloodType;
-        this.pastApptRecs = pastApptRecs;
+        this.pastApptRecs = new ArrayList<>();
     }
     // Getter methods
     public String getPatientId() {

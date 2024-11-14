@@ -1,8 +1,15 @@
 package com.hms.patient;
-public class PatientView {
 
-    public PatientView() {
-        // Initialization logic if needed
+import com.hms.user.*;
+
+import java.io.Serializable;
+
+public class PatientView extends UserView implements Serializable {
+
+    private PatientModel model;
+
+    public PatientView(PatientModel model) {
+        super(model);
     }
 
     public void displayRegistrationSuccess(String patientId) {

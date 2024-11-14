@@ -1,8 +1,10 @@
 package com.hms.patient;
 
+import java.io.Serializable;
+
 import com.hms.user.UserController;
 
-public class PatientController extends UserController {
+public class PatientController extends UserController implements Serializable {
     private PatientModel model;
     private PatientView view;
     private RegisterNewPatient registerNewPatient;
@@ -14,7 +16,7 @@ public class PatientController extends UserController {
     public void handleRegisterPatient() {
         PatientModel newPatient = registerNewPatient.createPatient();
         this.model = newPatient;
-        view.displayRegistraionSuccess(newPatient.getPatientId());
+        view.displayRegistrationSuccess(newPatient.getPatientId());
         view.displayPatientDetails(newPatient);
     }
     public void handleViewMedicalRecord() {
