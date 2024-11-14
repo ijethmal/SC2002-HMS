@@ -10,7 +10,7 @@ public class MedicineController {
     }
 
     public void updateView() {
-        System.out.println(view.toString(););
+        System.out.println(view.toString());
     }
 
     public void updateStock(double newStock) {

@@ -63,7 +63,7 @@ public class Main {
             e.printStackTrace();
         }
 
-        //patient objects
+        //load the patients data from the db and create objects from it
         
 
     }
