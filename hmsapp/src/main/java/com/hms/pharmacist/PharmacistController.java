@@ -1,10 +1,10 @@
 package com.hms.pharmacist;
-import com.hms.administrator.AdministratorView;
-import com.hms.inventory.InventoryView;
 
 import com.hms.prescription.*;
 import com.hms.user.*;
 import com.hms.medicine.*;
+import com.hms.administrator.*;
+import com.hms.inventory.*;
 
 
 public class PharmacistController extends UserController {
@@ -26,11 +26,11 @@ public class PharmacistController extends UserController {
         
     }
 
-    public void viewInventory(InventoryView inventoryView) {
-        inventoryView.showInventory();
+    public void viewInventory(InventoryController inventoryView) {
+        inventoryView.view.showInventory();
     }
 
-    public void submitReplenishmentRequest(AdministratorView administrator, MedicineController medicine) {
+    public void submitReplenishmentRequest(AdministratorController administrator, MedicineController medicine) {
         administrator.submitReplenishmentRequest(medicine);
     }
 

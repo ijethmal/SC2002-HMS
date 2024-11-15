@@ -5,7 +5,7 @@ import java.util.List;
 
 public class InventoryView {
 
-    private InventoryModel model;
+    protected InventoryModel model;
 
     public InventoryView(InventoryModel model) {
         this.model = model;

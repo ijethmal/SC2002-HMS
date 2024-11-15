@@ -25,7 +25,10 @@ public class MedicineController {
     }
 
     public void getMedicine(){
-        
-                                    //needa fix replenishment req model
+            //needa fix replenishment req model
+    }
+
+    public void getStockLevel(){
+                //...
     }
 }

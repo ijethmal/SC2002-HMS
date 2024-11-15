@@ -29,11 +29,12 @@ public class AdministratorController extends UserController{
         model.setAppointments(appointments); // Set in model
     }
 
-    // Display Replenishment Requests in the View
+    // Display Replenishment Requests in the View, is this not even sppsd to be in controller??
     public void displayReplenishmentRequests() {
         List<ReplenishmentRequestModel> replenishmentRequests = model.getReplenishmentRequests();
         view.displayReplenishmentRequests(replenishmentRequests); // Display in view
     }
+    
 
     // Approve Replenishment Request
     public void approveReplenishment(MedicineController medicine, int replenishQty) {

@@ -4,7 +4,7 @@ import com.hms.medicine.MedicineController;
 
 public class InventoryController {
     private InventoryModel model;
-    private InventoryView view;
+    protected InventoryView view;
 
     public InventoryController(InventoryModel model, InventoryView view) {
         this.model = model;

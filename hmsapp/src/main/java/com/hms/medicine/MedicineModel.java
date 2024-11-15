@@ -4,10 +4,10 @@ package com.hms.medicine;
 import java.util.UUID;
 
 public class MedicineModel {
-    private String medicineName;
-    private int medicationId;
-    private double stockLevel;
-    private double lowStockAlertLine;
+    protected String medicineName;
+    protected int medicationId;
+    protected double stockLevel;
+    protected double lowStockAlertLine;
 
     public MedicineModel(String medicineName, int stockLevel, int lowStockAlertLine) {
         this.medicineName = medicineName;
@@ -50,6 +50,7 @@ public class MedicineModel {
         this.medicineName = medicineName;
     }
 
+    //////////////////////////////////////////////////////////
     public int getMedicineId() {
         return medicationId;
     }

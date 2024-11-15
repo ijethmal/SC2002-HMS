@@ -36,6 +36,8 @@ public class ReplenishmentRequestModel {
                "\nApproval Date: " + (approvalDate != null ? approvalDate : "Not yet approved");
     }
 
+
+    ///////////////////////////////////////////////////
     public MedicineController getMedicine(){
         return medicine.getMedicineName();
     }

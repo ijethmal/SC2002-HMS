@@ -1,8 +1,9 @@
 package com.hms.pharmacist;
 
-import com.hms.user.UserView;
-import com.hms.administrator.AdministratorView;
-import com.hms.inventory.InventoryView;
+import com.hms.user.*;
+import com.hms.administrator.*;
+import com.hms.inventory.*;
+import com.hms.prescription.*;
 
 public class PharmacistView extends UserView {
     
@@ -13,23 +14,23 @@ public class PharmacistView extends UserView {
     }
 
     public void displayApptOutRec() {
-        controller.viewApptOutRec();
+        viewApptOutRec();
     }
 
-    public void updatePrescriptionStatus(Prescription prescription, String status) {
-        controller.updatePrescriptionStatus(prescription, status);
+    public void updatePrescriptionStatus(PrescriptionController prescription, String status) {
+        updatePrescriptionStatus(prescription, status);
     }
 
     public void displayPrescriptionStatus(Prescription prescription) {
-        controller.viewPrescriptionStatus(prescription);
+        viewPrescriptionStatus(prescription);
     }
 
     public void viewInventory(InventoryView inventoryView) {
-        controller.viewInventory(inventoryView);
+        viewInventory(inventoryView);
     }
 
     public void submitReplenishmentRequest(AdministratorView administrator, Medicine medicine) {
-        controller.submitReplenishmentRequest(administrator, medicine);
+        submitReplenishmentRequest(administrator, medicine);
     }
 
 }
