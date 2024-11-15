@@ -1,9 +1,12 @@
 package com.hms.prescription;
+
+import com.hms.medicine.*;
+
 public class Prescription {
     
     private String patientId;
     private String prescriptionId;
-    private Medicine medicine;
+    private MedicineController medicine;
     private String status;
     private int quantity;
 
@@ -23,11 +26,11 @@ public class Prescription {
         this.prescriptionId = prescriptionId;
     }
 
-    public Medicine getMedicine() {
+    public MedicineController getMedicine() {
         return medicine;
     }
 
-    public void setMedicine(Medicine medicine) {
+    public void setMedicine(MedicineController medicine) {
         this.medicine = medicine;
     }
 
