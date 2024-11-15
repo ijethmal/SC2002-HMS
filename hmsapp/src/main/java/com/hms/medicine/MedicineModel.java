@@ -60,6 +60,6 @@ public class MedicineModel {
     }
 
     public String getStatus() {
-        return 
+        return; //
     }
 }

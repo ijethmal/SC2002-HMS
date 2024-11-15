@@ -1,20 +1,19 @@
 package com.hms.staffrecord;
+
+import com.hms.user.*;
+
 public class StaffRecordModel {
     
-    private User user;
-    private String StaffId;
-    private String name;
-    private String role;
+    String staffId;
+    UserController staffController;
 
-    public StaffRecordModel(User user, String StaffId, String name, String role){
-        this.user = user;
+    public StaffRecordModel(String staffId, UserController staffController) {
+        this.staffController = staffController;
         this.staffId = staffId;
-        this.name = name;
-        this.role = role;
     }
 
-    //get methods
-    public User getUser(){
+    //get methodsbv
+    public UserController getUser(){
         return user;
     }
 
