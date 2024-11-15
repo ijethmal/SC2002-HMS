@@ -21,6 +21,15 @@ public class ReplenishmentRequestModel {
         this.requestDate = new Date(); // Set to current date
         this.admin = admin;
     }
+    
+    // Overloaded constructor without AdministratorController
+    public ReplenishmentRequestModel(MedicineController medicine, PharmacistController requester) {
+        this.medicine = medicine;
+        this.requester = requester;
+        this.status = "Pending"; // Default status
+        this.requestDate = new Date(); // Set to current date
+    }
+
 
     public void approveRequest(AdministratorController admin) {
         this.status = "Approved";
