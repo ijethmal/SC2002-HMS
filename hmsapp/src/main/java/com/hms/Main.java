@@ -26,6 +26,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.text.ParseException;
 
 public class Main {
 
@@ -63,6 +64,9 @@ public class Main {
             e.printStackTrace();
         }
 
+        //array of patients
+        List<PatientController> patientControllers = new ArrayList<>();
+
         //load patients from db
         String patientsData = "hmsapp\\db\\Patient_List.xlsx";
         try (FileInputStream file = new FileInputStream(new File(patientsData))) {
@@ -78,21 +82,43 @@ public class Main {
                 String name = row.getCell(1).getStringCellValue();
                 SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
                 String dobString = row.getCell(3).getStringCellValue();
-                Date dob = formatter.parse(dobString);
+                Date dob = null;
+                try {
+                    dob = formatter.parse(dobString);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
                 String gender = row.getCell(4).getStringCellValue();
                 String blood = row.getCell(5).getStringCellValue();
                 String contactInfo = row.getCell(6).getStringCellValue();
 
-                PatientModel patient = new PatientModel("null", "null", "null", date, "null", "null", "null");
-                MedicineView medicineView = new MedicineView(medicine);
-                MedicineController medicineController = new MedicineController(medicine, medicineView);
+                PatientModel patient = new PatientModel(patientId, password, name, dob, gender, contactInfo, blood);
+                PatientView patientView = new PatientView(patient);
+                PatientController patientController = new PatientController(patient, patientView);
 
-                // Add to inventory. The controllers store the model and view so only one list is needed to store controllers
-                inventoryController.addMedicine(medicineController);
+                patientControllers.add(patientController);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+        
+        //serialise
+        try {
+            SerializationUtil.serialize(patientControllers, "hmsapp\\db\\Patient_Controllers.ser");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        //view patients
+        // Deserialize patient controllers
+        /*try {
+            List<PatientController> deserializedPatientControllers = (List<PatientController>) SerializationUtil.deserialize("hmsapp\\db\\Patient_Controllers.ser");
+            for (PatientController patientController : deserializedPatientControllers) {
+                patientController.getView().display();
+            }
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }*/
 }
 
 }
