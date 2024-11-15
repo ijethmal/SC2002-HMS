@@ -25,6 +25,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 
 public class Main {
 
@@ -71,17 +72,18 @@ public class Main {
                 if (row.getRowNum() == 0) {
                     continue;
                 }
-                PatientModel patient = new PatientModel("null", "null", "null", date, "null", "null", "null");
-                String patientId = row.getCell(0).getStringCellValue();
-                String name = row.getCell(1).getStringCellValue();
-                String dobString = row.getCell(2).getStringCellValue();
-                //convert YYYY-MM-DD to date object
                 
+                String patientId = row.getCell(0).getStringCellValue();
+                String password = row.getCell(1).getStringCellValue();
+                String name = row.getCell(1).getStringCellValue();
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+                String dobString = row.getCell(3).getStringCellValue();
+                Date dob = formatter.parse(dobString);
+                String gender = row.getCell(4).getStringCellValue();
+                String blood = row.getCell(5).getStringCellValue();
+                String contactInfo = row.getCell(6).getStringCellValue();
 
-                medicine.setMedicineName(name);
-                medicine.setStock(stock);
-                medicine.setLowStockLine(alert);
-
+                PatientModel patient = new PatientModel("null", "null", "null", date, "null", "null", "null");
                 MedicineView medicineView = new MedicineView(medicine);
                 MedicineController medicineController = new MedicineController(medicine, medicineView);
 
