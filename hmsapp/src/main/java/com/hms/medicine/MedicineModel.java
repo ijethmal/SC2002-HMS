@@ -58,4 +58,8 @@ public class MedicineModel {
     public double getLowStockAlertLine() {
         return lowStockAlertLine;
     }
+
+    public String getStatus() {
+        return 
+    }
 }

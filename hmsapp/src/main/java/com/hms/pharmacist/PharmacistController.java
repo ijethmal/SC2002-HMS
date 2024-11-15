@@ -8,6 +8,8 @@ import com.hms.inventory.*;
 
 
 public class PharmacistController extends UserController {
+
+    public PharmacistModel model;
     
     public PharmacistController(PharmacistModel model, PharmacistView view) {
         super(model, view);

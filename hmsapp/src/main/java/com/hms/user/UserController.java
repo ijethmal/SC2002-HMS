@@ -1,8 +1,8 @@
 package com.hms.user;
 public abstract class UserController {
     
-    protected UserModel model;
-    protected UserView view;
+    public UserModel model;
+    public UserView view;
 
     public UserController(UserModel model, UserView view) {
         this.model = model;

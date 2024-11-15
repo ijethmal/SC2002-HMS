@@ -40,7 +40,7 @@ public class AdministratorView extends UserView{
         for (ReplenishmentRequestController request : requests) {
             System.out.println("Medicine: " + request.model.getMedicine().model.getMedicineName() +
                                ", Requested Quantity: " + request.model.getQuantityRequested() +
-                               ", Status: " + request.model.getQuantityRequested().model.getStatus());
+                               ", Status: " + );
         }
         System.out.println("=============================");
     }
