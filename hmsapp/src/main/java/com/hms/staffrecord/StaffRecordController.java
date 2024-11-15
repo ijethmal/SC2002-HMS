@@ -1,13 +1,14 @@
 package com.hms.staffrecord;
+
+import com.hms.user.*;
+
 public class StaffRecordController extends UserController{
     
     protected StaffRecordModel model;
     protected StaffRecordView view;
 
-    public StaffRecordController(StaffRecordModel model, StaffRecordView view) {
+    public StaffRecordController(StaffRecordModel model, StaffRecordView view){
         super(model, view);
-        this.model = model;
-        this.view = view;
     }
 
     public void viewRecord() {

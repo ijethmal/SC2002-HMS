@@ -1,5 +1,16 @@
 package com.hms.staffrecord;
-public class StaffRecordView {
+
+import com.hms.user.*;
+
+
+public class StaffRecordView extends UserView {
+
+    public StaffRecordModel model;
+
+    public StaffRecordView (StaffRecordModel model) {
+        super(model);
+    }
+
     public void displayRecord(StaffRecordModel record){
         System.out.println("Staff Record: ");
         System.out.println("User: " + record.getUser());
