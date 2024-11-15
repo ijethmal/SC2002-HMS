@@ -34,10 +34,10 @@ public void removeStaff(StaffRecordController staff) {
     staffList.remove(staff);
 }
 public void updateStaff(String staffId, String newName, String newRole) {
-    for (StaffRecordView staff : staffList) {
-        if (staff.getStaffId().equals(staffId)) { 
-            staff.setName(newName);  
-            staff.setRole(newRole);  
+    for (StaffRecordController staff : staffList) {
+        if (staff.view.getStaffId().equals(staffId)) { 
+            staff.view.setName(newName);  
+            staff.view.setRole(newRole);  
             System.out.println("Staff record updated.");
             return; 
         }
@@ -55,11 +55,11 @@ public void setAppointments(List<Appointment_ManagementController> appointments)
 
 // inventory 
 public void displayInventory() {
-    inventoryModel.showInventory();
+    inventory.showInventory();
 }
 
 public void updateMedicineStock(MedicineController medicine, int newQty) {
-    inventoryModel.updateStock(medicine, newQty);
+    inventory.updateStock(medicine, newQty);
 }
 
 public List<ReplenishmentRequestController> getReplenishmentRequests() {
