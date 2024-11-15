@@ -13,6 +13,7 @@ public class ReplenishmentRequestController {
         this.view = view;
     }
 
+
     public void createAndSubmitRequest(MedicineController medicine, PharmacistController requester) {
         model = new ReplenishmentRequestModel(medicine, requester);
         view.displayRequestDetails(model.viewRequest());

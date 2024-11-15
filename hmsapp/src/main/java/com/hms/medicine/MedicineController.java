@@ -24,9 +24,9 @@ public class MedicineController {
         }
     }
 
-    public void getMedicine(){
-            //needa fix replenishment req model
-    }
+    public String getName() {
+        return model.getMedicineName(); 
+        }
 
     public void getStockLevel(){
                 //...
