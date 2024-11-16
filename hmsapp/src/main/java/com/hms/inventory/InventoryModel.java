@@ -22,13 +22,13 @@ public class InventoryModel {
 
     public void showInventory() {
         for (MedicineController medicine : medicines) {
-            System.out.println(medicine.view.toString());
+            System.out.println(medicine.model.getMedicineInfo());
         }
     }
 
     public void decrementMedicine(MedicineController medicine, int qty) {
-        if (medicine.view.getQuantity() > qty) {
-            medicine.updateStock(medicine.view.getQuantity() - qty);
+        if (medicine.getStockLevel() > qty) {
+            medicine.updateStock(medicine.getStockLevel() - qty);
         } else {
             System.out.println("Not enough stock");
         }

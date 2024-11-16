@@ -14,6 +14,11 @@ public class MedicineController {
     }
 
     public void updateStock(double newStock) {
+        if(newStock < 0)
+        {
+            System.out.println("Error: Stock cannot be negative");
+            return;
+        }
         model.setStock(newStock);
         updateView();
     }
@@ -28,7 +33,7 @@ public class MedicineController {
         return model.getMedicineName(); 
         }
 
-    public void getStockLevel(){
-                //...
+    public double getStockLevel(){
+        return model.getStockLevel();
     }
 }
