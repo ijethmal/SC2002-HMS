@@ -31,7 +31,7 @@ public class AdministratorController extends UserController{
 
     // Display Replenishment Requests in the View, is this not even sppsd to be in controller??
     public void displayReplenishmentRequests() {
-        List<ReplenishmentRequestModel> replenishmentRequests = model.getReplenishmentRequests();
+        List<ReplenishmentRequestController> replenishmentRequests = model.getReplenishmentRequests();
         view.displayReplenishmentRequests(replenishmentRequests); // Display in view
     }
     
@@ -45,7 +45,7 @@ public class AdministratorController extends UserController{
     // Display Inventory in the View
     public void displayInventory() {
         List<MedicineController> inventory = model.getAllMedicines(); // Retrieve from model
-        view.displayInventory(inventory); // Display in view
+        view.displayInventory(inventory); 
     }
 
     // Update Stock for a Specific Medicine

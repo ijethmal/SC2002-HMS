@@ -1,22 +1,26 @@
 package com.hms.administrator;
 
 import java.util.List;
+
 import com.hms.appointment_management.*;
 import com.hms.user.*;
 import com.hms.replenishmentrequest.*;
 import com.hms.medicine.*;
+import com.hms.staffrecord.*;
+import com.hms.inventory.*;
 
 public class AdministratorView extends UserView{
 
     private AdministratorModel model;
 
-    public AdministratorView(AdministratorModel model) {
+    public AdministratorView (AdministratorModel model) {
+
         this.model = model;
     }
 
-    public void displayStaff(List<Staff> staffList) {
+    public void displayStaff(List<StaffRecordController> staffList) {
         System.out.println("=== Staff List ===");
-        for (Staff staff : staffList) {
+        for (StaffRecordController staff : staffList) {
             System.out.println("ID: " + staff.getId() + ", Name: " + staff.getName() 
                                 + ", Role: " + staff.getRole() + ", Age: " + staff.getAge()+"\n");
         }
@@ -40,18 +44,15 @@ public class AdministratorView extends UserView{
         for (ReplenishmentRequestController request : requests) {
             System.out.println("Medicine: " + request.model.getMedicine().model.getMedicineName() +
                                ", Requested Quantity: " + request.model.getQuantityRequested() +
-                               ", Status: " + );
+                               ", Status: " + getStatus());
         }
         System.out.println("=============================");
     }
 
-    public void displayInventory(MedicineController[] inventory) {
+    public void displayInventory(List<MedicineController> inventory) {
         System.out.println("=== Inventory ===");
         for (MedicineController medicine : inventory) {
-            System.out.println("Medicine Name: " + medicine.getMedicineName() +
-                               ", ID: " + medicine.getMedicationId() +
-                               ", Stock Level: " + medicine.getStockLevel() +
-                               ", Low Stock Alert Level: " + medicine.getLowStockAlertLine());
+            medicine.view.viewMedicineInfo();
         }
         System.out.println("=================");
     }

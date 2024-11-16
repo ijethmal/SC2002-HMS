@@ -8,29 +8,22 @@ public class MedicineView {
        this.model = model;
     }
 
-    public void getLowStockAlert(String alert) {
+    public void viewLowStockAlert(String alert) {
         System.out.println(alert);
     }
 
-    public void getStockLevel(String stock) {
+    public void viewStockLevel(String stock) {
         System.out.println(stock);
     }
 
-    /*
-    public String getMedicineName() {
-        return model.getMedicineName();
+    public String viewMedicineInfo() {
+        return "Medicine Name: " + model.medicineName + ", ID: " + model.medicationId +
+               ", Stock Level: " + model.stockLevel + ", Low Stock Alert: " + model.lowStockAlertLine;
     }
-
-    public int getMedicineId() {
-        return model.getMedicineId();
-    }
-
-    public double getQuantity() {
-        return model.getStockLevel();
-    }
-        */
 
     public String toString() {
-        return "Name: " + model.getMedicineName() + "\nQuantity: " + model.getStockLevel() + "\nLow Stock Alert: " + model.getLowStockAlertLine();
+        return "Name: " + model.getMedicineName() + 
+        "\nQuantity: " + model.getStockLevel() + 
+        "\nLow Stock Alert: " + model.getLowStockAlertLine();
     }
 }
