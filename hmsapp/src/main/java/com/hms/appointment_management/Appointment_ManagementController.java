@@ -12,8 +12,8 @@ import com.hms.prescription.PrescriptionModel;
 
 // asked chatgpt need to make changes 
 public class Appointment_ManagementController {
-    private Appointment_ManagementModel model;
-    private Appointment_ManagementView view;
+    public Appointment_ManagementModel model;
+    public Appointment_ManagementView view;
     private static Scanner scanner = new Scanner(System.in);
 
     public Appointment_ManagementController(Appointment_ManagementModel model, Appointment_ManagementView view) {

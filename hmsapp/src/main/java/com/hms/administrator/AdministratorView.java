@@ -20,20 +20,21 @@ public class AdministratorView extends UserView{
     public void displayStaff(List<StaffRecordController> staffList) {
         System.out.println("=== Staff List ===");
         for (StaffRecordController staff : staffList) {
-            System.out.println("ID: " + staff.getId() + ", Name: " + staff.getName() 
-                                + ", Role: " + staff.getRole() + ", Age: " + staff.getAge()+"\n");
+            staffList.view.displayRecord();
         }
         System.out.println("==================");
     }
 
+
+    // i dont think appt managment view has a function to use to print all the necessary details
     public void displayAppointments(List<Appointment_ManagementController> appointments) {
         System.out.println("=== Appointments ===");
         for (Appointment_ManagementController appt : appointments) {
-            System.out.println("Patient ID: " + appt.getPatientId() +
-                               ", Doctor ID: " + appt.getDoctorId() +
+            System.out.println("Patient ID: " + appt.model.getPatientId() +
+                               ", Doctor ID: " + appt.model.getDoctorId() +
                                ", Status: " + appt.getStatus() +
-                               ", Date: " + appt.getDate() +
-                               ", Outcome: " + (appt.getOutcomeRecord() != null ? appt.getOutcomeRecord() : "N/A"));
+                               ", Date: " + appt.model.getDateTime() +
+                               ", Outcome: " + (appt.model.getOutcome() != null ? appt.model.getOutcome() : "N/A"));
         }
         System.out.println("====================");
     }

@@ -42,12 +42,6 @@ public class ReplenishmentRequestModel {
         this.admin = admin;
     }
 
-    public String viewRequest() {
-        return "Request for " + medicine.model.getMedicineName() + " by " + requester.model.getName() +
-               "\nStatus: " + status + "\nRequested on: " + requestDate +
-               "\nApproval Date: " + (approvalDate != null ? approvalDate : "Not yet approved");
-    }
-
 
     public MedicineController getMedicine(){
         return medicine;

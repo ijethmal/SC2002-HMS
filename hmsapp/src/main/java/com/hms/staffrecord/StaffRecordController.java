@@ -9,6 +9,8 @@ public class StaffRecordController extends UserController{
 
     public StaffRecordController(StaffRecordModel model, StaffRecordView view){
         super(model, view);
+        this.model = model;
+        this.view = view;
     }
 
     public void viewRecord() {
