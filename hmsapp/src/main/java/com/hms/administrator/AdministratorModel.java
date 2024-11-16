@@ -37,6 +37,7 @@ public void updateStaff(String staffId, String newName, String newRole) {
         if (staffModel.getStaffId().equals(staffId)) {
             staffModel.setName(newName);
             staffModel.setRole(newRole);
+
             System.out.println("Staff record updated.");
             return;
         }
