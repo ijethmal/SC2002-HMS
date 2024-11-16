@@ -1,8 +1,8 @@
 package com.hms.appointment_management;
 
-import java.util.Date;
+//import java.util.Date;
 import java.time.LocalDateTime;
-import com.hms.appointment_outcome_record.*;
+//import com.hms.appointment_outcome_record.*;
 import com.hms.appointment_outcome_record.AppointmentOutcomeRecordModel;
 
 //generate uuid 
