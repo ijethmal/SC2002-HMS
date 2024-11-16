@@ -10,8 +10,6 @@ import com.hms.appointment_management.*;
 import com.hms.user.*;
 import com.hms.medicine.*;
 
-import java.util.ArrayList;
-
 public class AdministratorModel extends UserModel {
     private List<StaffRecordController> staffList; // List of staff members
     private List<Appointment_ManagementController> appointmentsList; // List of appointments
@@ -35,9 +33,9 @@ public void removeStaff(StaffRecordController staff) {
 }
 public void updateStaff(String staffId, String newName, String newRole) {
     for (StaffRecordController staff : staffList) {
-        if (staff.view.getStaffId().equals(staffId)) { 
-            staff.view.setName(newName);  
-            staff.view.setRole(newRole);  
+        if (staff.model.getStaffId().equals(staffId)) { 
+            staff.model.setName(newName);  
+            staff.model.setRole(newRole);  
             System.out.println("Staff record updated.");
             return; 
         }

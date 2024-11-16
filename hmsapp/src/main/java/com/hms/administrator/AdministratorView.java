@@ -11,11 +11,10 @@ import com.hms.inventory.*;
 
 public class AdministratorView extends UserView{
 
-    private AdministratorModel model;
+    protected AdministratorModel model;
 
     public AdministratorView (AdministratorModel model) {
-
-        this.model = model;
+        super(model);
     }
 
     public void displayStaff(List<StaffRecordController> staffList) {

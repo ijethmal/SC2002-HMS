@@ -4,8 +4,8 @@ import com.hms.user.*;
 
 public class StaffRecordController extends UserController{
     
-    protected StaffRecordModel model;
-    protected StaffRecordView view;
+    public StaffRecordModel model;
+    public StaffRecordView view;
 
     public StaffRecordController(StaffRecordModel model, StaffRecordView view){
         super(model, view);
