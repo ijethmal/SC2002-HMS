@@ -60,6 +60,10 @@ public class MedicineModel {
     }
 
     public String getStatus() {
-        return; //
+        if (isStockBelowAlert()) {
+            return "Low Stock";
+        } else {
+            return "Sufficient Stock";
+        }
     }
 }
