@@ -50,7 +50,6 @@ public class MedicineModel {
         this.medicineName = medicineName;
     }
 
-    //////////////////////////////////////////////////////////
     public int getMedicineId() {
         return medicationId;
     }

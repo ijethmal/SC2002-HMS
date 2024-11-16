@@ -8,7 +8,7 @@ public class MedicineView {
        this.model = model;
     }
 
-    public void viewLowStockAlert(String alert) {
+    public void getLowStockAlert(String alert) {
         System.out.println(alert);
     }
 
