@@ -1,8 +1,17 @@
 package com.hms.appointment_management;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
+import com.hms.appointment_outcome_record.*;
+import com.hms.diagnosis.Diagnosis;
+import com.hms.prescription.Prescription;
+
+
+
+
 // asked chatgpt need to make changes 
 public class Appointment_ManagementController {
     private Appointment_ManagementModel model;
@@ -22,13 +31,21 @@ public class Appointment_ManagementController {
         LocalDateTime dateTime = getDateTimeInput("Enter appointment date and time (yyyy-MM-dd HH:mm): ");
         String statusAppt = getInput("Enter Appointment Status: ");
 
-        // Create a new outcome record based on user input
-        Appointment_Outcome_Record outcome = new Appointment_Outcome_Record(
-            getInput("Enter Outcome Title: "),
-            getInput("Enter Outcome Description: "),
-            getInput("Enter Doctor's Notes: ")
-        );
+        LocalDateTime now = LocalDateTime.now(); 
+        Diagnosis[] diagnoses = new Diagnosis[0]; 
+        Prescription[] prescriptions = new Prescription[0];
 
+        // Convert LocalDateTime to Date right at the point of use
+        //Date date = Date.from(now.atZone(ZoneId.systemDefault()).toInstant()); 
+
+        // Create a new outcome record based on user input
+        AppointmentOutcomeRecordModel outcome = new AppointmentOutcomeRecordModel(
+        "patientId", // This should be an actual patient ID
+        Date.from(now.atZone(ZoneId.systemDefault()).toInstant()), // Convert LocalDateTime to Date
+        "TypeOfService",
+        diagnoses,
+        prescriptions
+        );
         // Set the data in the model
         model.setApptId(apptId);
         model.setPatientId(patientId);
@@ -94,4 +111,6 @@ public class Appointment_ManagementController {
         }
         return dateTime;
     }
+
+    
 }

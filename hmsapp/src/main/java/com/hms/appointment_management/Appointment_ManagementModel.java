@@ -3,20 +3,22 @@ package com.hms.appointment_management;
 import java.util.Date;
 import java.time.LocalDateTime;
 import com.hms.appointment_outcome_record.*;
+import com.hms.appointment_outcome_record.AppointmentOutcomeRecordModel;
+
 //generate uuid 
 import java.util.UUID;
 
 public class Appointment_ManagementModel {
-    private int apptId;
-    private Date dateTime;
+    private String apptId;
+    private LocalDateTime dateTime;
     private String patientId;
     private String doctorId;
     private String statusAppt;
-    private AppointmentOutcomeRecordControllerView outcome;
+    private AppointmentOutcomeRecordModel outcome;
 
     // Constructor
-    public Appointment_ManagementModel(Date dateTime, String patientId, String doctorId, String statusAppt) {
-        this.apptId =  Math.abs(UUID.randomUUID().hashCode() % 100000);
+    public Appointment_ManagementModel(LocalDateTime dateTime, String patientId, String doctorId, String statusAppt) {
+        this.apptId = UUID.randomUUID().toString();
         this.dateTime = dateTime;
         this.patientId = patientId;
         this.doctorId = doctorId;
@@ -25,19 +27,20 @@ public class Appointment_ManagementModel {
     }
 
     // Getter and Setter methods
-    public int getApptId() {
+    
+    public String getApptId() {
         return apptId;
     }
 
-    public void setApptId(int apptId) {
+    public void setApptId(String apptId) {
         this.apptId = apptId;
     }
 
-    public Date getDateTime() {
+    public LocalDateTime getDateTime() {
         return dateTime;
     }
 
-    public void setDateTime(Date dateTime) {
+    public void setDateTime(LocalDateTime dateTime) {
         this.dateTime = dateTime;
     }
 
@@ -65,11 +68,11 @@ public class Appointment_ManagementModel {
         this.statusAppt = statusAppt;
     }
 
-    public AppointmentOutcomeRecordControllerView getOutcome() {
+    public AppointmentOutcomeRecordModel getOutcome() {
         return outcome;
     }
 
-    public void setOutcome(AppointmentOutcomeRecordControllerView outcome) {
+    public void setOutcome(AppointmentOutcomeRecordModel outcome) {
         this.outcome = outcome;
     }
 
@@ -78,7 +81,9 @@ public class Appointment_ManagementModel {
         this.statusAppt = newStatus;
     }
 
-    public void updateRecord(AppointmentOutcomeRecordControllerView newOutcome) {
+    public void updateRecord(AppointmentOutcomeRecordModel newOutcome) {
         this.outcome = newOutcome;
     }
+
+
 }
