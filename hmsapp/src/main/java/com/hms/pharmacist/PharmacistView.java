@@ -13,10 +13,6 @@ public class PharmacistView extends UserView {
         super(model);
     }
 
-    public void displayApptOutRec() {
-        viewApptOutRec();
-    }
-
     public void displayPrescriptionStatus(PrescriptionController prescription) {
         return System.out.println("Prescription Status: " + prescription.getStatus());
     }
