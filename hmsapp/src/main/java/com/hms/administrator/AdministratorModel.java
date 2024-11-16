@@ -33,15 +33,17 @@ public void removeStaff(StaffRecordController staff) {
 }
 public void updateStaff(String staffId, String newName, String newRole) {
     for (StaffRecordController staff : staffList) {
-        if (staff.model.getStaffId().equals(staffId)) { 
-            staff.model.setName(newName);  
-            staff.model.setRole(newRole);  
+        StaffRecordModel staffModel = staff.getModel(); // Correct way to access model
+        if (staffModel.getStaffId().equals(staffId)) {
+            staffModel.setName(newName);
+            staffModel.setRole(newRole);
             System.out.println("Staff record updated.");
-            return; 
+            return;
         }
     }
     System.out.println("Staff ID not found.");
 }
+
 
 // appointment
 public List<Appointment_ManagementController> getAppointments() {
