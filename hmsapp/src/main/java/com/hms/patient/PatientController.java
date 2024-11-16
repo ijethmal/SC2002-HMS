@@ -43,6 +43,7 @@ public class PatientController extends UserController implements Serializable {
             dob = sdf.parse(dobInput);
         } catch (ParseException e) {
             System.out.println("Invalid date format. Please use yyyy-MM-dd.");
+            scanner.close();
             return;
         }
 
@@ -60,6 +61,8 @@ public class PatientController extends UserController implements Serializable {
 
         view.displayRegistrationSuccess(newPatient.getPatientId());
         view.displayPatientDetails(newPatient);
+        
+        scanner.close();
     }
 
     public void handleViewMedicalRecord() {
@@ -132,6 +135,7 @@ public class PatientController extends UserController implements Serializable {
         dob = sdf.parse(dobInput); // Parse dobInput into a Date object
     } catch (ParseException e) {
         System.out.println("Invalid date format. Please use yyyy-MM-dd.");
+        scanner.close();
         return; // Exit if the date format is invalid
     }
     System.out.print("Enter Gender: ");
@@ -147,6 +151,7 @@ public class PatientController extends UserController implements Serializable {
 
     // Add the new patient to a database or in-memory list if needed
     view.displayRegistrationSuccess(newPatient.getPatientId());
+    
+    scanner.close();
 }
-
 }
