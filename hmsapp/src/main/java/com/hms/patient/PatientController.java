@@ -1,8 +1,12 @@
 package com.hms.patient;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 import com.hms.user.UserController;
+
+import com.hms.appointment_management.*;
+import com.hms.appointment_outcome_record.*;
 
 public class PatientController extends UserController implements Serializable {
     private PatientModel model;
@@ -30,13 +34,18 @@ public class PatientController extends UserController implements Serializable {
     }
 
     public void handleScheduleAppt() {
-        model.scheduleAppt();
+        model.scheduleAppointment("doctorId", LocalDateTime.now(),"General Consultation", "Pending", null);
         view.showScheduleSuccess();
     }
 
     public void handleRescheduleAppt() {
-        model.rescheduleAppt();
-        view.showRescheduleSuccess();
+        // Create instances for Appointment Management
+        Appointment_ManagementModel apptModel = new Appointment_ManagementModel(null, model.getPatientId(), "doctorId", "Pending");
+        Appointment_ManagementView apptView = new Appointment_ManagementView();
+        Appointment_ManagementController apptController = new Appointment_ManagementController(apptModel, apptView);
+
+        // Use the Appointment Management Controller to handle scheduling
+        apptController.inputAndScheduleAppointment();
     }
 
     public void handleCancelAppt() {
@@ -50,9 +59,18 @@ public class PatientController extends UserController implements Serializable {
     }
 
     public void handleViewApptOutcomeRec() {
-        model.viewApptOutcomeRec();
-        view.displayAppointmentOutcome("Appointment outcome record displayed.");
-    }
- PatientController() {
- } 
+        if (model.getPastApptRecs() != null && !model.getPastApptRecs().isEmpty()) {
+            for (Appointment_ManagementModel appt : model.getPastApptRecs()) {
+                if (appt.getOutcome() != null) {
+                    AppointmentOutcomeRecordControllerView outcomeView =
+                            new AppointmentOutcomeRecordControllerView(appt.getOutcome());
+                    outcomeView.viewApptOutcomeRec();
+                } else {
+                    System.out.println("No outcome available for appointment ID: " + appt.getApptId());
+                }
+            }
+        } else {
+            System.out.println("No past appointment records available.");
+        }
+}
 }

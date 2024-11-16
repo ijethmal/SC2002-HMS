@@ -42,4 +42,12 @@ public class AppointmentOutcomeRecordControllerView {
         }
         System.out.println("-----------------------");
     }
+    // New method: viewApptOutcomeRec()
+    public void viewApptOutcomeRec() {
+        System.out.println("====== Full Appointment Outcome Record ======");
+        viewRecord(); // Display general appointment outcome record details
+        viewDiagnoses(); // Display diagnosis details
+        viewPrescriptions(); // Display prescription details
+        System.out.println("=============================================");
+    }
 }

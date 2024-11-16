@@ -1,7 +1,7 @@
 package com.hms.patient;
-
 import com.hms.user.*;
 
+//import com.hms.patient.PatientView.PatientView(PatientModel);
 import java.io.Serializable;
 
 public class PatientView extends UserView implements Serializable {
@@ -10,6 +10,7 @@ public class PatientView extends UserView implements Serializable {
 
     public PatientView(PatientModel model) {
         super(model);
+        this.model= model;
     }
 
     public void displayRegistrationSuccess(String patientId) {

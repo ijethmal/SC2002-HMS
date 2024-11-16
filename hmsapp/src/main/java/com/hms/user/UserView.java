@@ -12,6 +12,12 @@ public abstract class UserView {
         this.controller = controller;
     }
 
+    // New constructor that accepts only the model
+    public UserView(UserModel model) {
+        this.model = model;
+        this.controller = null; // Controller is optional
+    }
+
     public void printUserDetails() {
         System.out.println("User ID: " + model.getUserId());
         System.out.println("Role: " + model.getRole());
