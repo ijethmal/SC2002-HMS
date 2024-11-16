@@ -1,7 +1,7 @@
 package com.hms.appointment_outcome_record;
 
 import com.hms.diagnosis.Diagnosis;
-import com.hms.prescription.Prescription;
+import com.hms.prescription.PrescriptionModel;
 
 public class AppointmentOutcomeRecordControllerView {
     private AppointmentOutcomeRecordModel model;
@@ -36,7 +36,7 @@ public class AppointmentOutcomeRecordControllerView {
         if (model.getPrescriptions().isEmpty()) {
             System.out.println("No prescriptions available.");
         } else {
-            for (Prescription prescription : model.getPrescriptions()) {
+            for (PrescriptionModel prescription : model.getPrescriptions()) {
                 System.out.println(prescription);
             }
         }

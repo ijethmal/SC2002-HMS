@@ -47,7 +47,7 @@ public class AdministratorView extends UserView{
 
     public void displayInventory(MedicineController[] inventory) {
         System.out.println("=== Inventory ===");
-        for (Medicine medicine : inventory) {
+        for (MedicineController medicine : inventory) {
             System.out.println("Medicine Name: " + medicine.getMedicineName() +
                                ", ID: " + medicine.getMedicationId() +
                                ", Stock Level: " + medicine.getStockLevel() +

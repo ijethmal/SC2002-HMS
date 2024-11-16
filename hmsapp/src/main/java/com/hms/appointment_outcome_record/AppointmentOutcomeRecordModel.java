@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.UUID;
 
 import com.hms.diagnosis.Diagnosis;
-import com.hms.prescription.Prescription;
+import com.hms.prescription.PrescriptionModel;
 
 import java.util.ArrayList;
 
@@ -16,9 +16,9 @@ public class AppointmentOutcomeRecordModel {
     private Date dateTime;
     private String typeOfService;
     private Diagnosis[] diagnoses;
-    private Prescription[] prescriptions;
+    private PrescriptionModel[] prescriptions;
 
-    public AppointmentOutcomeRecordModel(String patientId, Date dateTime, String typeOfService, Diagnosis[] diagnoses, Prescription[] prescriptions) {
+    public AppointmentOutcomeRecordModel(String patientId, Date dateTime, String typeOfService, Diagnosis[] diagnoses, PrescriptionModel[] prescriptions) {
         this.recordID = UUID.randomUUID().toString().replace("-", "").substring(0, 10);
         //this.recordID = Math.abs(UUID.randomUUID().hashCode() % 100000);
         this.patientId = patientId;
@@ -54,10 +54,10 @@ public class AppointmentOutcomeRecordModel {
         return diagnosisList;
     }
 
-    public List<Prescription> getPrescriptions() {
-        List<Prescription> prescriptionList = new ArrayList<>();
+    public List<PrescriptionModel> getPrescriptions() {
+        List<PrescriptionModel> prescriptionList = new ArrayList<>();
         if (prescriptions != null) {
-            for (Prescription prescription : prescriptions) {
+            for (PrescriptionModel prescription : prescriptions) {
                 prescriptionList.add(prescription);
             }
         }
@@ -89,7 +89,7 @@ public class AppointmentOutcomeRecordModel {
         //notifyObservers("Diagnoses updated.");
     }
 
-    public void setPrescriptions(Prescription[] prescriptions) {
+    public void setPrescriptions(PrescriptionModel[] prescriptions) {
         this.prescriptions = prescriptions;
         //notifyObservers("Prescriptions updated.");
     }

@@ -4,18 +4,16 @@ import java.util.List;
 
 import com.hms.prescription.*;
 import com.hms.inventory.*;
-import com.hms.replenishmentrequest.*;
+import com.hms.appointment_outcome_record.*;
 
 import com.hms.user.UserModel;
 
 public class PharmacistModel extends UserModel {
 
     private String name;
-    private List<PrescriptionController> prescriptions;
+    private List<PrescriptionController> prescription;
     private List<InventoryController> inventory;
-    private List<ReplenishmentRequestController> replenishmentRequests;
-
-
+    private List<AppointmentOutcomeRecordControllerView> apptoutcomerecord;
 
     public PharmacistModel(String name, String userId, String password)
     {
@@ -23,12 +21,19 @@ public class PharmacistModel extends UserModel {
         this.name = name;
     }
 
-    public void viewApptOutRec() {
-        //...
-    }
-
     public String getName() {
         return name;
     }
-    
+
+    public List<InventoryController> getInventory(){
+        return inventory;
+    }
+
+    public List<AppointmentOutcomeRecordControllerView> getApptOutRecord(){
+        return apptoutcomerecord;
+    }
+
+    public List<PrescriptionController> getPrescriptionStatus(){
+        return prescription.getStatus();
+    }
 }

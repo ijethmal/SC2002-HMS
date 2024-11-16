@@ -7,9 +7,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 import com.hms.appointment_outcome_record.*;
 import com.hms.diagnosis.Diagnosis;
-import com.hms.prescription.Prescription;
-
-
+import com.hms.prescription.PrescriptionModel;
 
 
 // asked chatgpt need to make changes 
@@ -33,7 +31,7 @@ public class Appointment_ManagementController {
 
         LocalDateTime now = LocalDateTime.now(); 
         Diagnosis[] diagnoses = new Diagnosis[0]; 
-        Prescription[] prescriptions = new Prescription[0];
+        PrescriptionModel[] prescriptions = new PrescriptionModel[0];
 
         // Convert LocalDateTime to Date right at the point of use
         //Date date = Date.from(now.atZone(ZoneId.systemDefault()).toInstant()); 

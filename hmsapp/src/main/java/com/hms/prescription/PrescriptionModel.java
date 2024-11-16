@@ -2,7 +2,7 @@ package com.hms.prescription;
 
 import com.hms.medicine.*;
 
-public class Prescription {
+public class PrescriptionModel {
     
     private String patientId;
     private String prescriptionId;
@@ -10,7 +10,7 @@ public class Prescription {
     private String status;
     private int quantity;
 
-    public Prescription(String patientId, String prescriptionId, Medicine medicine, String status, int quantity) {
+    public PrescriptionModel(String patientId, String prescriptionId, MedicineController medicine, String status, int quantity) {
         this.patientId = patientId;
         this.prescriptionId = prescriptionId;
         this.medicine = medicine;
@@ -61,7 +61,6 @@ public class Prescription {
 
     public void dispense() {
         System.out.println("Dispensing " + quantity + " units of " + medicine.getName());
-        
     }
 
 }

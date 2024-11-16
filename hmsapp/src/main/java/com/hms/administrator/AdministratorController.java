@@ -44,7 +44,7 @@ public class AdministratorController extends UserController{
 
     // Display Inventory in the View
     public void displayInventory() {
-        MedicineController[] inventory = model.getAllMedicines(); // Retrieve from model
+        List<MedicineController> inventory = model.getAllMedicines(); // Retrieve from model
         view.displayInventory(inventory); // Display in view
     }
 

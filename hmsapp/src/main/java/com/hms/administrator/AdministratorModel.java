@@ -55,7 +55,7 @@ public void setAppointments(List<Appointment_ManagementController> appointments)
 
 // inventory 
 public void displayInventory() {
-    inventory.showInventory();
+    inventory.view.showInventory();
 }
 
 public void updateMedicineStock(MedicineController medicine, int newQty) {

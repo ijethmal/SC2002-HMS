@@ -10,31 +10,30 @@ import com.hms.inventory.*;
 public class PharmacistController extends UserController {
 
     public PharmacistModel model;
+    public PharmacistView view;
     
     public PharmacistController(PharmacistModel model, PharmacistView view) {
         super(model, view);
     }
 
     public void viewApptOutRec() {
-        ((PharmacistModel)model).viewApptOutRec();
+        model.getApptOutRecord();
     }
 
-    public void updatePrescriptionStatus(Prescription prescription, String status) {
+    public void updatePrescriptionStatus(PrescriptionModel prescription, String status) {
         prescription.setStatus(status);
-    }
-
-    public void viewPrescriptionStatus(Prescription prescription) {
-        System.out.println(prescription.getStatus());
-        
     }
 
     public void viewInventory(InventoryController inventoryView) {
         inventoryView.view.showInventory();
     }
 
+    public void checkForLowStockLevel(){
+
+    }
+
     public void submitReplenishmentRequest(AdministratorController administrator, MedicineController medicine) {
         administrator.submitReplenishmentRequest(medicine);
     }
-
 
 }

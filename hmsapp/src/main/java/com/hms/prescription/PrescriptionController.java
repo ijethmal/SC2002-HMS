@@ -1,12 +1,15 @@
 package com.hms.prescription;
-public class PrescriptionController {
-    protected Prescription model;
 
-    public PrescriptionController(Prescription model) {
+import com.hms.medicine.*;
+
+public class PrescriptionController {
+    public PrescriptionModel model;
+
+    public PrescriptionController(PrescriptionModel model) {
         this.model = model;
     }
 
-    public void updatePrescription(Medicine medicine, int quantity) {
+    public void updatePrescription(MedicineController medicine, int quantity) {
         model.setMedicine(medicine);
         model.setQuantity(quantity);
     }
@@ -15,7 +18,7 @@ public class PrescriptionController {
         model.dispense();
     }
 
-    public void checkeStatus() {
+    public void checkStatus() {
         System.out.println(model.getStatus());
     }
 
@@ -23,7 +26,4 @@ public class PrescriptionController {
         System.out.println(model.toString());
     }
 
-    public setStatus(){
-        
-    }
 }

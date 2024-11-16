@@ -17,20 +17,12 @@ public class PharmacistView extends UserView {
         viewApptOutRec();
     }
 
-    public void updatePrescriptionStatus(PrescriptionController prescription, String status) {
-        updatePrescriptionStatus(prescription, status);
+    public void displayPrescriptionStatus(PrescriptionController prescription) {
+        return System.out.println("Prescription Status: " + prescription.getStatus());
     }
 
-    public void displayPrescriptionStatus(Prescription prescription) {
-        viewPrescriptionStatus(prescription);
-    }
-
-    public void viewInventory(InventoryView inventoryView) {
-        viewInventory(inventoryView);
-    }
-
-    public void submitReplenishmentRequest(AdministratorView administrator, Medicine medicine) {
-        submitReplenishmentRequest(administrator, medicine);
+    public void viewInventory(InventoryController inventory) {
+        inventory.view.showInventory();
     }
 
 }
