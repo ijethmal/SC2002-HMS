@@ -10,25 +10,58 @@ import java.text.ParseException;
 
 
 import com.hms.user.UserController;
-
 import com.hms.appointment_management.*;
 import com.hms.appointment_outcome_record.*;
 
 public class PatientController extends UserController implements Serializable {
     private PatientModel model;
     private PatientView view;
-    private RegisterNewPatient registerNewPatient;
     
     public PatientController(PatientModel model, PatientView view) {
         super(model, view);
+        this.model= model;
+        this.view=view;
     }
 
-    public void handleRegisterPatient() {
-        PatientModel newPatient = registerNewPatient.createPatient();
+    public void registerPatient() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter Patient ID: ");
+        String patientId = scanner.nextLine();
+
+        System.out.print("Enter Password: ");
+        String password = scanner.nextLine();
+
+        System.out.print("Enter Name: ");
+        String name = scanner.nextLine();
+
+        System.out.print("Enter Date of Birth (yyyy-MM-dd): ");
+        String dobInput = scanner.nextLine();
+        Date dob = null;
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            dob = sdf.parse(dobInput);
+        } catch (ParseException e) {
+            System.out.println("Invalid date format. Please use yyyy-MM-dd.");
+            return;
+        }
+
+        System.out.print("Enter Gender: ");
+        String gender = scanner.nextLine();
+
+        System.out.print("Enter Contact Info: ");
+        String contactInfo = scanner.nextLine();
+
+        System.out.print("Enter Blood Type: ");
+        String bloodType = scanner.nextLine();
+
+        PatientModel newPatient = new PatientModel(patientId, password, name, dob, gender, contactInfo, bloodType);
         this.model = newPatient;
+
         view.displayRegistrationSuccess(newPatient.getPatientId());
         view.displayPatientDetails(newPatient);
     }
+
     public void handleViewMedicalRecord() {
         model.viewMedicalRecord();
         view.displayMedicalRecord("Displaying medical record...");
@@ -93,7 +126,7 @@ public class PatientController extends UserController implements Serializable {
 
     System.out.print("Enter Date of Birth (yyyy-MM-dd): ");
     String dobInput = scanner.nextLine();
-Date dob = null; // Declare dob as a Date object
+    Date dob = null; // Declare dob as a Date object
     try {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         dob = sdf.parse(dobInput); // Parse dobInput into a Date object
