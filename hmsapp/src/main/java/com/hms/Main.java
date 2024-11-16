@@ -32,22 +32,6 @@ public class Main {
 
     public static void main(String[] args){ 
        
-        StaffRecordModel staffRecord = new StaffRecordModel(
-                "user001", "password123", "Doctor", "D001", "John Smith", "Male", 45);
-    
-            // Correctly passing the staffRecord model to the view
-            StaffRecordView staffView = new StaffRecordView(staffRecord);
-    
-            StaffRecordController staffController = new StaffRecordController(staffRecord, staffView);
-    
-            // Example methods to interact with the MVC components
-            staffController.viewRecord();  // Display the initial record
-            staffController.updateRecord("Johnathan Smith", "Senior Doctor", "Male", 46);  // Update and display
-        }
-    
-    
-    
-
         // Create inventory object
         InventoryModel inventory = new InventoryModel();
         InventoryView inventoryView = new InventoryView(inventory);
