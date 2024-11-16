@@ -1,6 +1,7 @@
 package com.hms.appointment_outcome_record;
 
 import com.hms.diagnosis.Diagnosis;
+import com.hms.prescription.Prescription;
 
 public class AppointmentOutcomeRecordControllerView {
     private AppointmentOutcomeRecordModel model;

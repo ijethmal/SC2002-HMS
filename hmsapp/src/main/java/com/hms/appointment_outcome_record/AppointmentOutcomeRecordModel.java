@@ -9,9 +9,9 @@ import com.hms.diagnosis.Diagnosis;
 import com.hms.prescription.Prescription;
 
 import java.util.ArrayList;
- 
+
 public class AppointmentOutcomeRecordModel {
-    private int recordID;
+    private String recordID;
     private String patientId;
     private Date dateTime;
     private String typeOfService;
@@ -19,7 +19,8 @@ public class AppointmentOutcomeRecordModel {
     private Prescription[] prescriptions;
 
     public AppointmentOutcomeRecordModel(String patientId, Date dateTime, String typeOfService, Diagnosis[] diagnoses, Prescription[] prescriptions) {
-        this.recordID = Math.abs(UUID.randomUUID().hashCode() % 100000);
+        this.recordID = UUID.randomUUID().toString().replace("-", "").substring(0, 10);
+        //this.recordID = Math.abs(UUID.randomUUID().hashCode() % 100000);
         this.patientId = patientId;
         this.dateTime = dateTime;
         this.typeOfService = typeOfService;
@@ -65,34 +66,35 @@ public class AppointmentOutcomeRecordModel {
 
     public void setRecordID(String recordID) {
         this.recordID = recordID;
-        notifyObservers("Record ID updated.");
+        //notifyObservers("Record ID updated.");
     }
 
     public void setPatientId(String patientId) {
         this.patientId = patientId;
-        notifyObservers("Patient ID updated.");
+        //notifyObservers("Patient ID updated.");
     }
 
     public void setDateTime(Date dateTime) {
         this.dateTime = dateTime;
-        notifyObservers("Date and time updated.");
+        //notifyObservers("Date and time updated.");
     }
 
     public void setTypeOfService(String typeOfService) {
         this.typeOfService = typeOfService;
-        notifyObservers("Type of service updated.");
+        //notifyObservers("Type of service updated.");
     }
 
     public void setDiagnoses(Diagnosis[] diagnoses) {
         this.diagnoses = diagnoses;
-        notifyObservers("Diagnoses updated.");
+        //notifyObservers("Diagnoses updated.");
     }
 
     public void setPrescriptions(Prescription[] prescriptions) {
         this.prescriptions = prescriptions;
-        notifyObservers("Prescriptions updated.");
+        //notifyObservers("Prescriptions updated.");
     }
 
+    /*
     private List<ModelObserver> observers = new ArrayList<>();
 
     public void addObserver(ModelObserver observer) {
@@ -108,4 +110,5 @@ public class AppointmentOutcomeRecordModel {
             observer.onModelChange(message);
         }
     }
+        */
 }
