@@ -6,7 +6,7 @@ import java.io.Serializable;
 
 public class PatientView extends UserView implements Serializable {
 
-    private PatientModel model;
+    //private PatientModel model;
 
     public PatientView(PatientModel model) {
         super(model);

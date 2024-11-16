@@ -1,10 +1,10 @@
 package com.hms.patient;
 
 import com.hms.user.*;
-import com.hms.appointment_outcome_record.*;
-import com.hms.diagnosis.Diagnosis;
+//import com.hms.appointment_outcome_record.*;
+//import com.hms.diagnosis.Diagnosis;
 import com.hms.appointment_management.*;
-import com.hms.appointment_outcome_record.AppointmentOutcomeRecordControllerView;
+//import com.hms.appointment_outcome_record.AppointmentOutcomeRecordControllerView;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
