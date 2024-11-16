@@ -21,6 +21,14 @@ public class Appointment_ManagementController {
         this.view = view;
     }
 
+    public Appointment_ManagementModel getModel() {
+        return model; // Returns the model
+    }
+
+    public String getStatus() {
+        return model.getStatusAppt(); // Forward the call to the model
+    }
+
     // Method to input data and schedule a new appointment
     public void inputAndScheduleAppointment() {
         String apptId = getInput("Enter Appointment ID: ");
@@ -44,6 +52,7 @@ public class Appointment_ManagementController {
         diagnoses,
         prescriptions
         );
+
         // Set the data in the model
         model.setApptId(apptId);
         model.setPatientId(patientId);
