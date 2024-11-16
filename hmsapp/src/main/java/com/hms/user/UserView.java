@@ -1,5 +1,5 @@
 package com.hms.user;
-import org.apache.xmlbeans.impl.xb.xsdschema.Attribute.Use;
+//import org.apache.xmlbeans.impl.xb.xsdschema.Attribute.Use;
 
 public abstract class UserView {
 
