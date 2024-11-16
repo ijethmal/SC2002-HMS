@@ -70,7 +70,7 @@ public void approveReplenishment(MedicineController medicine, int replenishQty) 
     inventory.decrementMedicine(medicine, -replenishQty); // Increment by negative decrement
 }
 
-public MedicineController[] getAllMedicines() {
-    return inventory.getMedicines();
+public List<MedicineController> getAllMedicines() {
+    return inventory.model.getMedicines();
 }
 }

@@ -3,7 +3,7 @@ package com.hms.inventory;
 import com.hms.medicine.MedicineController;
 
 public class InventoryController {
-    private InventoryModel model;
+    public InventoryModel model;
     protected InventoryView view;
 
     public InventoryController(InventoryModel model, InventoryView view) {

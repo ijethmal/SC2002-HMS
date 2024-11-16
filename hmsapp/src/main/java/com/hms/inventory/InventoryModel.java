@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class InventoryModel {
-    private List<MedicineController> medicines;
+    public List<MedicineController> medicines;
 
     public InventoryModel() {
         this.medicines = new ArrayList<MedicineController>();
