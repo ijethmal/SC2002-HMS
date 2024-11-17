@@ -11,10 +11,12 @@ public class DoctorView extends UserView implements Serializable {
 
     public DoctorView() {
         super();
+
     }
 
     public DoctorView(DoctorModel model) {
         super(model);
+        this.model = model;
     };
 
     public void displayDoctorDetails(DoctorModel model) {
@@ -23,14 +25,17 @@ public class DoctorView extends UserView implements Serializable {
         System.out.println("Name: " + model.getName());
         System.out.println("Gender: " + model.getGender());
         System.out.println("Age: " + model.getAge());
-        System.out.println("---------------------------");
-    }
+    System.out.println("---------------------------");
+}
 
     public void displaySchedule(Map<Date, String> schedule) {
-        for (Map.Entry<Date, String> entry : schedule.entrySet()) {
-            System.out.println("Date: " + entry.getKey() + " - Details: " + entry.getValue());
+        System.out.println("\nDoctor: " + model.getName());
+        schedule.entrySet().stream()
+            .sorted(Map.Entry.comparingByKey())
+            .forEach(entry -> System.out.println("Date: " + entry.getKey() + " - Details: " + entry.getValue()));
+            System.out.println("---------------------------");
         }
-    }
+
 
     /*public void displayRecordsByPatient(String patientId) {
         controller.viewRecordsByPatient(patientId);

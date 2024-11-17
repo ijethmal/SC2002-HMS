@@ -24,18 +24,27 @@ public class DoctorModel extends UserModel implements Serializable {
     }
 
     public DoctorModel(String userId, String password, int age, String name, String gender)
-    {
-        super(userId, password, "Doctor", name, gender);
-        this.age = age;
-        this.appointments = null;
-        this.schedule = new HashMap<>();
-        Calendar cal = Calendar.getInstance();
-        for (int i = 0; i < 30; i++) {
-            Date date = cal.getTime();
-            schedule.put(date, "empty");
-            cal.add(Calendar.DAY_OF_MONTH, 1);
-        }
-    }
+{
+    super(userId, password, "Doctor", name, gender);
+this.userId = userId;
+this.password = password;
+this.name = name;
+this.gender = gender;
+this.age = age;
+this.appointments = null;
+this.schedule = new HashMap<>();
+//add dates to schedule using calendar
+for (int i = 1; i <= 30; i++) { // Corrected loop to start from 1 and go up to 30
+    Calendar cal = Calendar.getInstance();
+    cal.set(2024, Calendar.NOVEMBER, i); // Use Calendar.NOVEMBER for better readability
+    cal.set(Calendar.HOUR_OF_DAY, 0);
+    cal.set(Calendar.MINUTE, 0);
+    cal.set(Calendar.SECOND, 0);
+    cal.set(Calendar.MILLISECOND, 0);
+    Date date = cal.getTime();
+    schedule.put(date, "empty");
+}
+}
 
     public int getAge() {
         return age;

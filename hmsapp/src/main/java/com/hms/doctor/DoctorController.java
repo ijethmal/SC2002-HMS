@@ -71,11 +71,7 @@ public class DoctorController extends UserController implements Serializable {
         }
     }
 
-    public void viewSchedule() {
-        for (Map.Entry<Date, String> entry : ((DoctorModel) model).getSchedule().entrySet()) {
-            System.out.println("Date: " + entry.getKey() + " - Details: " + entry.getValue());
-        }
-    }
+    
 
     public void setSchedule(Map<Date, String> newSchedule) {
         ((DoctorModel) model).setSchedule(newSchedule);
