@@ -19,15 +19,11 @@ import com.hms.util.SerializationUtil;
 public class MainMenu {
 
     public static void main(String[] args) {
-
-        //deserialise the arrays of user objects
-        
-
-
+        MainMenu mainMenu = new MainMenu();
+        mainMenu.displayMainMenu();
     }
 
     public void displayMainMenu() {
-
         System.out.println("Welcome to Hospital Management System!");
         // get staff controllers in a list of usercontroller
         List<UserController> allControllers = deserialiseUsers();
@@ -136,6 +132,7 @@ public class MainMenu {
                     break;
                 case 8:
                     // log out
+                    displayMainMenu();
                     return;
                 default:
                     System.out.println("Invalid choice. Please try again.");
@@ -151,7 +148,6 @@ public class MainMenu {
                 doctorController.view.displaySchedule(doctorController.model.getSchedule());
             }
         }
-
     }
 
     //find user in list of user controllers
@@ -175,18 +171,13 @@ public class MainMenu {
         }
         System.out.println("Login failed. Please try again.");
         return null;
-
     }
 
     public List<UserController> deserialiseUsers() {
-
         List<UserController> allControllers = new ArrayList<>();
         // Deserialize doctor controllers
         try {
             List<DoctorController> deserializedDoctorControllers = (List<DoctorController>) SerializationUtil.deserialize("hmsapp\\db\\Doctor_Controllers.ser");
-            /*for (DoctorController doctorController : deserializedDoctorControllers) {
-                doctorController.view.displayDoctorDetails(doctorController.model);
-            }*/
             allControllers.addAll(deserializedDoctorControllers);
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
@@ -195,9 +186,6 @@ public class MainMenu {
         // Deserialize administrator controllers
         try {
             List<AdministratorController> deserializedAdministratorControllers = (List<AdministratorController>) SerializationUtil.deserialize("hmsapp\\db\\Administrator_Controllers.ser");
-            /*for (AdministratorController administratorController : deserializedAdministratorControllers) {
-                administratorController.view.displayAdministratorDetails(administratorController.model);
-            }*/
             allControllers.addAll(deserializedAdministratorControllers);
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
@@ -206,9 +194,6 @@ public class MainMenu {
         // Deserialize pharmacist controllers
         try {
             List<PharmacistController> deserializedPharmacistControllers = (List<PharmacistController>) SerializationUtil.deserialize("hmsapp\\db\\Pharmacist_Controllers.ser");
-            /*for (PharmacistController pharmacistController : deserializedPharmacistControllers) {
-                pharmacistController.view.displayPharmacistDetails(pharmacistController.model);
-            }*/
             allControllers.addAll(deserializedPharmacistControllers);
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
@@ -217,9 +202,6 @@ public class MainMenu {
         // Deserialize patient controllers
         try {
             List<PatientController> deserializedPatientControllers = (List<PatientController>) SerializationUtil.deserialize("hmsapp\\db\\Patient_Controllers.ser");
-            /*for (PatientController patientController : deserializedPatientControllers) {
-                patientController.view.displayPatientDetails(patientController.model);
-            }*/
             allControllers.addAll(deserializedPatientControllers);
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
@@ -227,5 +209,4 @@ public class MainMenu {
 
         return allControllers;
     }
-
 }

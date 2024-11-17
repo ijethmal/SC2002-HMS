@@ -76,6 +76,10 @@ public class PatientController extends UserController implements Serializable {
 
     public void handleScheduleAppt(DoctorController doctor, Date apptDateTime, String apptType) {
         doctor.addApptRequest(apptDateTime, this);
+        Appointment_ManagementModel newAppt = new Appointment_ManagementModel(apptDateTime, model.getPatientId(), doctor.model.getUserId(), "Pending");
+        Appointment_ManagementView newApptView = new Appointment_ManagementView();
+        Appointment_ManagementController newApptController = new Appointment_ManagementController(newAppt, newApptView);
+        model.addAppointment(newAppt);
         view.showScheduleSuccess();
     }
 
