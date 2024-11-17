@@ -27,8 +27,8 @@ public class InventoryModel {
     }
 
     public void decrementMedicine(MedicineController medicine, int qty) {
-        if (medicine.getStockLevel() > qty) {
-            medicine.updateStock(medicine.getStockLevel() - qty);
+        if (medicine.model.getStockLevel() > qty) {
+            medicine.updateStock(medicine.model.getStockLevel() - qty);
         } else {
             System.out.println("Not enough stock");
         }
