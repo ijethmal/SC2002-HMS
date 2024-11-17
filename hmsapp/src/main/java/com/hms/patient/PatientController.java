@@ -138,19 +138,11 @@ public class PatientController extends UserController implements Serializable {
         view.displayAppointmentStatus("Appointment status displayed.");
     }
 
-    public void handleViewApptOutcomeRec() {
-        if (model.getPastApptRecs() != null && !model.getPastApptRecs().isEmpty()) {
-            for (Appointment_ManagementController appt : model.getPastApptRecs()) {
-                if (appt.model.getOutcome() != null) {
-                    AppointmentOutcomeRecordControllerView outcomeView =
-                            new AppointmentOutcomeRecordControllerView(appt.model.getOutcome());
-                    outcomeView.viewApptOutcomeRec();
-                } else {
-                    System.out.println("No outcome available for appointment ID: " + appt.model.getApptId());
-                }
+    public void handleViewApptOutcomeRec(List<Appointment_ManagementController> appointments) {
+        for (Appointment_ManagementController appt : appointments) {
+            if (appt.model.getPatientId().equals(model.getPatientId())) {
+                appt.model.getOutcome().viewApptOutcomeRec();
             }
-        } else {
-            System.out.println("No past appointment records available.");
         }
     }
     public void RegisterPatient() {

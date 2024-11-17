@@ -3,6 +3,8 @@ package com.hms.appointment_management;
 import java.io.Serializable;
 //import java.util.Date;
 import java.time.LocalDateTime;
+
+import com.hms.appointment_outcome_record.AppointmentOutcomeRecordControllerView;
 //import com.hms.appointment_outcome_record.*;
 import com.hms.appointment_outcome_record.AppointmentOutcomeRecordModel;
 
@@ -17,7 +19,7 @@ public class Appointment_ManagementModel implements Serializable {
     private String patientId;
     private String doctorId;
     private String statusAppt;
-    private AppointmentOutcomeRecordModel outcome;
+    private AppointmentOutcomeRecordControllerView outcome;
 
     // Constructor
     public Appointment_ManagementModel(Date dateTime, String patientId, String doctorId, String statusAppt) {
@@ -71,11 +73,11 @@ public class Appointment_ManagementModel implements Serializable {
         this.statusAppt = statusAppt;
     }
 
-    public AppointmentOutcomeRecordModel getOutcome() {
+    public AppointmentOutcomeRecordControllerView getOutcome() {
         return outcome;
     }
 
-    public void setOutcome(AppointmentOutcomeRecordModel outcome) {
+    public void setOutcome(AppointmentOutcomeRecordControllerView outcome) {
         this.outcome = outcome;
     }
 
@@ -84,7 +86,7 @@ public class Appointment_ManagementModel implements Serializable {
         this.statusAppt = newStatus;
     }
 
-    public void updateRecord(AppointmentOutcomeRecordModel newOutcome) {
+    public void updateRecord(AppointmentOutcomeRecordControllerView newOutcome) {
         this.outcome = newOutcome;
     }
 

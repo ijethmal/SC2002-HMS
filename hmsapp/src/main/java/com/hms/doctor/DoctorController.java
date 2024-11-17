@@ -7,9 +7,11 @@ import java.util.Date;
 import java.time.ZoneId;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 
 import com.hms.user.*;
 import com.hms.appointment_management.*;
+import com.hms.appointment_outcome_record.AppointmentOutcomeRecordControllerView;
 import com.hms.appointment_outcome_record.AppointmentOutcomeRecordModel;
 import com.hms.diagnosis.Diagnosis;
 import com.hms.patient.PatientController;
@@ -36,7 +38,7 @@ public class DoctorController extends UserController implements Serializable {
         this.view = new DoctorView(this.model); // Reinitialize the view after deserialization
     }
 
-    public void viewRecordsByPatient(String patientId) {
+    /*public void viewRecordsByPatient(String patientId) {
         if (patientId == null || patientId.isEmpty()) {
             System.out.println("Invalid patient ID provided.");
             return;
@@ -53,7 +55,7 @@ public class DoctorController extends UserController implements Serializable {
                 System.out.println("Status: " + app.getStatus());
     
                 // Display outcome if available
-                AppointmentOutcomeRecordModel outcome = app.getModel().getOutcome();
+                AppointmentOutcomeRecordControllerView outcome = app.model.getOutcome();
                 if (outcome != null) {
                     System.out.println("Outcome: " + outcome.getTypeOfService());
                     System.out.println("Diagnoses: " + (outcome.getDiagnoses() != null ? outcome.getDiagnoses().toString() : "None"));
@@ -70,7 +72,7 @@ public class DoctorController extends UserController implements Serializable {
         if (!recordsFound) {
             System.out.println("No records found for patient ID: " + patientId);
         }
-    }
+    }*/
 
     
 
@@ -106,6 +108,25 @@ public class DoctorController extends UserController implements Serializable {
     public void handleRescheduleAppt(Date oldDate, Date newDateTime) {
         ((DoctorModel) model).rescheduleAppointment(oldDate, newDateTime);
     }
+
+    public void handleViewPatientRecords(List<Appointment_ManagementController> appointments) {
+        view.displayPatients();
+        System.out.println("Enter patient ID to view records: ");
+        Scanner scanner = new Scanner(System.in);
+        String patientId = scanner.nextLine();
+
+        for (PatientController patient : model.getPatients()) {
+            if (patient.model.getUserId().equals(patientId)) {
+                patient.handleViewApptOutcomeRec(appointments);
+            }
+        }
+    }
+
+    public void handleSetAvailability(Date date, String avail) {
+        ((DoctorModel) model).setAvailability(date, avail);
+    }
+
+    
 
     /*public void updateAppOutRecords(
         Appointment_ManagementController app,

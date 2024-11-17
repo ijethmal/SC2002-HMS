@@ -20,6 +20,7 @@ public class DoctorModel extends UserModel implements Serializable {
     //private List<String> schedule;
     private Map<Date, String> schedule;
     private int age;
+    protected List<PatientController> patients;
 
     public DoctorModel() {
         super();
@@ -34,6 +35,7 @@ public class DoctorModel extends UserModel implements Serializable {
         this.gender = gender;
         this.age = age;
         this.appointments = new ArrayList<>();
+        this.patients = new ArrayList<>();
         this.schedule = new HashMap<>();
         //add dates to schedule using calendar
         for (int i = 1; i <= 30; i++) { // Corrected loop to start from 1 and go up to 30
@@ -54,6 +56,14 @@ public class DoctorModel extends UserModel implements Serializable {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public List<PatientController> getPatients() {
+        return patients;
+    }
+
+    public void addPatient(PatientController patient) {
+        patients.add(patient);
     }
 
     public String getName() {
@@ -118,6 +128,16 @@ public class DoctorModel extends UserModel implements Serializable {
             schedule.put(newDateTime, "booked");
         } else {
             System.out.println("Appointment slot not available.");
+        }
+    }
+
+    public void setAvailability(Date date, String avail) {
+        if (schedule.containsKey(date) && avail.equals("empty")) {
+            schedule.put(date, avail);
+        } else if (schedule.containsKey(date) && avail.equals("booked")) {
+            schedule.put(date, avail);
+        } else {
+            System.out.println("Invalid availability.");
         }
     }
 

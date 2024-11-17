@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Map;
 
+import com.hms.patient.PatientController;
 import com.hms.user.*;
 
 public class DoctorView extends UserView implements Serializable {
@@ -36,6 +37,12 @@ public class DoctorView extends UserView implements Serializable {
             .forEach(entry -> System.out.println("Date: " + entry.getKey() + " - Details: " + entry.getValue()));
             System.out.println("---------------------------");
         }
+
+    public void displayPatients() {
+        for (PatientController patient : model.patients) {
+            patient.view.displayPatientDetails(patient.model);
+        }
+    }
 
 
     /*public void displayRecordsByPatient(String patientId) {

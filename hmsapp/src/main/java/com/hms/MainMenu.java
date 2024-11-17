@@ -56,7 +56,7 @@ public class MainMenu {
             // Menu options depend on user role
             if (loggedInController.model.getRole().equals("Doctor")) {
                 DoctorController doctorController = (DoctorController) loggedInController;
-                // displayDoctorMenu();
+                displayDoctorMenu(doctorController, appointments);
             } else if (loggedInController.model.getRole().equals("Pharmacist")) {
                 PharmacistController pharmacistController = (PharmacistController) loggedInController;
                 // displayPharmacistMenu();
@@ -76,6 +76,64 @@ public class MainMenu {
             }
         }
     }
+
+    public void displayDoctorMenu(DoctorController doctorController, List<Appointment_ManagementController> appointments) {
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            System.out.println("\nPlease select an option:");
+            System.out.println("1. View my schedule");
+            System.out.println("2. Set my availability");
+            System.out.println("3. Manage appointment requests");
+            System.out.println("4. View my upcoming appointments");
+            System.out.println("5. Update appointment outcome");
+            System.out.println("6. View patient's medical records");
+            System.out.println("7. Log out");
+
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // consume the newline character
+
+            switch (choice) {
+                case 1:
+                    // view schedule
+                    doctorController.view.displaySchedule(doctorController.model.getSchedule());
+                    break;
+                case 2:
+                    // set availability
+                    System.out.println("Enter the date you would like to set availability for (yyyy-MM-dd): ");
+                    String dateStr = scanner.nextLine();
+                    try {
+                        Date date = new SimpleDateFormat("yyyy-MM-dd").parse(dateStr);
+                        System.out.println("Enter availability for this date (empty/booked): ");
+                        String avail = scanner.nextLine();
+                        doctorController.handleSetAvailability(date, avail);
+                    } catch (ParseException e) {
+                        System.out.println("Invalid date format. Please try again.");
+                    }
+                    break;
+                case 3:
+                    // manage appointment requests
+                    //doctorController.view.displayApptRequests();
+                    //doctorController.handleManageAppRequests();
+                    break;
+                case 4:
+                    // view upcoming appointments
+                    //doctorController.view.displayAppts();
+                    break;
+                case 5:
+                    // update appointment outcome
+                    //doctorController.handleUpdateApptOutcome(appointments);
+                    break;
+                case 6:
+                    // view patient's medical records
+                    doctorController.handleViewPatientRecords(appointments);
+                case 7:
+                    // log out
+                    return;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+    }
+}
 
     public void displayPatientMenu(PatientController patientController, List<UserController> allControllers) {
         Scanner scanner = new Scanner(System.in);
@@ -105,7 +163,7 @@ public class MainMenu {
                     break;
                 case 3:
                     // view past appt records
-                    patientController.handleViewApptOutcomeRec();
+                    patientController.handleViewApptOutcomeRec(appointments);
                     break;
                 case 4:
                     // view upcoming appts
