@@ -72,7 +72,7 @@ public class PatientModel extends UserModel implements Serializable {
     }
     
 
-    public void viewMedicalRecord() {
+    /*public void viewMedicalRecord() {
         System.out.println("---- Medical Record ----");
         System.out.println("Patient ID: " + userId);
         System.out.println("Name: " + name);
@@ -94,12 +94,12 @@ public class PatientModel extends UserModel implements Serializable {
             System.out.println("No past appointment records found.");
         }
         System.out.println("------------------------");
-    }
+    }*/
 
   public void updateContactInfo(String newContactInfo) {
     if (newContactInfo != null && !newContactInfo.trim().isEmpty()) {
         this.contactInfo = newContactInfo;
-        System.out.println("Contact information updated successfully to: " + newContactInfo);
+        System.out.println("Contact information updated successfully to: " + this.contactInfo);
     } else {
         System.out.println("Invalid contact information. Update failed.");
     }

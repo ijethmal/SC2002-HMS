@@ -37,7 +37,7 @@ public class MainMenu {
             String password = scanner.nextLine();
             loggedInController = login(userId, password, allControllers);
             if (loggedInController != null) {
-                System.out.println("Welcome, " + loggedInController.model.getRole() + " " + loggedInController.model.getName() + "!\n");
+                System.out.println("Welcome, " + loggedInController.model.getRole() + " " + loggedInController.model.getName() + "!");
                 break;
             }
         }
@@ -46,20 +46,72 @@ public class MainMenu {
         //if user is a doctor
         if (loggedInController.model.getRole().equals("Doctor")) {
             DoctorController doctorController = (DoctorController) loggedInController;
-            doctorController.view.displayDoctorMenu();
+            //displayDoctorMenu();
         } 
         else if (loggedInController.model.getRole().equals("Pharmacist")) {
             PharmacistController pharmacistController = (PharmacistController) loggedInController;
-            pharmacistController.view.displayPharmacistMenu();
+            //displayPharmacistMenu();
         } 
         else if (loggedInController.model.getRole().equals("Administrator")) {
             AdministratorController administratorController = (AdministratorController) loggedInController;
-            administratorController.view.displayAdministratorMenu();
+            //displayAdministratorMenu();
         } 
         else if (loggedInController.model.getRole().equals("Patient")) {
             PatientController patientController = (PatientController) loggedInController;
-            patientController.view.displayPatientMenu();
+            displayPatientMenu(patientController);
         }
+    }
+
+    public void displayPatientMenu(PatientController patientController) {
+        while (true) {
+            System.out.println("\nPlease select an option:");
+            System.out.println("1. View my medical record");
+            System.out.println("2. Update my contact information");
+            System.out.println("3. View my past appointment records");
+            System.out.println("4. View my upcoming appointments");
+            System.out.println("5. Schedule a new appointment");
+            System.out.println("6. Reschedule an appointment");
+            System.out.println("7. Cancel an appointment");
+            System.out.println("8. Log out");
+            Scanner scanner = new Scanner(System.in);
+            int choice = scanner.nextInt();
+
+            switch (choice) {
+                case 1:
+                    //view medical record
+                    patientController.view.displayPatientDetails(patientController.model);
+                    break;
+                case 2:
+                    //update contact info
+                    System.out.println("Enter new contact information: ");
+                    scanner.nextLine(); // consume the newline character
+                    String newContactInfo = scanner.nextLine();
+                    patientController.handleUpdateContactInfo(newContactInfo);
+                    break;
+                case 3:
+                    //view past appt records
+                    patientController.handleViewApptOutcomeRec();
+                    break;
+                case 4:
+                    //view upcoming appts
+                    break;
+                case 5:
+                    //schedule new appt
+                    break;
+                case 6:
+                    //reschedule appt
+                    break;
+                case 7:
+                    //cancel appt
+                    break;
+                case 8:
+                    //log out
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+        }
+        //
     }
 
     public UserController login(String userId, String password, List<UserController> allControllers) {

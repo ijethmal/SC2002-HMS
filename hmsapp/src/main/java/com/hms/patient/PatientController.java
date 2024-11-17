@@ -69,14 +69,8 @@ public class PatientController extends UserController implements Serializable {
         scanner.close();
     }
 
-    public void handleViewMedicalRecord() {
-        model.viewMedicalRecord();
-        view.displayMedicalRecord("Displaying medical record...");
-    }
-
     public void handleUpdateContactInfo(String newContactInfo) {
         model.updateContactInfo(newContactInfo);
-        view.displayContactInfo("Contact information updated: " + newContactInfo);
     }
 
     public void handleScheduleAppt() {

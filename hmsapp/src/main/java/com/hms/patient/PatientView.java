@@ -31,10 +31,6 @@ public class PatientView extends UserView implements Serializable {
         System.out.println("---------------------------");
     }
 
-    public void displayMedicalRecord(String record) {
-        System.out.println(record);
-    }
-
     public void displayContactInfo(String contactInfo) {
         System.out.println(contactInfo);
     }
