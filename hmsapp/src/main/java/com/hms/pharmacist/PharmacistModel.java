@@ -26,14 +26,6 @@ public class PharmacistModel extends UserModel implements Serializable {
         this.age = age;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public int getAge() {
         return age;
     }

@@ -15,7 +15,7 @@ public abstract class UserController implements Serializable {
         this.view = view;
     }
 
-    public boolean handleLogin(String userId, String password) {
+    /*public boolean handleLogin(String userId, String password) {
         if (model.getUserId().equals(userId) && model.getPassword().equals(password)) {
             view.displayLoginSuccess();
             return true;
@@ -23,7 +23,7 @@ public abstract class UserController implements Serializable {
             view.displayLoginError();
             return false;
         }
-    }
+    }*/
 
     public void handleChangePassword(String oldPass, String newPass) {
         if (oldPass.equals(model.getPassword())) {

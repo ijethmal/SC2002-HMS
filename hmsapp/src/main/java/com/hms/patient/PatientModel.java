@@ -28,6 +28,9 @@ public class PatientModel extends UserModel implements Serializable {
         this.contactInfo = contactInfo;
         this.bloodType = bloodType;
         this.pastApptRecs = new ArrayList<>();
+        this.name = name;
+        this.gender = gender;
+        this.password = password;
     }
     // Getter methods
     public String getPatientId() {

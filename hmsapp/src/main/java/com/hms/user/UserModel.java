@@ -42,7 +42,6 @@ public abstract class UserModel implements Serializable {
         this.userId = userId;
     }
 
-
     public String getName() {
         return name;
     }

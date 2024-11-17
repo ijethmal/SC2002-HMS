@@ -114,21 +114,7 @@ public class Main {
             e.printStackTrace();
         }
 
-        //view patients
-        // Deserialize patient controllers
-        try {
-            List<PatientController> deserializedPatientControllers = (List<PatientController>) SerializationUtil.deserialize("hmsapp\\db\\Patient_Controllers.ser");
-            /*for (PatientController patientController : deserializedPatientControllers) {
-                patientController.view.displayPatientDetails(patientController.model);
-            }*/
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        System.out.println("Patients loaded successfully.\n");
 
-
-        //serialise staff
-        System.out.println("Loading staff...");
         //array of staff
         List<DoctorController> doctorControllers = new ArrayList<>();
         List<PharmacistController> pharmacistControllers = new ArrayList<>();
@@ -187,43 +173,9 @@ public class Main {
             e.printStackTrace();
         }
 
-
-
-        //view staff
-        // Deserialize doctor controllers
-        try {
-            List<DoctorController> deserializedDoctorControllers = (List<DoctorController>) SerializationUtil.deserialize("hmsapp\\db\\Doctor_Controllers.ser");
-            /*for (DoctorController doctorController : deserializedDoctorControllers) {
-                doctorController.view.displayDoctorDetails(doctorController.model);
-            }*/
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        // Deserialize administrator controllers
-        try {
-            List<AdministratorController> deserializedAdministratorControllers = (List<AdministratorController>) SerializationUtil.deserialize("hmsapp\\db\\Administrator_Controllers.ser");
-            /*for (AdministratorController administratorController : deserializedAdministratorControllers) {
-                administratorController.view.displayAdministratorDetails(administratorController.model);
-            }*/
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        // Deserialize pharmacist controllers
-        try {
-            List<PharmacistController> deserializedPharmacistControllers = (List<PharmacistController>) SerializationUtil.deserialize("hmsapp\\db\\Pharmacist_Controllers.ser");
-            /*for (PharmacistController pharmacistController : deserializedPharmacistControllers) {
-                pharmacistController.view.displayPharmacistDetails(pharmacistController.model);
-            }*/
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        System.out.println("Staff loaded successfully.\n");
-
-
         //create main menu
-        //MainMenu mainMenu = new MainMenu();
+        MainMenu mainMenu = new MainMenu();
+        mainMenu.displayMainMenu();
 
 }
 

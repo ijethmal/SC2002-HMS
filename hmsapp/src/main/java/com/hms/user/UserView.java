@@ -24,6 +24,7 @@ public abstract class UserView implements Serializable {
 
     public void printUserDetails() {
         System.out.println("User ID: " + model.getUserId());
+        System.out.println("Name: " + model.getName());
         System.out.println("Role: " + model.getRole());
     }
 
