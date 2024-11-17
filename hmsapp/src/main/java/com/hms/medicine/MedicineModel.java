@@ -58,11 +58,4 @@ public class MedicineModel {
         return lowStockAlertLine;
     }
 
-    public String getStatus() {
-        if (isStockBelowAlert()) {
-            return "Low Stock";
-        } else {
-            return "Sufficient Stock";
-        }
-    }
 }

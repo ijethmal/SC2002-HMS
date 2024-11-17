@@ -7,8 +7,8 @@ import com.hms.user.UserController;
  */
 public class StaffRecordController extends UserController {
     
-    private StaffRecordModel model;
-    private StaffRecordView view;
+    public StaffRecordModel model;
+    public StaffRecordView view;
 
     /**
      * Constructor to initialize the StaffRecordController.

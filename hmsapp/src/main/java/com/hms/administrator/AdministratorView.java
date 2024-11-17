@@ -19,8 +19,8 @@ public class AdministratorView extends UserView{
 
     public void displayStaff(List<StaffRecordController> staffList) {
         System.out.println("=== Staff List ===");
-        for (StaffRecordController staff : staffList) {
-            staffList.view.displayRecord();
+        for (StaffRecordController staffcontroller : staffList) {
+            staffcontroller.view.displayRecord(staffcontroller.model);
         }
         System.out.println("==================");
     }
@@ -43,8 +43,8 @@ public class AdministratorView extends UserView{
         System.out.println("=== Replenishment Requests ===");
         for (ReplenishmentRequestController request : requests) {
             System.out.println("Medicine: " + request.model.getMedicine().model.getMedicineName() +
-                               ", Requested Quantity: " + request.model.getQuantityRequested() +
-                               ", Status: " + getStatus());
+                               ", Requested Quantity: " + model.getQuantityRequested() +
+                               ", Status: " + request.model.getStatus());
         }
         System.out.println("=============================");
     }
@@ -58,11 +58,11 @@ public class AdministratorView extends UserView{
     }
 
     public void displayReplenishmentApproved(MedicineController medicine) {
-        System.out.println("Replenishment approved for medicine: " + medicine.getMedicineName());
+        System.out.println("Replenishment approved for medicine: " + medicine.model.getMedicineName());
     }
 
     public void displayMedicineStockUpdated(MedicineController medicine) {
-        System.out.println("Stock updated for medicine: " + medicine.getMedicineName() +
-                           ", New Stock Level: " + medicine.getStockLevel());
+        System.out.println("Stock updated for medicine: " + medicine.model.getMedicineName() +
+                           ", New Stock Level: " + medicine.model.getStockLevel());
     }
 }

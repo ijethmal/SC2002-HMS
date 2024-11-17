@@ -34,7 +34,6 @@ public class AdministratorController extends UserController{
         List<ReplenishmentRequestController> replenishmentRequests = model.getReplenishmentRequests();
         view.displayReplenishmentRequests(replenishmentRequests); // Display in view
     }
-    
 
     // Approve Replenishment Request
     public void approveReplenishment(MedicineController medicine, int replenishQty) {

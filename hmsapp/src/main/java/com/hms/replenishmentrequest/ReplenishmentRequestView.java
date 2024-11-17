@@ -1,6 +1,11 @@
 package com.hms.replenishmentrequest;
 
+import com.hms.medicine.*;
+import com.hms.pharmacist.*;
+
 public class ReplenishmentRequestView {
+
+    protected ReplenishmentRequestModel model;
 
     public void displayApprovalStatus(String status) {
         System.out.println("Approval Status: " + status);
@@ -10,9 +15,9 @@ public class ReplenishmentRequestView {
         System.out.println(message);
     }
 
-    public String viewRequest() {
+    public String viewRequest(MedicineController medicine, PharmacistController requester) {
         return "Request for " + medicine.model.getMedicineName() + " by " + requester.model.getName() +
-               "\nStatus: " + status + "\nRequested on: " + model.requestDate +
-               "\nApproval Date: " + (model.approvalDate != null ? model.approvalDate : "Not yet approved");
+               "\nStatus: " + requester.model.getPrescriptionStatus() + "\nRequested on: " + model.getRequestDate() +
+               "\nApproval Date: " + (model.getApprovalDate() != null ? model.getApprovalDate() : "Not yet approved");
     }
 }

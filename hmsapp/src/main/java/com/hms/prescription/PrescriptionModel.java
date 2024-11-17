@@ -59,8 +59,8 @@ public class PrescriptionModel {
         return patientId;
     }
 
-    public void dispense() {
-        System.out.println("Dispensing " + quantity + " units of " + medicine.getName());
+    public void dispense(MedicineController medicine) {
+        System.out.println("Dispensing " + quantity + " units of " + medicine.model.getMedicineName());
     }
 
 }

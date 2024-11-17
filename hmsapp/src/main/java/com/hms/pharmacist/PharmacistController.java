@@ -6,7 +6,6 @@ import com.hms.medicine.*;
 import com.hms.administrator.*;
 import com.hms.inventory.*;
 
-
 public class PharmacistController extends UserController {
 
     public PharmacistModel model;
@@ -28,12 +27,12 @@ public class PharmacistController extends UserController {
         inventoryView.view.showInventory();
     }
 
-    public void checkForLowStockLevel(){
-
+    public void checkForLowStockLevel(MedicineController medicine){
+        medicine.checkStockLevels();
     }
 
     public void submitReplenishmentRequest(AdministratorController administrator, MedicineController medicine) {
-        administrator.submitReplenishmentRequest(medicine);
+            // need to fill in the logic
     }
 
 }

@@ -1,7 +1,6 @@
 package com.hms.pharmacist;
 
 import com.hms.user.*;
-import com.hms.administrator.*;
 import com.hms.inventory.*;
 import com.hms.prescription.*;
 
@@ -14,7 +13,7 @@ public class PharmacistView extends UserView {
     }
 
     public void displayPrescriptionStatus(PrescriptionController prescription) {
-        return System.out.println("Prescription Status: " + prescription.getStatus());
+        System.out.println("Prescription Status: " + model.getPrescriptionStatus());
     }
 
     public void viewInventory(InventoryController inventory) {

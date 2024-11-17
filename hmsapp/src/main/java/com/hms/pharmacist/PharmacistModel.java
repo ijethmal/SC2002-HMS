@@ -11,7 +11,7 @@ import com.hms.user.UserModel;
 public class PharmacistModel extends UserModel {
 
     private String name;
-    private List<PrescriptionController> prescription;
+    private PrescriptionController prescription;
     private List<InventoryController> inventory;
     private List<AppointmentOutcomeRecordControllerView> apptoutcomerecord;
 
@@ -33,7 +33,11 @@ public class PharmacistModel extends UserModel {
         return apptoutcomerecord;
     }
 
-    public List<PrescriptionController> getPrescriptionStatus(){
-        return prescription.getStatus();
+    public String getPrescriptionStatus(){
+        return prescription.checkStatus();
+    }
+
+    public void getQuantityRequested(){
+        // need to fill in
     }
 }

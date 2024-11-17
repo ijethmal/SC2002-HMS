@@ -26,14 +26,9 @@ public class MedicineController {
     public void checkStockLevels() {
         if (model.isStockBelowAlert()) {
             view.getLowStockAlert("Alert: Stock below threshold for " + model.getMedicineName());
+        } else {
+            System.out.println("Sufficient Stock");
         }
     }
-
-    public String getName() {
-        return model.getMedicineName(); 
-        }
-
-    public double getStockLevel(){
-        return model.getStockLevel();
-    }
+    
 }

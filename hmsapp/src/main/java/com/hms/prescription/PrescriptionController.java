@@ -3,6 +3,7 @@ package com.hms.prescription;
 import com.hms.medicine.*;
 
 public class PrescriptionController {
+
     public PrescriptionModel model;
 
     public PrescriptionController(PrescriptionModel model) {
@@ -15,11 +16,11 @@ public class PrescriptionController {
     }
 
     public void handleDispense() {
-        model.dispense();
+        model.dispense(model.getMedicine());
     }
 
-    public void checkStatus() {
-        System.out.println(model.getStatus());
+    public String checkStatus() {
+        return model.getStatus();
     }
 
     public void printPrescriptionDetails() {
