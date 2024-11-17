@@ -7,6 +7,7 @@ import java.util.Map;
 import com.hms.user.*;
 
 public class DoctorView extends UserView implements Serializable {
+    private static final long serialVersionUID = 1L; // Define serialVersionUID
     protected DoctorModel model;
 
     public DoctorView() {

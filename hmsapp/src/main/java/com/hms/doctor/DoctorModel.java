@@ -12,7 +12,7 @@ import com.hms.appointment_management.*;
 import com.hms.patient.*;
 
 public class DoctorModel extends UserModel implements Serializable {
-    
+    private static final long serialVersionUID = 1L; // Define serialVersionUID
     //userid from user
     //password from user
     protected String specialization;
@@ -103,6 +103,19 @@ public class DoctorModel extends UserModel implements Serializable {
             Appointment_ManagementView appointmentView = new Appointment_ManagementView(appointment);
             Appointment_ManagementController appointmentController = new Appointment_ManagementController(appointment, appointmentView);
             appointments.add(appointmentController);
+        } else {
+            System.out.println("Appointment slot not available.");
+        }
+    }
+
+    public void cancelAppointment(Date date) {
+        schedule.put(date, "empty");
+    }
+
+    public void rescheduleAppointment(Date oldDate, Date newDateTime) {
+        if (schedule.containsKey(newDateTime) && schedule.get(newDateTime).equals("empty")) {
+            schedule.put(oldDate, "empty");
+            schedule.put(newDateTime, "booked");
         } else {
             System.out.println("Appointment slot not available.");
         }

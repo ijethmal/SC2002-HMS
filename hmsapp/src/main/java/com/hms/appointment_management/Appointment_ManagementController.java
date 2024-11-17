@@ -8,12 +8,14 @@ import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 import com.hms.appointment_outcome_record.*;
 import com.hms.diagnosis.Diagnosis;
+import com.hms.doctor.DoctorController;
 import com.hms.prescription.PrescriptionModel;
 import com.hms.user.UserController;
 
 
 // asked chatgpt need to make changes 
 public class Appointment_ManagementController implements Serializable {
+
     public Appointment_ManagementModel model;
     public Appointment_ManagementView view;
     private static Scanner scanner = new Scanner(System.in);
@@ -73,20 +75,39 @@ public class Appointment_ManagementController implements Serializable {
         view.displayStatusUpdateResponse("Status updated to: " + newStatus);
     }
 
-    public void handleCancelAppt() {
-        String apptId = getInput("Enter appointment ID to cancel: ");
-        if (model.getApptId().equals(apptId)) {
-            model.setStatusAppt("Cancelled");
-            view.displayCancelSuccess("Appointment " + apptId + " has been cancelled.");
-        } else {
-            view.displayError("Appointment not found or ID mismatch.");
+    public void handleCancelAppt(String apptId, List<Appointment_ManagementController> appointments, List<UserController> allControllers) {
+        for (Appointment_ManagementController appt : appointments) {
+            if (appt.model.getApptId().equals(apptId)) {
+                appointments.remove(appt);
+                //find doctor
+                for (UserController controller : allControllers) {
+                    if (controller instanceof DoctorController) {
+                        DoctorController doctor = (DoctorController) controller;
+                        if (doctor.model.getUserId().equals(appt.model.getDoctorId())) {
+                            doctor.handleCancelAppt(appt.model.getDateTime());
+                        }
+                    }
+                }
+                System.out.println("Appointment " + apptId + " has been cancelled.");
+                return;
+            }
         }
     }
 
     public void handleRescheduleAppt(String apptId, Date newDateTime, List<Appointment_ManagementController> appointments, List<UserController> allControllers) {
         for (Appointment_ManagementController appt : appointments) {
             if (appt.model.getApptId().equals(apptId)) {
+                Date oldDateTime = appt.model.getDateTime();
                 appt.model.setDateTime(newDateTime);
+                //find doctor
+                for (UserController controller : allControllers) {
+                    if (controller instanceof DoctorController) {
+                        DoctorController doctor = (DoctorController) controller;
+                        if (doctor.model.getUserId().equals(appt.model.getDoctorId())) {
+                            doctor.handleRescheduleAppt(oldDateTime, newDateTime);
+                        }
+                    }
+                }
                 System.out.println("Appointment " + apptId + " has been rescheduled.");
                 return;
             }

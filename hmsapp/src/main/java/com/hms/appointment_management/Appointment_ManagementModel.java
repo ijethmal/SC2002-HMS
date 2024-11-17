@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.UUID;
 
 public class Appointment_ManagementModel implements Serializable {
+
     private String apptId;
     private Date dateTime;
     private String patientId;

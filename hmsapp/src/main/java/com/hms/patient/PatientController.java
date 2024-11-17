@@ -17,6 +17,7 @@ import com.hms.appointment_outcome_record.*;
 import com.hms.doctor.DoctorController;
 
 public class PatientController extends UserController implements Serializable {
+    private static final long serialVersionUID = 1L; // Define serialVersionUID
     public PatientModel model;
     public PatientView view;
     
@@ -114,9 +115,18 @@ public class PatientController extends UserController implements Serializable {
         //scanner.close();
     }
 
-    public void handleCancelAppt() {
-        model.cancelAppt();
-        view.showCancelSuccess();
+    public void handleCancelAppt(List<Appointment_ManagementController> appointments, List<UserController> allControllers) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter the appointment ID you want to cancel: ");
+        String apptId = scanner.nextLine();
+        for (Appointment_ManagementController appt : appointments) {
+            if (appt.model.getApptId().equals(apptId)) {
+                appt.handleCancelAppt(apptId, appointments, allControllers);
+                //scanner.close();
+                return;
+            }
+        }
+        //scanner.close();
     }
 
     public void handleViewApptStatus(List<Appointment_ManagementController> appointments) {

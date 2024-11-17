@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public class Appointment_ManagementView implements Serializable {
 
+
     public Appointment_ManagementModel model;
 
     public Appointment_ManagementView() {}

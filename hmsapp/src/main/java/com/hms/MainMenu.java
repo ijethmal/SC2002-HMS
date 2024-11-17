@@ -145,6 +145,7 @@ public class MainMenu {
                     break;
                 case 7:
                     // cancel appt
+                    patientController.handleCancelAppt(appointments, allControllers);
                     break;
                 case 8:
                     // log out

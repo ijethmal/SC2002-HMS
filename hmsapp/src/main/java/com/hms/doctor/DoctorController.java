@@ -16,7 +16,7 @@ import com.hms.patient.PatientController;
 import com.hms.prescription.PrescriptionModel;
 
 public class DoctorController extends UserController implements Serializable {
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L; // Define serialVersionUID to avoid warnings
     
     public DoctorModel model;
     public DoctorView view;
@@ -97,6 +97,14 @@ public class DoctorController extends UserController implements Serializable {
 
     public void manageAppRequests() {
         ((DoctorModel) model).manageAppRequests();
+    }
+
+    public void handleCancelAppt(Date dateTime) {
+        ((DoctorModel) model).cancelAppointment(dateTime);
+    }
+
+    public void handleRescheduleAppt(Date oldDate, Date newDateTime) {
+        ((DoctorModel) model).rescheduleAppointment(oldDate, newDateTime);
     }
 
     /*public void updateAppOutRecords(
