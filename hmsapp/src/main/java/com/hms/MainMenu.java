@@ -94,9 +94,13 @@ public class MainMenu {
                     break;
                 case 4:
                     //view upcoming appts
+                    patientController.handleViewApptStatus();
                     break;
                 case 5:
                     //schedule new appt
+                    //display doctors' availabilities
+
+                    patientController.handleScheduleAppt();
                     break;
                 case 6:
                     //reschedule appt
@@ -112,6 +116,17 @@ public class MainMenu {
             }
         }
         //
+    }
+
+    //display doctor schedules
+    public void displayDoctorSchedules(List<UserController> allControllers) {
+        for (UserController controller : allControllers) {
+            if (controller.model.getRole().equals("Doctor")) {
+                DoctorController doctorController = (DoctorController) controller;
+                doctorController.view.
+            }
+        }
+
     }
 
     public UserController login(String userId, String password, List<UserController> allControllers) {

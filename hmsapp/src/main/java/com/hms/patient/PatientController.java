@@ -73,8 +73,8 @@ public class PatientController extends UserController implements Serializable {
         model.updateContactInfo(newContactInfo);
     }
 
-    public void handleScheduleAppt() {
-        model.scheduleAppointment("doctorId", LocalDateTime.now(),"General Consultation", "Pending", null);
+    public void handleScheduleAppt(String doctorId, LocalDateTime apptDateTime, String apptType) {
+        model.scheduleAppointment(doctorId, apptDateTime,apptType, "Pending", null);
         view.showScheduleSuccess();
     }
 
