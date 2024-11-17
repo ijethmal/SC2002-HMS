@@ -1,8 +1,14 @@
 package com.hms.user;
-public abstract class UserController {
+
+import java.io.Serializable;
+
+public abstract class UserController implements Serializable {
     
     public UserModel model;
     public UserView view;
+
+    // No-argument constructor for deserialization ONLY
+    public UserController() {}
 
     public UserController(UserModel model, UserView view) {
         this.model = model;

@@ -1,10 +1,15 @@
 package com.hms.user;
 
-public abstract class UserModel {
+import java.io.Serializable;
+
+public abstract class UserModel implements Serializable {
 
     protected String userId;
     protected String password;
     protected String role;
+
+    // No-argument constructor for deserialization ONLY
+    public UserModel() {}
 
     public UserModel (String userId, String password, String role) {
         this.userId =  userId;

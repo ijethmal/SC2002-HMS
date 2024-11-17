@@ -8,6 +8,9 @@ public class PatientView extends UserView implements Serializable {
 
     //private PatientModel model;
 
+    public PatientView() {}
+
+    
     public PatientView(PatientModel model) {
         super(model);
         this.model= model;

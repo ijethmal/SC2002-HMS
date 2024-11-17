@@ -80,7 +80,7 @@ public class Main {
                 
                 String patientId = row.getCell(0).getStringCellValue();
                 String password = row.getCell(1).getStringCellValue();
-                String name = row.getCell(1).getStringCellValue();
+                String name = row.getCell(2).getStringCellValue();
                 SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
                 String dobString = row.getCell(3).getStringCellValue();
                 Date dob = null;
@@ -98,6 +98,7 @@ public class Main {
                 PatientController patientController = new PatientController(patient, patientView);
 
                 patientControllers.add(patientController);
+                //patientController.view.displayPatientDetails(patientController.model);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -112,14 +113,14 @@ public class Main {
 
         //view patients
         // Deserialize patient controllers
-        /*try {
+        try {
             List<PatientController> deserializedPatientControllers = (List<PatientController>) SerializationUtil.deserialize("hmsapp\\db\\Patient_Controllers.ser");
             for (PatientController patientController : deserializedPatientControllers) {
-                patientController.getView().display();
+                patientController.view.displayPatientDetails(patientController.model);
             }
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
-        }*/
+        }
 }
 
 }

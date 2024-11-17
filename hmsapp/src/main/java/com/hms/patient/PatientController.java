@@ -14,9 +14,13 @@ import com.hms.appointment_management.*;
 import com.hms.appointment_outcome_record.*;
 
 public class PatientController extends UserController implements Serializable {
-    private PatientModel model;
-    private PatientView view;
+    public PatientModel model;
+    public PatientView view;
     
+    // No-argument constructor for deserialization
+    public PatientController() {
+    }
+
     public PatientController(PatientModel model, PatientView view) {
         super(model, view);
         this.model= model;

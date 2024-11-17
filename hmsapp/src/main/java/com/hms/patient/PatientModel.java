@@ -20,6 +20,8 @@ public class PatientModel extends UserModel implements Serializable {
     private String bloodType;
     private List<Appointment_ManagementModel> pastApptRecs;
 
+    public PatientModel() {}
+
     public PatientModel(String patientId, String password, String name, Date dob, String gender, String contactInfo, String bloodType) {
         super(patientId, password, "Patient");
         this.name = name;

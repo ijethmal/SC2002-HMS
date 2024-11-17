@@ -1,11 +1,15 @@
 package com.hms.user;
 //import org.apache.xmlbeans.impl.xb.xsdschema.Attribute.Use;
 
-public abstract class UserView {
+import java.io.Serializable;
+
+public abstract class UserView implements Serializable {
 
     protected UserModel model;
     protected UserController controller;
 
+    // No-argument constructor for deserialization ONLY
+    public UserView () {}
 
     public UserView(UserModel model, UserController controller) {
         this.model = model;
