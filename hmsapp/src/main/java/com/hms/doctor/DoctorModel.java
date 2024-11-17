@@ -92,19 +92,20 @@ public class DoctorModel extends UserModel implements Serializable {
         //...
     }
 
-    public void addAppointment(Date date, PatientController patient) {
+    //called by doctor controller to add an appointment
+    public void addAppointment(Date date, PatientController patient, List<Appointment_ManagementController> appointments) {
         if (schedule.containsKey(date) && schedule.get(date).equals("empty")) {
             schedule.put(date, patient.model.getPatientId());
             System.out.println("Appointment added for " + date);
             schedule.put(date, "booked");
+            //create appointment
+            Appointment_ManagementModel appointment = new Appointment_ManagementModel(date, patient.model.getPatientId(), this.userId, "Pending");
+            Appointment_ManagementView appointmentView = new Appointment_ManagementView(appointment);
+            Appointment_ManagementController appointmentController = new Appointment_ManagementController(appointment, appointmentView);
+            appointments.add(appointmentController);
         } else {
             System.out.println("Appointment slot not available.");
         }
-        //create appointment
-        Appointment_ManagementModel appointment = new Appointment_ManagementModel(date, patient.model.getPatientId(), this.userId, "Pending");
-        Appointment_ManagementView appointmentView = new Appointment_ManagementView(appointment);
-        Appointment_ManagementController appointmentController = new Appointment_ManagementController(appointment, appointmentView);
-        appointments.add(appointmentController);
     }
 
 

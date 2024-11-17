@@ -10,8 +10,12 @@ public class Appointment_ManagementView {
         this.model = model;
     }
 
-    public void displayAppointmentDetails(String appointmentDetails) {
-        System.out.println(appointmentDetails);
+    public void displayAppointmentDetails() {
+        System.out.println("Appointment ID: " + model.getApptId());
+        System.out.println("Patient ID: " + model.getPatientId());
+        System.out.println("Doctor ID: " + model.getDoctorId());
+        System.out.println("Date/Time: " + model.getDateTime());
+        System.out.println("Status: " + model.getStatusAppt());
     }
 
     public void displayStatusUpdateResponse(String response) {

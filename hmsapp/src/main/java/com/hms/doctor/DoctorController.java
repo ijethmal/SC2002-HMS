@@ -86,9 +86,8 @@ public class DoctorController extends UserController implements Serializable {
         }
     }
 
-    public void addApptRequest(Date date, PatientController patient) {
-        ((DoctorModel) model).addAppointment(date, patient);
-    }
+    //called by patient controller to create a new appointment request
+    
 
     public void viewAppts() {
         for (Appointment_ManagementController app : ((DoctorModel) model).getAppointments()) {

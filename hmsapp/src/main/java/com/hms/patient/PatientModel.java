@@ -63,7 +63,7 @@ public class PatientModel extends UserModel implements Serializable {
         return pastApptRecs;
     }
 
-    // Add a new appointment to the past appointment records
+    // Add a new appointment to the past appointment records - called by patient controller
     public void addAppointment(Appointment_ManagementController appointment) {
         if (appointment != null) {
             pastApptRecs.add(appointment);

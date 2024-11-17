@@ -83,13 +83,7 @@ public class Appointment_ManagementController {
     public void handleViewApptDetails() {
         String apptId = getInput("Enter appointment ID to view details: ");
         if (model.getApptId().equals(apptId)) {
-            String details = "Appointment ID: " + model.getApptId() +
-                             "\nDate/Time: " + model.getDateTime() +
-                             "\nPatient ID: " + model.getPatientId() +
-                             "\nDoctor ID: " + model.getDoctorId() +
-                             "\nStatus: " + model.getStatusAppt() +
-                             "\nOutcome: " + (model.getOutcome() != null ? model.getOutcome().toString() : "No outcome recorded");
-            view.displayAppointmentDetails(details);
+            view.displayAppointmentDetails();
         } else {
             view.displayError("Appointment not found or ID mismatch.");
         }

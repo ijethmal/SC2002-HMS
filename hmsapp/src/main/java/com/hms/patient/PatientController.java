@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.Scanner;
 import java.util.Date;
+import java.util.List;
 import java.text.ParseException;
 
 
@@ -74,13 +75,9 @@ public class PatientController extends UserController implements Serializable {
         model.updateContactInfo(newContactInfo);
     }
 
-    public void handleScheduleAppt(DoctorController doctor, Date apptDateTime, String apptType) {
-        doctor.addApptRequest(apptDateTime, this);
-        Appointment_ManagementModel newAppt = new Appointment_ManagementModel(apptDateTime, model.getPatientId(), doctor.model.getUserId(), "Pending");
-        Appointment_ManagementView newApptView = new Appointment_ManagementView();
-        Appointment_ManagementController newApptController = new Appointment_ManagementController(newAppt, newApptView);
-        model.addAppointment(newApptController);
-        view.showScheduleSuccess();
+    //called by main to create a new appointment
+    public void handleScheduleAppt(DoctorController doctor, Date apptDateTime, List<Appointment_ManagementController> appointments) {
+        doctor.model.addAppointment(apptDateTime, this, appointments);
     }
 
     public void handleRescheduleAppt() {
@@ -98,8 +95,12 @@ public class PatientController extends UserController implements Serializable {
         view.showCancelSuccess();
     }
 
-    public void handleViewApptStatus() {
-        model.viewApptStatus();
+    public void handleViewApptStatus(List<Appointment_ManagementController> appointments) {
+        for (Appointment_ManagementController appt : appointments) {
+            if (appt.model.getPatientId().equals(model.getPatientId())) {
+                appt.view.displayAppointmentDetails();
+            }
+        }
         view.displayAppointmentStatus("Appointment status displayed.");
     }
 

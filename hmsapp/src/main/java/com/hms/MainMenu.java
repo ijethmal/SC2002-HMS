@@ -15,8 +15,15 @@ import com.hms.patient.PatientController;
 import com.hms.pharmacist.PharmacistController;
 import com.hms.user.*;
 import com.hms.util.SerializationUtil;
+import com.hms.appointment_management.Appointment_ManagementController;
 
 public class MainMenu {
+
+    private List<Appointment_ManagementController> appointments;
+
+    public MainMenu() {
+        this.appointments = new ArrayList<>();
+    }
 
     public static void main(String[] args) {
         MainMenu mainMenu = new MainMenu();
@@ -25,40 +32,46 @@ public class MainMenu {
 
     public void displayMainMenu() {
         System.out.println("Welcome to Hospital Management System!");
-        // get staff controllers in a list of usercontroller
         List<UserController> allControllers = deserialiseUsers();
-        UserController loggedInController = null;
+        Scanner scanner = new Scanner(System.in);
+
         while (true) {
-            System.out.println("Please login:");
-            System.out.println("Enter your user ID: ");
-            Scanner scanner = new Scanner(System.in);
-            String userId = scanner.nextLine();
-            System.out.println("Enter your password: ");
-            String password = scanner.nextLine();
-            loggedInController = login(userId, password, allControllers);
-            if (loggedInController != null) {
-                System.out.println("Welcome, " + loggedInController.model.getRole() + " " + loggedInController.model.getName() + "!");
+            UserController loggedInController = null;
+            while (loggedInController == null) {
+                System.out.println("Please login:");
+                System.out.println("Enter your user ID: ");
+                String userId = scanner.nextLine();
+                System.out.println("Enter your password: ");
+                String password = scanner.nextLine();
+                loggedInController = login(userId, password, allControllers);
+                if (loggedInController != null) {
+                    System.out.println("Welcome, " + loggedInController.model.getRole() + " " + loggedInController.model.getName() + "!");
+                } else {
+                    System.out.println("Login failed. Please try again.");
+                }
+            }
+
+            // Menu options depend on user role
+            if (loggedInController.model.getRole().equals("Doctor")) {
+                DoctorController doctorController = (DoctorController) loggedInController;
+                // displayDoctorMenu();
+            } else if (loggedInController.model.getRole().equals("Pharmacist")) {
+                PharmacistController pharmacistController = (PharmacistController) loggedInController;
+                // displayPharmacistMenu();
+            } else if (loggedInController.model.getRole().equals("Administrator")) {
+                AdministratorController administratorController = (AdministratorController) loggedInController;
+                // displayAdministratorMenu();
+            } else if (loggedInController.model.getRole().equals("Patient")) {
+                PatientController patientController = (PatientController) loggedInController;
+                displayPatientMenu(patientController, allControllers);
+            }
+
+            System.out.println("Do you want to log in as another user? (yes/no)");
+            String response = scanner.nextLine().trim().toLowerCase();
+            if (!response.equals("yes")) {
+                System.out.println("Exiting the system. Goodbye!");
                 break;
             }
-        }
-
-        //menu options depend on user
-        //if user is a doctor
-        if (loggedInController.model.getRole().equals("Doctor")) {
-            DoctorController doctorController = (DoctorController) loggedInController;
-            //displayDoctorMenu();
-        } 
-        else if (loggedInController.model.getRole().equals("Pharmacist")) {
-            PharmacistController pharmacistController = (PharmacistController) loggedInController;
-            //displayPharmacistMenu();
-        } 
-        else if (loggedInController.model.getRole().equals("Administrator")) {
-            AdministratorController administratorController = (AdministratorController) loggedInController;
-            //displayAdministratorMenu();
-        } 
-        else if (loggedInController.model.getRole().equals("Patient")) {
-            PatientController patientController = (PatientController) loggedInController;
-            displayPatientMenu(patientController, allControllers);
         }
     }
 
@@ -76,7 +89,7 @@ public class MainMenu {
             System.out.println("8. Log out");
             int choice = scanner.nextInt();
             scanner.nextLine(); // consume the newline character
-    
+
             switch (choice) {
                 case 1:
                     // view medical record
@@ -94,7 +107,7 @@ public class MainMenu {
                     break;
                 case 4:
                     // view upcoming appts
-                    patientController.handleViewApptStatus();
+                    patientController.handleViewApptStatus(appointments);
                     break;
                 case 5:
                     // schedule new appt
@@ -116,7 +129,7 @@ public class MainMenu {
                         if (schedule.containsKey(chosenDate) && schedule.get(chosenDate).equals("empty")) {
                             System.out.println("Date is available for scheduling.");
                             // handle schedule appointment
-                            patientController.handleScheduleAppt(docController, chosenDate, "Consultation");
+                            patientController.handleScheduleAppt(docController, chosenDate, appointments);
                         } else {
                             System.out.println("Date is not available. Please choose another date.");
                         }
@@ -132,7 +145,6 @@ public class MainMenu {
                     break;
                 case 8:
                     // log out
-                    displayMainMenu();
                     return;
                 default:
                     System.out.println("Invalid choice. Please try again.");
@@ -140,7 +152,7 @@ public class MainMenu {
         }
     }
 
-    //display doctor schedules
+    // display doctor schedules
     public void displayDoctorSchedules(List<UserController> allControllers) {
         for (UserController controller : allControllers) {
             if (controller.model.getRole().equals("Doctor")) {
@@ -150,9 +162,8 @@ public class MainMenu {
         }
     }
 
-    //find user in list of user controllers
+    // find user in list of user controllers
     public UserController findUserbyID(String userId, List<UserController> allControllers) {
-        //trim userId
         userId = userId.trim();
         for (UserController controller : allControllers) {
             if (controller.model.getUserId().equals(userId)) {
@@ -169,7 +180,6 @@ public class MainMenu {
                 return controller;
             }
         }
-        System.out.println("Login failed. Please try again.");
         return null;
     }
 
