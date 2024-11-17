@@ -2,6 +2,10 @@ package com.hms.doctor;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;  
+import java.util.HashMap;
+import java.util.Calendar;
+import java.util.Date;
 import com.hms.user.*;
 import com.hms.appointment_management.*;
 
@@ -11,7 +15,8 @@ public class DoctorModel extends UserModel implements Serializable {
     //password from user
     protected String specialization;
     private List<Appointment_ManagementController> appointments;
-    private List<String> schedule;
+    //private List<String> schedule;
+    private Map<Date, String> schedule;
     private int age;
 
     public DoctorModel() {
@@ -23,7 +28,13 @@ public class DoctorModel extends UserModel implements Serializable {
         super(userId, password, "Doctor", name, gender);
         this.age = age;
         this.appointments = null;
-        this.schedule = null;
+        this.schedule = new HashMap<>();
+        Calendar cal = Calendar.getInstance();
+        for (int i = 0; i < 30; i++) {
+            Date date = cal.getTime();
+            schedule.put(date, "empty");
+            cal.add(Calendar.DAY_OF_MONTH, 1);
+        }
     }
 
     public int getAge() {
@@ -50,11 +61,11 @@ public class DoctorModel extends UserModel implements Serializable {
         this.appointments = appointments;
     }
 
-    public List<String> getSchedule() {
+    public Map<Date, String> getSchedule() {
         return schedule;
     }
 
-    public void setSchedule(List<String> schedule) {
+    public void setSchedule(Map<Date, String> schedule) {
         this.schedule = schedule;
     }
 

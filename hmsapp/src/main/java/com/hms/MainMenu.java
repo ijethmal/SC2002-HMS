@@ -58,11 +58,11 @@ public class MainMenu {
         } 
         else if (loggedInController.model.getRole().equals("Patient")) {
             PatientController patientController = (PatientController) loggedInController;
-            displayPatientMenu(patientController);
+            displayPatientMenu(patientController, allControllers);
         }
     }
 
-    public void displayPatientMenu(PatientController patientController) {
+    public void displayPatientMenu(PatientController patientController, List<UserController> allControllers) {
         while (true) {
             System.out.println("\nPlease select an option:");
             System.out.println("1. View my medical record");
@@ -99,8 +99,8 @@ public class MainMenu {
                 case 5:
                     //schedule new appt
                     //display doctors' availabilities
-
-                    patientController.handleScheduleAppt();
+                    displayDoctorSchedules(allControllers);
+                    //patientController.handleScheduleAppt();
                     break;
                 case 6:
                     //reschedule appt
@@ -123,7 +123,7 @@ public class MainMenu {
         for (UserController controller : allControllers) {
             if (controller.model.getRole().equals("Doctor")) {
                 DoctorController doctorController = (DoctorController) controller;
-                doctorController.view.
+                doctorController.view.displaySchedule(doctorController.model.getSchedule());
             }
         }
 

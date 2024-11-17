@@ -1,6 +1,8 @@
 package com.hms.doctor;
 
 import java.io.Serializable;
+import java.util.Date;
+import java.util.Map;
 
 import com.hms.user.*;
 
@@ -22,6 +24,12 @@ public class DoctorView extends UserView implements Serializable {
         System.out.println("Gender: " + model.getGender());
         System.out.println("Age: " + model.getAge());
         System.out.println("---------------------------");
+    }
+
+    public void displaySchedule(Map<Date, String> schedule) {
+        for (Map.Entry<Date, String> entry : schedule.entrySet()) {
+            System.out.println("Date: " + entry.getKey() + " - Details: " + entry.getValue());
+        }
     }
 
     /*public void displayRecordsByPatient(String patientId) {

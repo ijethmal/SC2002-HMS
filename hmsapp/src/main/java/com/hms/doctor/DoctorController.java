@@ -3,9 +3,10 @@ package com.hms.doctor;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
+import java.util.Date;
 import java.time.ZoneId;
 import java.util.List;
-import java.util.Date;
+import java.util.Map;
 
 import com.hms.user.*;
 import com.hms.appointment_management.*;
@@ -33,7 +34,6 @@ public class DoctorController extends UserController implements Serializable {
         ois.defaultReadObject();
         this.view = new DoctorView(this.model); // Reinitialize the view after deserialization
     }
-    
 
     public void viewRecordsByPatient(String patientId) {
         if (patientId == null || patientId.isEmpty()) {
@@ -71,19 +71,18 @@ public class DoctorController extends UserController implements Serializable {
         }
     }
 
-
     public void viewSchedule() {
-        for (String s : ((DoctorModel)model).getSchedule()) {
-            System.out.println(s);
+        for (Map.Entry<Date, String> entry : ((DoctorModel) model).getSchedule().entrySet()) {
+            System.out.println("Date: " + entry.getKey() + " - Details: " + entry.getValue());
         }
     }
 
-    public void setSchedule(List<String> newSchedule) {
-        ((DoctorModel)model).setSchedule(newSchedule);
+    public void setSchedule(Map<Date, String> newSchedule) {
+        ((DoctorModel) model).setSchedule(newSchedule);
     }
 
     public void viewApptRequests() {
-        for (Appointment_ManagementController app : ((DoctorModel)model).getAppointments()) {
+        for (Appointment_ManagementController app : ((DoctorModel) model).getAppointments()) {
             if (app.getStatus().equals("Pending")) {
                 System.out.println(app);
             }
@@ -91,13 +90,13 @@ public class DoctorController extends UserController implements Serializable {
     }
 
     public void viewAppts() {
-        for (Appointment_ManagementController app : ((DoctorModel)model).getAppointments()) {
+        for (Appointment_ManagementController app : ((DoctorModel) model).getAppointments()) {
             System.out.println(app);
         }
     }
 
     public void manageAppRequests() {
-        ((DoctorModel)model).manageAppRequests();
+        ((DoctorModel) model).manageAppRequests();
     }
 
     public void updateAppOutRecords(
@@ -128,9 +127,4 @@ public class DoctorController extends UserController implements Serializable {
         System.out.println("Failed to update appointment outcome.");
     }
     }
-
-    // public void updateApptOutcome(Appointment_ManagementController app, String outcome) {
-    //     //app.setOutcome(outcome); //fix
-    // }
-    
 }
