@@ -79,7 +79,7 @@ public class PatientController extends UserController implements Serializable {
         Appointment_ManagementModel newAppt = new Appointment_ManagementModel(apptDateTime, model.getPatientId(), doctor.model.getUserId(), "Pending");
         Appointment_ManagementView newApptView = new Appointment_ManagementView();
         Appointment_ManagementController newApptController = new Appointment_ManagementController(newAppt, newApptView);
-        model.addAppointment(newAppt);
+        model.addAppointment(newApptController);
         view.showScheduleSuccess();
     }
 
@@ -105,13 +105,13 @@ public class PatientController extends UserController implements Serializable {
 
     public void handleViewApptOutcomeRec() {
         if (model.getPastApptRecs() != null && !model.getPastApptRecs().isEmpty()) {
-            for (Appointment_ManagementModel appt : model.getPastApptRecs()) {
-                if (appt.getOutcome() != null) {
+            for (Appointment_ManagementController appt : model.getPastApptRecs()) {
+                if (appt.model.getOutcome() != null) {
                     AppointmentOutcomeRecordControllerView outcomeView =
-                            new AppointmentOutcomeRecordControllerView(appt.getOutcome());
+                            new AppointmentOutcomeRecordControllerView(appt.model.getOutcome());
                     outcomeView.viewApptOutcomeRec();
                 } else {
-                    System.out.println("No outcome available for appointment ID: " + appt.getApptId());
+                    System.out.println("No outcome available for appointment ID: " + appt.model.getApptId());
                 }
             }
         } else {

@@ -19,7 +19,7 @@ public class PatientModel extends UserModel implements Serializable {
     private String gender;
     private String contactInfo;
     private String bloodType;
-    private List<Appointment_ManagementModel> pastApptRecs;
+    private List<Appointment_ManagementController> pastApptRecs;
 
     public PatientModel() {}
 
@@ -59,12 +59,12 @@ public class PatientModel extends UserModel implements Serializable {
     }
 
     // Return past appointment records as Appointment_ManagementModel
-    public List<Appointment_ManagementModel> getPastApptRecs() {
+    public List<Appointment_ManagementController> getPastApptRecs() {
         return pastApptRecs;
     }
 
     // Add a new appointment to the past appointment records
-    public void addAppointment(Appointment_ManagementModel appointment) {
+    public void addAppointment(Appointment_ManagementController appointment) {
         if (appointment != null) {
             pastApptRecs.add(appointment);
         } else {
@@ -109,11 +109,11 @@ public class PatientModel extends UserModel implements Serializable {
 
     public void rescheduleAppointment(int appointmentIndex, Date newDate) {
         if (pastApptRecs != null && appointmentIndex >= 0 && appointmentIndex < pastApptRecs.size()) {
-            Appointment_ManagementModel record = pastApptRecs.get(appointmentIndex);
+            Appointment_ManagementController record = pastApptRecs.get(appointmentIndex);
 
             if (newDate != null ) {
-                record.setDateTime(newDate);
-                record.setStatusAppt("Rescheduled");
+                record.model.setDateTime(newDate);
+                record.model.setStatusAppt("Rescheduled");
                 System.out.println("Appointment at index " + appointmentIndex + " has been rescheduled to: " + newDate);
             } else {
                 System.out.println("Invalid date provided. Rescheduling failed.");
@@ -128,9 +128,9 @@ public class PatientModel extends UserModel implements Serializable {
 
     public void cancelAppt() {
         if (pastApptRecs != null && !pastApptRecs.isEmpty()) {
-            Appointment_ManagementModel lastAppointment = pastApptRecs.get(pastApptRecs.size() - 1); // Get the last appointment
+            Appointment_ManagementController lastAppointment = pastApptRecs.get(pastApptRecs.size() - 1); // Get the last appointment
             pastApptRecs.remove(lastAppointment); // Remove the last appointment from the list
-            System.out.println("Appointment on " + lastAppointment.getDateTime() + " has been cancelled successfully.");
+            System.out.println("Appointment on " + lastAppointment.model.getDateTime() + " has been cancelled successfully.");
         } else {
             System.out.println("No appointments found to cancel.");
     }
@@ -143,10 +143,10 @@ public class PatientModel extends UserModel implements Serializable {
     System.out.println("---- Appointment Status ----");
     
     if (pastApptRecs != null && !pastApptRecs.isEmpty()) {
-        for (Appointment_ManagementModel record : pastApptRecs) {
+        for (Appointment_ManagementController record : pastApptRecs) {
             // Display details of each appointment
-            System.out.println("Appointment Date: " + record.getDateTime());
-            System.out.println("Status: " + record.getStatusAppt());
+            System.out.println("Appointment Date: " + record.model.getDateTime());
+            System.out.println("Status: " + record.model.getStatusAppt());
             System.out.println("----------------------------");
         }
     } else {
@@ -157,12 +157,12 @@ public class PatientModel extends UserModel implements Serializable {
 
    public void cancelAppointment(int appointmentIndex) {
     if (pastApptRecs != null && appointmentIndex >= 0 && appointmentIndex < pastApptRecs.size()) {
-        Appointment_ManagementModel record = pastApptRecs.get(appointmentIndex);
+        Appointment_ManagementController record = pastApptRecs.get(appointmentIndex);
         
-        if (!"Cancelled".equalsIgnoreCase(record.getStatusAppt())) {
-            record.setStatusAppt("Cancelled");
-            record.setOutcome(null);
-            System.out.println("Appointment at index " + appointmentIndex + " on " + record.getDateTime() + " has been cancelled.");
+        if (!"Cancelled".equalsIgnoreCase(record.model.getStatusAppt())) {
+            record.model.setStatusAppt("Cancelled");
+            record.model.setOutcome(null);
+            System.out.println("Appointment at index " + appointmentIndex + " on " + record.model.getDateTime() + " has been cancelled.");
         } else {
             System.out.println("The appointment is already cancelled.");
         }
