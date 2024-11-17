@@ -1,13 +1,28 @@
 package com.hms.doctor;
 
+import java.io.Serializable;
+
 import com.hms.user.*;
 
-public class DoctorView extends UserView {
+public class DoctorView extends UserView implements Serializable {
     protected DoctorModel model;
+
+    public DoctorView() {
+        super();
+    }
 
     public DoctorView(DoctorModel model) {
         super(model);
     };
+
+    public void displayDoctorDetails(DoctorModel model) {
+        System.out.println("Doctor Details:");
+        System.out.println("ID: " + model.getUserId());
+        System.out.println("Name: " + model.getName());
+        System.out.println("Gender: " + model.getGender());
+        System.out.println("Age: " + model.getAge());
+        System.out.println("---------------------------");
+    }
 
     /*public void displayRecordsByPatient(String patientId) {
         controller.viewRecordsByPatient(patientId);

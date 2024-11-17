@@ -23,10 +23,8 @@ public class PatientModel extends UserModel implements Serializable {
     public PatientModel() {}
 
     public PatientModel(String patientId, String password, String name, Date dob, String gender, String contactInfo, String bloodType) {
-        super(patientId, password, "Patient");
-        this.name = name;
+        super(patientId, password, "Patient", name, gender);
         this.dob = dob;
-        this.gender = gender;
         this.contactInfo = contactInfo;
         this.bloodType = bloodType;
         this.pastApptRecs = new ArrayList<>();

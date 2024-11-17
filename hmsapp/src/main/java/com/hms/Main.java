@@ -65,6 +65,7 @@ public class Main {
             e.printStackTrace();
         }
 
+
         //array of patients
         List<PatientController> patientControllers = new ArrayList<>();
 
@@ -113,14 +114,108 @@ public class Main {
 
         //view patients
         // Deserialize patient controllers
-        try {
+        /*try {
             List<PatientController> deserializedPatientControllers = (List<PatientController>) SerializationUtil.deserialize("hmsapp\\db\\Patient_Controllers.ser");
             for (PatientController patientController : deserializedPatientControllers) {
                 patientController.view.displayPatientDetails(patientController.model);
             }
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
+        }*/
+
+
+        //serialise staff
+        //array of staff
+        List<DoctorController> doctorControllers = new ArrayList<>();
+        List<PharmacistController> pharmacistControllers = new ArrayList<>();
+        List<AdministratorController> administratorControllers = new ArrayList<>();
+
+        List<StaffRecordController> staffRecordControllers = new ArrayList<>();
+
+        //load staff from db
+        String staffData = "hmsapp\\db\\Staff_List.xlsx";
+        try (FileInputStream file = new FileInputStream(new File(staffData))) {
+            Workbook workbook = new XSSFWorkbook(file);
+            Sheet sheet = workbook.getSheetAt(0);
+            for (Row row : sheet) {
+                if (row.getRowNum() == 0) {
+                    continue;
+                }
+                
+                String staffId = row.getCell(0).getStringCellValue();
+                String password = row.getCell(1).getStringCellValue();
+                String name = row.getCell(2).getStringCellValue();
+                String role = row.getCell(3).getStringCellValue();
+                String gender = row.getCell(4).getStringCellValue();
+                int age = (int)row.getCell(5).getNumericCellValue();
+
+                if (role.equals("Doctor")) {
+                    DoctorModel doctor = new DoctorModel(staffId, password, age, name, gender);
+                    DoctorView doctorView = new DoctorView(doctor);
+                    DoctorController doctorController = new DoctorController(doctor, doctorView);
+                    doctorControllers.add(doctorController);
+                    //doctorController.view.displayDoctorDetails(doctorController.model);
+                } else if (role.equals("Pharmacist")) {
+                    PharmacistModel pharmacist = new PharmacistModel(staffId, password, age, name, gender);
+                    PharmacistView pharmacistView = new PharmacistView(pharmacist);
+                    PharmacistController pharmacistController = new PharmacistController(pharmacist, pharmacistView);
+                    pharmacistControllers.add(pharmacistController);
+                } else if (role.equals("Administrator")) {
+                    AdministratorModel administrator = new AdministratorModel(staffId, password, age, name, gender);
+                    AdministratorView administratorView = new AdministratorView(administrator);
+                    AdministratorController administratorController = new AdministratorController(administrator, administratorView);
+                    administratorControllers.add(administratorController);
+                } else {
+                    System.out.println("Invalid role: " + role);
+                }
+                
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+
+        //serialise
+        try {
+            SerializationUtil.serialize(doctorControllers, "hmsapp\\db\\Doctor_Controllers.ser");
+            SerializationUtil.serialize(pharmacistControllers, "hmsapp\\db\\Pharmacist_Controllers.ser");
+            SerializationUtil.serialize(administratorControllers, "hmsapp\\db\\Administrator_Controllers.ser");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+
+        //view staff
+        // Deserialize doctor controllers
+        try {
+            List<DoctorController> deserializedDoctorControllers = (List<DoctorController>) SerializationUtil.deserialize("hmsapp\\db\\Doctor_Controllers.ser");
+            for (DoctorController doctorController : deserializedDoctorControllers) {
+                doctorController.view.displayDoctorDetails(doctorController.model);
+            }
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        // Deserialize administrator controllers
+        try {
+            List<AdministratorController> deserializedAdministratorControllers = (List<AdministratorController>) SerializationUtil.deserialize("hmsapp\\db\\Administrator_Controllers.ser");
+            for (AdministratorController administratorController : deserializedAdministratorControllers) {
+                administratorController.view.displayAdministratorDetails(administratorController.model);
+            }
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        // Deserialize pharmacist controllers
+        try {
+            List<PharmacistController> deserializedPharmacistControllers = (List<PharmacistController>) SerializationUtil.deserialize("hmsapp\\db\\Pharmacist_Controllers.ser");
+            for (PharmacistController pharmacistController : deserializedPharmacistControllers) {
+                pharmacistController.view.displayPharmacistDetails(pharmacistController.model);
+            }
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
 }
 
 }

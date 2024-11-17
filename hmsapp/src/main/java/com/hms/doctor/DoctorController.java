@@ -1,5 +1,8 @@
 package com.hms.doctor;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.Serializable;
 import java.time.ZoneId;
 import java.util.List;
 import java.util.Date;
@@ -10,10 +13,25 @@ import com.hms.appointment_outcome_record.AppointmentOutcomeRecordModel;
 import com.hms.diagnosis.Diagnosis;
 import com.hms.prescription.PrescriptionModel;
 
-public class DoctorController extends UserController {
+public class DoctorController extends UserController implements Serializable {
+    private static final long serialVersionUID = 1L;
     
-    public DoctorController(DoctorModel model, UserView view) {
+    public DoctorModel model;
+    public DoctorView view;
+
+    public DoctorController() {
+        super();
+    }
+
+    public DoctorController(DoctorModel model, DoctorView view) {
         super(model, view);
+        this.model = model;
+        this.view = view;
+    }
+
+    private void readObject(ObjectInputStream ois) throws ClassNotFoundException, IOException {
+        ois.defaultReadObject();
+        this.view = new DoctorView(this.model); // Reinitialize the view after deserialization
     }
     
 

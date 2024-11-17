@@ -3,6 +3,7 @@ package com.hms.administrator;
 import java.util.List;
 
 import com.hms.appointment_management.*;
+import com.hms.doctor.DoctorModel;
 import com.hms.user.*;
 import com.hms.replenishmentrequest.*;
 import com.hms.medicine.*;
@@ -13,8 +14,21 @@ public class AdministratorView extends UserView{
 
     protected AdministratorModel model;
 
+    public AdministratorView() {
+        super();
+    }
+
     public AdministratorView (AdministratorModel model) {
         super(model);
+    }
+
+    public void displayAdministratorDetails(AdministratorModel model) {
+        System.out.println("Administrator Details:");
+        System.out.println("ID: " + model.getUserId());
+        System.out.println("Name: " + model.getName());
+        System.out.println("Gender: " + model.getGender());
+        System.out.println("Age: " + model.getAge());
+        System.out.println("---------------------------");
     }
 
     public void displayStaff(List<StaffRecordController> staffList) {

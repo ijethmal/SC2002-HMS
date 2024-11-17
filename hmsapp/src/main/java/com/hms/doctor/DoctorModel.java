@@ -1,32 +1,45 @@
 package com.hms.doctor;
 
+import java.io.Serializable;
 import java.util.List;
 import com.hms.user.*;
 import com.hms.appointment_management.*;
 
-public class DoctorModel extends UserModel {
+public class DoctorModel extends UserModel implements Serializable {
     
     //userid from user
     //password from user
     protected String specialization;
     private List<Appointment_ManagementController> appointments;
     private List<String> schedule;
+    private int age;
 
+    public DoctorModel() {
+        super();
+    }
 
-    public DoctorModel(String userId, String password, String specialization)
+    public DoctorModel(String userId, String password, int age, String name, String gender)
     {
-        super(userId, password, "Doctor");
-        this.specialization = specialization;
+        super(userId, password, "Doctor", name, gender);
+        this.age = age;
         this.appointments = null;
         this.schedule = null;
     }
 
-    public String getSpecialization() {
-        return specialization;
+    public int getAge() {
+        return age;
     }
 
-    public void setSpecialization(String specialization) {
-        this.specialization = specialization;
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public List<Appointment_ManagementController> getAppointments() {

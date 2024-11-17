@@ -3,16 +3,25 @@ package com.hms.pharmacist;
 import com.hms.prescription.*;
 import com.hms.user.*;
 import com.hms.medicine.*;
+
+import java.io.Serializable;
+
 import com.hms.administrator.*;
 import com.hms.inventory.*;
 
-public class PharmacistController extends UserController {
+public class PharmacistController extends UserController implements Serializable {
 
     public PharmacistModel model;
     public PharmacistView view;
     
+    public PharmacistController() {
+        super();
+    }
+
     public PharmacistController(PharmacistModel model, PharmacistView view) {
         super(model, view);
+        this.model = model;
+        this.view = view;
     }
 
     public void viewApptOutRec() {

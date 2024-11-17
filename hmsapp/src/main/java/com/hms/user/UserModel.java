@@ -7,14 +7,18 @@ public abstract class UserModel implements Serializable {
     protected String userId;
     protected String password;
     protected String role;
+    protected String name;
+    protected String gender;
 
     // No-argument constructor for deserialization ONLY
     public UserModel() {}
 
-    public UserModel (String userId, String password, String role) {
+    public UserModel (String userId, String password, String role, String name, String gender) {
         this.userId =  userId;
         this.password = password;
         this.role = role;
+        this.name = name;
+        this.gender = gender;
     }
 
     public static void login(String userId, String password){
@@ -38,12 +42,29 @@ public abstract class UserModel implements Serializable {
         this.userId = userId;
     }
 
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public void setPassword(String password) {
         this.password = password;
     }
 
     public String getPassword() {
         return password;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
     public String getRole() {

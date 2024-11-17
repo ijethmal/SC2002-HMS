@@ -9,8 +9,12 @@ import com.hms.medicine.*;
 
 public class AdministratorController extends UserController{
     
-    protected AdministratorModel model;
-    protected AdministratorView view;
+    public AdministratorModel model;
+    public AdministratorView view;
+
+    public AdministratorController() {
+        super();
+    }
 
     public AdministratorController(AdministratorModel model, AdministratorView view) {
         super(model, view); // Explicitly call the superclass constructor
