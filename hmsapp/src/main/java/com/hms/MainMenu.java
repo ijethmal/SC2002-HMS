@@ -27,6 +27,7 @@ public class MainMenu {
         System.out.println("Welcome to Hospital Management System!");
         // get staff controllers in a list of usercontroller
         List<UserController> allControllers = deserialiseUsers();
+        UserController loggedInController = null;
         while (true) {
             System.out.println("Please login:");
             System.out.println("Enter your user ID: ");
@@ -34,15 +35,31 @@ public class MainMenu {
             String userId = scanner.nextLine();
             System.out.println("Enter your password: ");
             String password = scanner.nextLine();
-            UserController loggedInController = login(userId, password, allControllers);
+            loggedInController = login(userId, password, allControllers);
             if (loggedInController != null) {
-                System.out.println("Welcome, " + loggedInController.model.getRole() + " " + loggedInController.model.getName() + "!");
+                System.out.println("Welcome, " + loggedInController.model.getRole() + " " + loggedInController.model.getName() + "!\n");
                 break;
             }
         }
 
-        System.out.println("What would you like to do?");
-
+        //menu options depend on user
+        //if user is a doctor
+        if (loggedInController.model.getRole().equals("Doctor")) {
+            DoctorController doctorController = (DoctorController) loggedInController;
+            doctorController.view.displayDoctorMenu();
+        } 
+        else if (loggedInController.model.getRole().equals("Pharmacist")) {
+            PharmacistController pharmacistController = (PharmacistController) loggedInController;
+            pharmacistController.view.displayPharmacistMenu();
+        } 
+        else if (loggedInController.model.getRole().equals("Administrator")) {
+            AdministratorController administratorController = (AdministratorController) loggedInController;
+            administratorController.view.displayAdministratorMenu();
+        } 
+        else if (loggedInController.model.getRole().equals("Patient")) {
+            PatientController patientController = (PatientController) loggedInController;
+            patientController.view.displayPatientMenu();
+        }
     }
 
     public UserController login(String userId, String password, List<UserController> allControllers) {

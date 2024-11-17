@@ -66,8 +66,6 @@ public class Main {
             e.printStackTrace();
         }
 
-
-        System.out.println("Loading patients...");
         //array of patients
         List<PatientController> patientControllers = new ArrayList<>();
 
