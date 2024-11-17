@@ -1,8 +1,12 @@
 package com.hms;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 import com.hms.administrator.AdministratorController;
@@ -63,6 +67,7 @@ public class MainMenu {
     }
 
     public void displayPatientMenu(PatientController patientController, List<UserController> allControllers) {
+        Scanner scanner = new Scanner(System.in);
         while (true) {
             System.out.println("\nPlease select an option:");
             System.out.println("1. View my medical record");
@@ -73,49 +78,69 @@ public class MainMenu {
             System.out.println("6. Reschedule an appointment");
             System.out.println("7. Cancel an appointment");
             System.out.println("8. Log out");
-            Scanner scanner = new Scanner(System.in);
             int choice = scanner.nextInt();
-
+            scanner.nextLine(); // consume the newline character
+    
             switch (choice) {
                 case 1:
-                    //view medical record
+                    // view medical record
                     patientController.view.displayPatientDetails(patientController.model);
                     break;
                 case 2:
-                    //update contact info
+                    // update contact info
                     System.out.println("Enter new contact information: ");
-                    scanner.nextLine(); // consume the newline character
                     String newContactInfo = scanner.nextLine();
                     patientController.handleUpdateContactInfo(newContactInfo);
                     break;
                 case 3:
-                    //view past appt records
+                    // view past appt records
                     patientController.handleViewApptOutcomeRec();
                     break;
                 case 4:
-                    //view upcoming appts
+                    // view upcoming appts
                     patientController.handleViewApptStatus();
                     break;
                 case 5:
-                    //schedule new appt
-                    //display doctors' availabilities
+                    // schedule new appt
+                    // display doctors' availabilities
                     displayDoctorSchedules(allControllers);
-                    //patientController.handleScheduleAppt();
+                    System.out.println("Enter the doctor's ID you would like to schedule an appointment with: ");
+                    String doctorId = scanner.nextLine().trim();
+                    UserController doctorController = findUserbyID(doctorId, allControllers);
+                    if (doctorController == null) {
+                        System.out.println("Doctor not found. Please try again.");
+                        break;
+                    }
+                    System.out.println("Enter the date you would like to schedule the appointment (yyyy-MM-dd): ");
+                    String dateStr = scanner.nextLine();
+                    try {
+                        Date chosenDate = new SimpleDateFormat("yyyy-MM-dd").parse(dateStr);
+                        DoctorController docController = (DoctorController) doctorController;
+                        Map<Date, String> schedule = docController.model.getSchedule();
+                        if (schedule.containsKey(chosenDate) && schedule.get(chosenDate).equals("empty")) {
+                            System.out.println("Date is available for scheduling.");
+                            // handle schedule appointment
+                            patientController.handleScheduleAppt(docController, chosenDate, "Consultation");
+                        } else {
+                            System.out.println("Date is not available. Please choose another date.");
+                        }
+                    } catch (ParseException e) {
+                        System.out.println("Invalid date format. Please try again.");
+                    }
                     break;
                 case 6:
-                    //reschedule appt
+                    // reschedule appt
                     break;
                 case 7:
-                    //cancel appt
+                    // cancel appt
                     break;
                 case 8:
-                    //log out
-                    break;
+                    // log out
+                    return;
                 default:
                     System.out.println("Invalid choice. Please try again.");
             }
         }
-        //
     }
 
     //display doctor schedules
@@ -127,6 +152,18 @@ public class MainMenu {
             }
         }
 
+    }
+
+    //find user in list of user controllers
+    public UserController findUserbyID(String userId, List<UserController> allControllers) {
+        //trim userId
+        userId = userId.trim();
+        for (UserController controller : allControllers) {
+            if (controller.model.getUserId().equals(userId)) {
+                return controller;
+            }
+        }
+        return null;
     }
 
     public UserController login(String userId, String password, List<UserController> allControllers) {

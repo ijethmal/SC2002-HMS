@@ -1,6 +1,5 @@
 package com.hms.appointment_management;
 
-import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 import java.time.format.DateTimeFormatter;
@@ -30,11 +29,11 @@ public class Appointment_ManagementController {
     }
 
     // Method to input data and schedule a new appointment
-    public void inputAndScheduleAppointment() {
+    /*public void inputAndScheduleAppointment() {
         String apptId = getInput("Enter Appointment ID: ");
         String patientId = getInput("Enter Patient ID: ");
         String doctorId = getInput("Enter Doctor ID: ");
-        LocalDateTime dateTime = getDateTimeInput("Enter appointment date and time (yyyy-MM-dd HH:mm): ");
+        Date dateTime = Date("Enter appointment date and time (yyyy-MM-dd HH:mm): ");
         String statusAppt = getInput("Enter Appointment Status: ");
 
         LocalDateTime now = LocalDateTime.now(); 
@@ -63,7 +62,7 @@ public class Appointment_ManagementController {
 
         // Display confirmation through the view
         view.displayScheduleSuccess("Appointment scheduled successfully with ID: " + apptId);
-    }
+    }*/
 
     public void handleUpdateStatus() {
         String newStatus = getInput("Enter new status for the appointment: ");
@@ -103,7 +102,7 @@ public class Appointment_ManagementController {
     }
 
     // get input as a date and time (LocalDateTime)
-    private static LocalDateTime getDateTimeInput(String prompt) {
+    /*private static LocalDateTime getDateTimeInput(String prompt) {
         LocalDateTime dateTime = null;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         
@@ -117,7 +116,7 @@ public class Appointment_ManagementController {
             }
         }
         return dateTime;
-    }
+    }*/
 
     
 }

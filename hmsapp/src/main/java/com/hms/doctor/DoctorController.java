@@ -12,6 +12,7 @@ import com.hms.user.*;
 import com.hms.appointment_management.*;
 import com.hms.appointment_outcome_record.AppointmentOutcomeRecordModel;
 import com.hms.diagnosis.Diagnosis;
+import com.hms.patient.PatientController;
 import com.hms.prescription.PrescriptionModel;
 
 public class DoctorController extends UserController implements Serializable {
@@ -85,6 +86,10 @@ public class DoctorController extends UserController implements Serializable {
         }
     }
 
+    public void addApptRequest(Date date, PatientController patient) {
+        ((DoctorModel) model).addAppointment(date, patient);
+    }
+
     public void viewAppts() {
         for (Appointment_ManagementController app : ((DoctorModel) model).getAppointments()) {
             System.out.println(app);
@@ -95,7 +100,7 @@ public class DoctorController extends UserController implements Serializable {
         ((DoctorModel) model).manageAppRequests();
     }
 
-    public void updateAppOutRecords(
+    /*public void updateAppOutRecords(
         Appointment_ManagementController app,
         String outcome,
         Diagnosis[] diagnoses,
@@ -107,8 +112,7 @@ public class DoctorController extends UserController implements Serializable {
         }
 
         // Convert LocalDateTime to Date
-        Date date = Date.from(app.getModel().getDateTime().atZone(ZoneId.systemDefault()).toInstant());
-
+        
         // Update the appointment outcome record
             app.getModel().updateRecord(new AppointmentOutcomeRecordModel(
             app.getModel().getPatientId(),
@@ -122,5 +126,5 @@ public class DoctorController extends UserController implements Serializable {
     } else {
         System.out.println("Failed to update appointment outcome.");
     }
-    }
+    }*/
 }

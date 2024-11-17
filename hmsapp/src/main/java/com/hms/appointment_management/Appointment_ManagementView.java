@@ -2,7 +2,13 @@ package com.hms.appointment_management;
 
 public class Appointment_ManagementView {
 
+    public Appointment_ManagementModel model;
+
     public Appointment_ManagementView() {}
+
+    public Appointment_ManagementView(Appointment_ManagementModel model) {
+        this.model = model;
+    }
 
     public void displayAppointmentDetails(String appointmentDetails) {
         System.out.println(appointmentDetails);

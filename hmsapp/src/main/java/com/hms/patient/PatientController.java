@@ -12,6 +12,7 @@ import java.text.ParseException;
 import com.hms.user.UserController;
 import com.hms.appointment_management.*;
 import com.hms.appointment_outcome_record.*;
+import com.hms.doctor.DoctorController;
 
 public class PatientController extends UserController implements Serializable {
     public PatientModel model;
@@ -73,8 +74,8 @@ public class PatientController extends UserController implements Serializable {
         model.updateContactInfo(newContactInfo);
     }
 
-    public void handleScheduleAppt(String doctorId, LocalDateTime apptDateTime, String apptType) {
-        model.scheduleAppointment(doctorId, apptDateTime,apptType, "Pending", null);
+    public void handleScheduleAppt(DoctorController doctor, Date apptDateTime, String apptType) {
+        doctor.addApptRequest(apptDateTime, this);
         view.showScheduleSuccess();
     }
 
@@ -85,7 +86,7 @@ public class PatientController extends UserController implements Serializable {
         Appointment_ManagementController apptController = new Appointment_ManagementController(apptModel, apptView);
 
         // Use the Appointment Management Controller to handle scheduling
-        apptController.inputAndScheduleAppointment();
+        //apptController.inputAndScheduleAppointment();
     }
 
     public void handleCancelAppt() {

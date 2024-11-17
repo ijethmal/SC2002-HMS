@@ -29,7 +29,7 @@ public class DoctorView extends UserView implements Serializable {
 }
 
     public void displaySchedule(Map<Date, String> schedule) {
-        System.out.println("\nDoctor: " + model.getName());
+        System.out.println("\nDoctor ID: " + model.getUserId());
         schedule.entrySet().stream()
             .sorted(Map.Entry.comparingByKey())
             .forEach(entry -> System.out.println("Date: " + entry.getKey() + " - Details: " + entry.getValue()));

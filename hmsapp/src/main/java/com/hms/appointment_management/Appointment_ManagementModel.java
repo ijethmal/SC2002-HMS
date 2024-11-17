@@ -5,19 +5,20 @@ import java.time.LocalDateTime;
 //import com.hms.appointment_outcome_record.*;
 import com.hms.appointment_outcome_record.AppointmentOutcomeRecordModel;
 
+import java.util.Date;
 //generate uuid 
 import java.util.UUID;
 
 public class Appointment_ManagementModel {
     private String apptId;
-    private LocalDateTime dateTime;
+    private Date dateTime;
     private String patientId;
     private String doctorId;
     private String statusAppt;
     private AppointmentOutcomeRecordModel outcome;
 
     // Constructor
-    public Appointment_ManagementModel(LocalDateTime dateTime, String patientId, String doctorId, String statusAppt) {
+    public Appointment_ManagementModel(Date dateTime, String patientId, String doctorId, String statusAppt) {
         this.apptId = UUID.randomUUID().toString();
         this.dateTime = dateTime;
         this.patientId = patientId;
@@ -36,11 +37,11 @@ public class Appointment_ManagementModel {
         this.apptId = apptId;
     }
 
-    public LocalDateTime getDateTime() {
+    public Date getDateTime() {
         return dateTime;
     }
 
-    public void setDateTime(LocalDateTime dateTime) {
+    public void setDateTime(Date dateTime) {
         this.dateTime = dateTime;
     }
 

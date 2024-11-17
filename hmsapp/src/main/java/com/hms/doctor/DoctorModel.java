@@ -4,10 +4,12 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;  
 import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import com.hms.user.*;
 import com.hms.appointment_management.*;
+import com.hms.patient.*;
 
 public class DoctorModel extends UserModel implements Serializable {
     
@@ -24,27 +26,27 @@ public class DoctorModel extends UserModel implements Serializable {
     }
 
     public DoctorModel(String userId, String password, int age, String name, String gender)
-{
-    super(userId, password, "Doctor", name, gender);
-this.userId = userId;
-this.password = password;
-this.name = name;
-this.gender = gender;
-this.age = age;
-this.appointments = null;
-this.schedule = new HashMap<>();
-//add dates to schedule using calendar
-for (int i = 1; i <= 30; i++) { // Corrected loop to start from 1 and go up to 30
-    Calendar cal = Calendar.getInstance();
-    cal.set(2024, Calendar.NOVEMBER, i); // Use Calendar.NOVEMBER for better readability
-    cal.set(Calendar.HOUR_OF_DAY, 0);
-    cal.set(Calendar.MINUTE, 0);
-    cal.set(Calendar.SECOND, 0);
-    cal.set(Calendar.MILLISECOND, 0);
-    Date date = cal.getTime();
-    schedule.put(date, "empty");
-}
-}
+    {
+        super(userId, password, "Doctor", name, gender);
+        this.userId = userId;
+        this.password = password;
+        this.name = name;
+        this.gender = gender;
+        this.age = age;
+        this.appointments = new ArrayList<>();
+        this.schedule = new HashMap<>();
+        //add dates to schedule using calendar
+        for (int i = 1; i <= 30; i++) { // Corrected loop to start from 1 and go up to 30
+            Calendar cal = Calendar.getInstance();
+            cal.set(2024, Calendar.NOVEMBER, i); // Use Calendar.NOVEMBER for better readability
+            cal.set(Calendar.HOUR_OF_DAY, 0);
+            cal.set(Calendar.MINUTE, 0);
+            cal.set(Calendar.SECOND, 0);
+            cal.set(Calendar.MILLISECOND, 0);
+            Date date = cal.getTime();
+            schedule.put(date, "empty");
+        }
+    }
 
     public int getAge() {
         return age;
@@ -88,6 +90,21 @@ for (int i = 1; i <= 30; i++) { // Corrected loop to start from 1 and go up to 3
 
     public void updateApptOutcome() {
         //...
+    }
+
+    public void addAppointment(Date date, PatientController patient) {
+        if (schedule.containsKey(date) && schedule.get(date).equals("empty")) {
+            schedule.put(date, patient.model.getPatientId());
+            System.out.println("Appointment added for " + date);
+            schedule.put(date, "booked");
+        } else {
+            System.out.println("Appointment slot not available.");
+        }
+        //create appointment
+        Appointment_ManagementModel appointment = new Appointment_ManagementModel(date, patient.model.getPatientId(), this.userId, "Pending");
+        Appointment_ManagementView appointmentView = new Appointment_ManagementView(appointment);
+        Appointment_ManagementController appointmentController = new Appointment_ManagementController(appointment, appointmentView);
+        appointments.add(appointmentController);
     }
 
 

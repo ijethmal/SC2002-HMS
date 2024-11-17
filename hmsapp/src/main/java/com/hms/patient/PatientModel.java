@@ -5,6 +5,7 @@ import com.hms.user.*;
 //import com.hms.diagnosis.Diagnosis;
 import com.hms.appointment_management.*;
 //import com.hms.appointment_outcome_record.AppointmentOutcomeRecordControllerView;
+import com.hms.doctor.DoctorController;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -106,23 +107,11 @@ public class PatientModel extends UserModel implements Serializable {
 }
 
 
-    public void scheduleAppointment(String doctorId, LocalDateTime appointmentDate, String typeOfService, String initialStatus, String doctorNotes) {
-        if (appointmentDate != null && appointmentDate.isAfter(LocalDateTime.now())) {
-            Appointment_ManagementModel newAppointment = new Appointment_ManagementModel(appointmentDate, userId, doctorId, "Pending");
-            Appointment_ManagementView apptView = new Appointment_ManagementView();
-            Appointment_ManagementController apptController = new Appointment_ManagementController(newAppointment, apptView);
-            pastApptRecs.add(newAppointment);
-            System.out.println("Appointment scheduled successfully on " + appointmentDate);
-        } else {
-            System.out.println("Invalid date provided. Scheduling failed.");
-        }
-    }
-
-    public void rescheduleAppointment(int appointmentIndex, LocalDateTime newDate) {
+    public void rescheduleAppointment(int appointmentIndex, Date newDate) {
         if (pastApptRecs != null && appointmentIndex >= 0 && appointmentIndex < pastApptRecs.size()) {
             Appointment_ManagementModel record = pastApptRecs.get(appointmentIndex);
 
-            if (newDate != null && newDate.isAfter(LocalDateTime.now())) {
+            if (newDate != null ) {
                 record.setDateTime(newDate);
                 record.setStatusAppt("Rescheduled");
                 System.out.println("Appointment at index " + appointmentIndex + " has been rescheduled to: " + newDate);
