@@ -1,6 +1,8 @@
 package com.hms.appointment_management;
 
-public class Appointment_ManagementView {
+import java.io.Serializable;
+
+public class Appointment_ManagementView implements Serializable {
 
     public Appointment_ManagementModel model;
 

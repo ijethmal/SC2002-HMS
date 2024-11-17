@@ -58,4 +58,6 @@ public class PatientView extends UserView implements Serializable {
     public void showCancelSuccess() {
         System.out.println("Appointment canceled successfully.");
     }
+
+    
 }

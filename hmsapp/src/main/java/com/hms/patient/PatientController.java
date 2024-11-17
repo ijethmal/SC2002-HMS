@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.util.Scanner;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.text.ParseException;
 
 
@@ -49,7 +50,7 @@ public class PatientController extends UserController implements Serializable {
             dob = sdf.parse(dobInput);
         } catch (ParseException e) {
             System.out.println("Invalid date format. Please use yyyy-MM-dd.");
-            scanner.close();
+            //scanner.close();
             return;
         }
 
@@ -68,7 +69,7 @@ public class PatientController extends UserController implements Serializable {
         view.displayRegistrationSuccess(newPatient.getPatientId());
         view.displayPatientDetails(newPatient);
         
-        scanner.close();
+        //scanner.close();
     }
 
     public void handleUpdateContactInfo(String newContactInfo) {
@@ -80,14 +81,37 @@ public class PatientController extends UserController implements Serializable {
         doctor.model.addAppointment(apptDateTime, this, appointments);
     }
 
-    public void handleRescheduleAppt() {
-        // Create instances for Appointment Management
-        Appointment_ManagementModel apptModel = new Appointment_ManagementModel(null, model.getPatientId(), "doctorId", "Pending");
-        Appointment_ManagementView apptView = new Appointment_ManagementView();
-        Appointment_ManagementController apptController = new Appointment_ManagementController(apptModel, apptView);
+    public void handleRescheduleAppt(List<Appointment_ManagementController> appointments, List<UserController> allControllers) {
+        for (Appointment_ManagementController appt : appointments) {
+            if (appt.model.getPatientId().equals(model.getPatientId())) {
+                appt.view.displayAppointmentDetails();
+                System.out.println();
+            }
+        }
+        System.out.println("Enter the appointment ID you want to reschedule: ");
+        Scanner scanner = new Scanner(System.in);
+        String apptId = scanner.nextLine();
 
-        // Use the Appointment Management Controller to handle scheduling
-        //apptController.inputAndScheduleAppointment();
+        //get appointment object by id
+        for (Appointment_ManagementController appt : appointments) {
+            if (appt.model.getApptId().equals(apptId)) {
+                System.out.println("Enter the new date and time (yyyy-MM-dd): ");
+                String newDateTime = scanner.nextLine();
+                //scanner.close();
+                try {
+                    Date chosenDate = new SimpleDateFormat("yyyy-MM-dd").parse(newDateTime);
+                    appt.handleRescheduleAppt(apptId, chosenDate, appointments, allControllers);
+                    //scanner.close();
+                    return;
+                } catch (ParseException e) {
+                    System.out.println("Invalid date format. Please try again.");
+                    //scanner.close();
+                    return;
+                }
+            }
+        }
+        System.out.println("Appointment ID not found.");
+        //scanner.close();
     }
 
     public void handleCancelAppt() {
@@ -139,7 +163,7 @@ public class PatientController extends UserController implements Serializable {
         dob = sdf.parse(dobInput); // Parse dobInput into a Date object
     } catch (ParseException e) {
         System.out.println("Invalid date format. Please use yyyy-MM-dd.");
-        scanner.close();
+        //scanner.close();
         return; // Exit if the date format is invalid
     }
     System.out.print("Enter Gender: ");
@@ -156,6 +180,6 @@ public class PatientController extends UserController implements Serializable {
     // Add the new patient to a database or in-memory list if needed
     view.displayRegistrationSuccess(newPatient.getPatientId());
     
-    scanner.close();
+    //scanner.close();
 }
 }

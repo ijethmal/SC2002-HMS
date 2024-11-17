@@ -1,5 +1,6 @@
 package com.hms.appointment_management;
 
+import java.io.Serializable;
 //import java.util.Date;
 import java.time.LocalDateTime;
 //import com.hms.appointment_outcome_record.*;
@@ -9,7 +10,7 @@ import java.util.Date;
 //generate uuid 
 import java.util.UUID;
 
-public class Appointment_ManagementModel {
+public class Appointment_ManagementModel implements Serializable {
     private String apptId;
     private Date dateTime;
     private String patientId;

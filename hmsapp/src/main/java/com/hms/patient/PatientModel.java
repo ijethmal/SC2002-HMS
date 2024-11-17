@@ -32,6 +32,8 @@ public class PatientModel extends UserModel implements Serializable {
         this.name = name;
         this.gender = gender;
         this.password = password;
+        this.userId = patientId;
+        this.role = "Patient";
     }
     // Getter methods
     public String getPatientId() {

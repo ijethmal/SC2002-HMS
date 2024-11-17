@@ -1,16 +1,19 @@
 package com.hms.appointment_management;
 
+import java.io.Serializable;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.List;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 import com.hms.appointment_outcome_record.*;
 import com.hms.diagnosis.Diagnosis;
 import com.hms.prescription.PrescriptionModel;
+import com.hms.user.UserController;
 
 
 // asked chatgpt need to make changes 
-public class Appointment_ManagementController {
+public class Appointment_ManagementController implements Serializable {
     public Appointment_ManagementModel model;
     public Appointment_ManagementView view;
     private static Scanner scanner = new Scanner(System.in);
@@ -77,6 +80,16 @@ public class Appointment_ManagementController {
             view.displayCancelSuccess("Appointment " + apptId + " has been cancelled.");
         } else {
             view.displayError("Appointment not found or ID mismatch.");
+        }
+    }
+
+    public void handleRescheduleAppt(String apptId, Date newDateTime, List<Appointment_ManagementController> appointments, List<UserController> allControllers) {
+        for (Appointment_ManagementController appt : appointments) {
+            if (appt.model.getApptId().equals(apptId)) {
+                appt.model.setDateTime(newDateTime);
+                System.out.println("Appointment " + apptId + " has been rescheduled.");
+                return;
+            }
         }
     }
 
