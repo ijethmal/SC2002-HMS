@@ -28,10 +28,6 @@ public abstract class UserView implements Serializable {
         System.out.println("Role: " + model.getRole());
     }
 
-    public void login(String userId, String password) {
-        controller.handleLogin(userId, password);
-    }
-
     public void changePassword(String oldPass, String newPass) {
         controller.handleChangePassword(oldPass, newPass);
     }
