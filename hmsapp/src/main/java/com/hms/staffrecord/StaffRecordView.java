@@ -3,20 +3,17 @@ package com.hms.staffrecord;
 import com.hms.user.UserView;
 
 // Define the view class
-public class StaffRecordView extends UserView {
+public class StaffRecordView {
 
-    // Constructor that initializes the UserView with a StaffRecordModel
+    public StaffRecordModel model;
+
     public StaffRecordView(StaffRecordModel model) {
-        super(model);  // Pass the model to the UserView constructor
+        this.model = model;
     }
 
-    // Method to display the staff record in a formatted way
-    public void displayRecord(StaffRecordModel record) {
-        System.out.println("Staff Record:");
-        System.out.println("Staff ID: " + record.getStaffId());
-        System.out.println("Name: " + record.getName());
-        System.out.println("Role: " + record.getRole());
-        System.out.println("Gender: " + record.getGender());
-        System.out.println("Age: " + record.getAge());
+    public void printStaffRecord() {
+        System.out.println("Staff ID: " + model.getStaffId());
+        System.out.println("Name: " + model.userController.model.getName());
+        System.out.println("Role: " + model.userController.model.getRole());
     }
 }
