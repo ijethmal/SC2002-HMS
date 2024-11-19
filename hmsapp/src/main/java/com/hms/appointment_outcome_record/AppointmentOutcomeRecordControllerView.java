@@ -18,7 +18,6 @@ public class AppointmentOutcomeRecordControllerView {
         System.out.println("---- Appointment Outcome Record ----");
         System.out.println("Record ID: " + model.getRecordID());
         System.out.println("Patient ID: " + model.getPatientId());
-        System.out.println("Date and Time: " + model.getDateTime());
         System.out.println("Type of Service: " + model.getTypeOfService());
         System.out.println("-------------------------------------");
     }

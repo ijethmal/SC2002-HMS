@@ -13,16 +13,14 @@ import java.util.ArrayList;
 public class AppointmentOutcomeRecordModel {
     private String recordID;
     private String patientId;
-    private Date dateTime;
     private String typeOfService;
     private List<String> diagnoses;
     private PrescriptionController[] prescriptions;
 
-    public AppointmentOutcomeRecordModel(String patientId, Date dateTime, String typeOfService, List<String> diagnoses, PrescriptionController[] prescriptions) {
+    public AppointmentOutcomeRecordModel(String patientId, String typeOfService, List<String> diagnoses, PrescriptionController[] prescriptions) {
         this.recordID = UUID.randomUUID().toString().replace("-", "").substring(0, 10);
         //this.recordID = Math.abs(UUID.randomUUID().hashCode() % 100000);
         this.patientId = patientId;
-        this.dateTime = dateTime;
         this.typeOfService = typeOfService;
         this.diagnoses = new ArrayList<>();
         this.prescriptions = prescriptions;
@@ -36,9 +34,6 @@ public class AppointmentOutcomeRecordModel {
         return patientId;
     }
 
-    public Date getDateTime() {
-        return dateTime;
-    }
 
     public String getTypeOfService() {
         return typeOfService;
@@ -70,11 +65,6 @@ public class AppointmentOutcomeRecordModel {
     public void setPatientId(String patientId) {
         this.patientId = patientId;
         //notifyObservers("Patient ID updated.");
-    }
-
-    public void setDateTime(Date dateTime) {
-        this.dateTime = dateTime;
-        //notifyObservers("Date and time updated.");
     }
 
     public void setTypeOfService(String typeOfService) {

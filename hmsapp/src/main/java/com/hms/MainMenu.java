@@ -1,5 +1,7 @@
 package com.hms;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -9,8 +11,25 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.text.ParseException;
+
 import com.hms.administrator.AdministratorController;
 import com.hms.doctor.DoctorController;
+import com.hms.inventory.InventoryController;
+import com.hms.inventory.InventoryModel;
+import com.hms.inventory.InventoryView;
+import com.hms.medicine.MedicineController;
+import com.hms.medicine.MedicineModel;
+import com.hms.medicine.MedicineView;
 import com.hms.patient.PatientController;
 import com.hms.pharmacist.PharmacistController;
 import com.hms.user.*;
@@ -33,6 +52,7 @@ public class MainMenu {
     public void displayMainMenu() {
         System.out.println("Welcome to Hospital Management System!");
         List<UserController> allControllers = deserialiseUsers();
+        InventoryController inventoryController = loadInventory();
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
@@ -56,7 +76,7 @@ public class MainMenu {
             // Menu options depend on user role
             if (loggedInController.model.getRole().equals("Doctor")) {
                 DoctorController doctorController = (DoctorController) loggedInController;
-                displayDoctorMenu(doctorController, appointments);
+                displayDoctorMenu(doctorController, appointments, inventoryController, allControllers);
             } else if (loggedInController.model.getRole().equals("Pharmacist")) {
                 PharmacistController pharmacistController = (PharmacistController) loggedInController;
                 // displayPharmacistMenu();
@@ -77,7 +97,7 @@ public class MainMenu {
         }
     }
 
-    public void displayDoctorMenu(DoctorController doctorController, List<Appointment_ManagementController> appointments) {
+    public void displayDoctorMenu(DoctorController doctorController, List<Appointment_ManagementController> appointments, InventoryController inventoryController, List<UserController> allControllers) {
         Scanner scanner = new Scanner(System.in);
         while (true) {
             System.out.println("\nPlease select an option:");
@@ -112,7 +132,7 @@ public class MainMenu {
                     break;
                 case 3:
                     // manage appointment requests
-                    doctorController.manageAppRequests(appointments);
+                    doctorController.manageAppRequests(appointments, allControllers);
                     break;
                 case 4:
                     // view upcoming appointments
@@ -120,7 +140,7 @@ public class MainMenu {
                     break;
                 case 5:
                     // update appointment outcome
-                    doctorController.handleUpdateApptOutcome(appointments);
+                    doctorController.handleUpdateApptOutcome(appointments, inventoryController);
                     //doctorController.handleUpdateApptOutcome(appointments);
                     break;
                 case 6:
@@ -286,4 +306,44 @@ public class MainMenu {
     
         return allControllers;
     }
+
+    //load medicine
+    // Create inventory object
+    public InventoryController loadInventory() {
+        System.out.println("Loading inventory...");
+        InventoryModel inventory = new InventoryModel();
+        InventoryView inventoryView = new InventoryView(inventory);
+        InventoryController inventoryController = new InventoryController(inventory, inventoryView);
+
+        // Load the medicine data from the db and create objects from it
+        String medicineData = "hmsapp\\db\\Medicine_List.xlsx";
+        try (FileInputStream file = new FileInputStream(new File(medicineData))) {
+            Workbook workbook = new XSSFWorkbook(file);
+            Sheet sheet = workbook.getSheetAt(0);
+            for (Row row : sheet) {
+                if (row.getRowNum() == 0) {
+                    continue;
+                }
+                MedicineModel medicine = new MedicineModel("temp", 0, 0);
+                String name = row.getCell(0).getStringCellValue();
+                double stock = row.getCell(1).getNumericCellValue();
+                double alert = row.getCell(2).getNumericCellValue();
+
+                medicine.setMedicineName(name);
+                medicine.setStock(stock);
+                medicine.setLowStockLine(alert);
+
+                MedicineView medicineView = new MedicineView(medicine);
+                MedicineController medicineController = new MedicineController(medicine, medicineView);
+
+                // Add to inventory. The controllers store the model and view so only one list is needed to store controllers
+                inventoryController.addMedicine(medicineController);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return inventoryController;
+    }
+
+        
 }

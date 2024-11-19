@@ -13,6 +13,7 @@ import com.hms.user.*;
 import com.hms.appointment_management.*;
 import com.hms.appointment_outcome_record.AppointmentOutcomeRecordControllerView;
 import com.hms.appointment_outcome_record.AppointmentOutcomeRecordModel;
+import com.hms.inventory.InventoryController;
 import com.hms.patient.PatientController;
 import com.hms.prescription.PrescriptionModel;
 
@@ -96,7 +97,7 @@ public class DoctorController extends UserController implements Serializable {
         }
     }
 
-    public void manageAppRequests(List<Appointment_ManagementController> appointments) {
+    public void manageAppRequests(List<Appointment_ManagementController> appointments, List<UserController> allControllers) {
         viewApptRequests(appointments);
         System.out.println("Enter appointment ID to manage: ");
         Scanner scanner = new Scanner(System.in);
@@ -108,6 +109,19 @@ public class DoctorController extends UserController implements Serializable {
                 String response = scanner.nextLine();
                 if (response.equals("accept")) {
                     app.model.setStatusAppt("Confirmed");
+                    //get patient id
+                    String patientId = app.model.getPatientId();
+                    for (UserController controller : allControllers) {
+                        if (controller instanceof PatientController) {
+                            PatientController patient = (PatientController) controller;
+                            if (patient.model.getUserId().equals(patientId)) {
+                                //check if patient in doctor's list
+                                if (!((DoctorModel) model).getPatients().contains(patient)) {
+                                    ((DoctorModel) model).addPatient(patient);
+                            }
+                        }
+                        }
+                    }
                     System.out.println("Appointment accepted.");
                 } else if (response.equals("reject")) {
                     app.model.setStatusAppt("Canceled");
@@ -149,7 +163,7 @@ public class DoctorController extends UserController implements Serializable {
         view.displayUpcomingAppts(appointments);
     }
 
-    public void handleUpdateApptOutcome(List<Appointment_ManagementController> appointments) {
+    public void handleUpdateApptOutcome(List<Appointment_ManagementController> appointments, InventoryController inventoryController) {
         System.out.println("Confirmed appointments:");
         for (Appointment_ManagementController app : appointments) {
             if (app.model.getStatusAppt().equals("Confirmed")) {
@@ -163,7 +177,7 @@ public class DoctorController extends UserController implements Serializable {
         //get appt
         for (Appointment_ManagementController app : appointments) {
             if (app.model.getApptId().equals(apptId)) {
-                app.handleUpdateApptOutcome();
+                app.handleUpdateApptOutcome(app.model.getPatientId(), inventoryController);
                 app.handleUpdateStatus("Completed");
             }
         }

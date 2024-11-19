@@ -8,6 +8,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 import com.hms.appointment_outcome_record.*;
 import com.hms.doctor.DoctorController;
+import com.hms.inventory.InventoryController;
 import com.hms.prescription.PrescriptionModel;
 import com.hms.user.UserController;
 
@@ -127,11 +128,13 @@ public class Appointment_ManagementController implements Serializable {
         return scanner.nextLine();
     }
 
-    public void handleUpdateApptOutcome() {
+    public void handleUpdateApptOutcome(String patientId, InventoryController inventoryController) {
         if (model.getOutcome() == null) {
-            model.setOutcome(
+            AppointmentOutcomeRecordModel outcome = new AppointmentOutcomeRecordModel("", "", null, null);
+            AppointmentOutcomeRecordControllerView outcomeView = new AppointmentOutcomeRecordControllerView(outcome);
+            model.setOutcome(outcomeView);
         }
-        model.getOutcome().handleUpdateOutcome();
+        model.getOutcome().handleUpdateOutcome(patientId, inventoryController);
     }
 
     // get input as a date and time (LocalDateTime)

@@ -54,9 +54,8 @@ public class PrescriptionModel {
         this.quantity = quantity;
     }
 
-    @Override
     public String toString() {
-        return "Prescription{" + "patientId=" + patientId + ", prescriptionId=" + prescriptionId + ", medicine=" + medicine + ", status=" + status + ", quantity=" + quantity + '}';
+        return "Medicine: " + medicine + ", Status: " + status + ", Quantity: " + quantity;
     }
 
     public String getPatientId() {

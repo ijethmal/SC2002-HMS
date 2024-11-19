@@ -8,7 +8,6 @@ import com.hms.prescription.*;
 import com.hms.appointment_management.*;
 import com.hms.appointment_outcome_record.*;
 import com.hms.doctor.*;
-import com.hms.diagnosis.*;
 import com.hms.inventory.*;
 import com.hms.pharmacist.*;
 import com.hms.replenishmentrequest.*;
@@ -33,7 +32,7 @@ public class Main {
     public static void main(String[] args){ 
        
         // Create inventory object
-        System.out.println("Loading inventory...");
+        /*System.out.println("Loading inventory...");
         InventoryModel inventory = new InventoryModel();
         InventoryView inventoryView = new InventoryView(inventory);
         InventoryController inventoryController = new InventoryController(inventory, inventoryView);
@@ -64,7 +63,7 @@ public class Main {
             }
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
 
         //array of patients
         List<PatientController> patientControllers = new ArrayList<>();
