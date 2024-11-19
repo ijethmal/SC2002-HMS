@@ -48,7 +48,7 @@ public class ReplenishmentRequestModel {
         return medicine;
     }
 
-    public PharmacistController getQuantityRequested(){
+    public int getQuantityRequested(){
         return requester.model.getQuantityRequested();
     }
 

@@ -15,6 +15,8 @@ public class PharmacistModel extends UserModel implements Serializable {
     private List<InventoryController> inventory;
     private List<AppointmentOutcomeRecordControllerView> apptoutcomerecord;
     private int age;
+    private int quantityRequested;
+
 
     public PharmacistModel() {
         super();
@@ -46,7 +48,11 @@ public class PharmacistModel extends UserModel implements Serializable {
         return prescription.checkStatus();
     }
 
-    public void getQuantityRequested(){
-        // need to fill in
+    public int getQuantityRequested(){
+        return quantityRequested;
+    }
+
+    public void setQuantityRequested(int quantityRequested) {
+        this.quantityRequested = quantityRequested;
     }
 }
