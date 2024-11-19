@@ -323,6 +323,83 @@ public class MainMenu {
         }
     }
 
+    public void displayPharmacistMenu(PharmacistController pharmacistController, InventoryController inventoryController, List<Appointment_ManagementController> appts) {
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            System.out.println("\nPlease select an option:");
+            System.out.println("1. View appointment outcome records");
+            System.out.println("2. Update prescription status");
+            System.out.println("3. View inventory");
+            System.out.println("4. Check for low stock levels");
+            System.out.println("5. Submit replenishment request");
+            System.out.println("6. Log out");
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // Consume the newline character
+    
+            switch (choice) {
+                case 1:
+                    pharmacistController.viewApptOutRec();
+                    break;
+    
+                case 2:
+                    // Update prescription status
+                    System.out.println("Enter prescription ID: ");
+                    int prescriptionId = scanner.nextInt();
+                    scanner.nextLine(); // Consume the newline
+    
+                    // Fetch the PrescriptionModel from the collection
+                    //PrescriptionModel prescription = allPrescriptions.get(prescriptionId);
+                    //get appt outcome record from each appt where its not null
+                    //then you get prescriptioncontroller from that outcome record
+    
+                    List<AppointmentOutcomeRecordControllerView> apptOutcomeRecords = pharmacistController.getModel().getApptOutRecord();
+    
+                    // Find the PrescriptionController associated with the given prescription ID
+                    PrescriptionController prescriptionController = null;
+                    for (AppointmentOutcomeRecordControllerView record : apptOutcomeRecords) {
+                        if (record != null && record.getPrescription() != null) { // Ensure record and prescription are not null
+                            PrescriptionController currentPrescription = record.getPrescription();
+                        if (currentPrescription.getModel().getPrescriptionId() == prescriptionId) {
+                            prescriptionController = currentPrescription;
+                            break; // Stop searching once we find the matching prescription
+            }
+        }
+    }
+                    if (prescription != null) {
+                        System.out.println("Enter new status for the prescription:");
+                        String status = scanner.nextLine();
+                        pharmacistController.updatePrescriptionStatus(prescription, status);
+                        System.out.println("Prescription status updated successfully.");
+                    } else {
+                        System.out.println("Prescription not found. Please try again.");
+                    }
+                    break;
+    
+                case 3:
+                    pharmacistController.viewInventory(inventoryController);
+                    break;
+    
+                case 4:
+                //ask for medicine name
+                //find the medicine in the list of inventory
+                    pharmacistController.checkForLowStockLevel(MedicineController medicineController);
+                    break;
+    
+                case 5:
+                    pharmacistController.submitReplenishmentRequest(administratorController, medicineController);
+                    System.out.println("Replenishment request submitted successfully.");
+                    break;
+    
+                case 6:
+                    return;
+    
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+        }
+    }
+    
+
 
     // display doctor schedules
     public void displayDoctorSchedules(List<UserController> allControllers) {
