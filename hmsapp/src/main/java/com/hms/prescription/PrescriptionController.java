@@ -10,6 +10,10 @@ public class PrescriptionController {
         this.model = model;
     }
 
+    public PrescriptionModel getModel() {
+        return model;
+    }
+
     public void updatePrescription(MedicineController medicine, int quantity) {
         model.setMedicine(medicine);
         model.setQuantity(quantity);

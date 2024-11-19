@@ -36,6 +36,9 @@ import com.hms.replenishmentrequest.ReplenishmentRequestController;
 import com.hms.user.*;
 import com.hms.util.SerializationUtil;
 import com.hms.appointment_management.Appointment_ManagementController;
+import com.hms.appointment_outcome_record.AppointmentOutcomeRecordControllerView;
+import com.hms.prescription.PrescriptionController;
+
 
 public class MainMenu {
 
@@ -340,7 +343,7 @@ public class MainMenu {
                 case 1:
                     pharmacistController.viewApptOutRec();
                     break;
-    
+     
                 case 2:
                     // Update prescription status
                     System.out.println("Enter prescription ID: ");
@@ -356,23 +359,25 @@ public class MainMenu {
     
                     // Find the PrescriptionController associated with the given prescription ID
                     PrescriptionController prescriptionController = null;
-                    for (AppointmentOutcomeRecordControllerView record : apptOutcomeRecords) {
-                        if (record != null && record.getPrescription() != null) { // Ensure record and prescription are not null
-                            PrescriptionController currentPrescription = record.getPrescription();
-                        if (currentPrescription.getModel().getPrescriptionId() == prescriptionId) {
-                            prescriptionController = currentPrescription;
-                            break; // Stop searching once we find the matching prescription
-            }
+                        for (AppointmentOutcomeRecordControllerView record : apptOutcomeRecords) {
+                            if (record != null && record.getPrescription() != null) {
+                                PrescriptionController currentPrescription = record.getPrescription();
+                            if (currentPrescription.getModel().getPrescriptionId() == prescriptionId) {
+                                prescriptionController = currentPrescription;
+                        break; // Found the matching prescription
         }
     }
-                    if (prescription != null) {
-                        System.out.println("Enter new status for the prescription:");
-                        String status = scanner.nextLine();
-                        pharmacistController.updatePrescriptionStatus(prescription, status);
-                        System.out.println("Prescription status updated successfully.");
-                    } else {
-                        System.out.println("Prescription not found. Please try again.");
-                    }
+}
+
+// Ensure prescriptionController is assigned before using it
+        if (prescriptionController != null) {
+             System.out.println("Enter new status for the prescription:");
+            String status = scanner.nextLine();
+            pharmacistController.updatePrescriptionStatus(prescriptionController.getModel(), status);
+            System.out.println("Prescription status updated successfully.");
+    }        else {
+            System.out.println("Prescription not found. Please try again.");
+    }
                     break;
     
                 case 3:

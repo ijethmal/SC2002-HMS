@@ -24,6 +24,10 @@ public class PharmacistController extends UserController implements Serializable
         this.view = view;
     }
 
+    public PharmacistModel getModel() {
+        return model;
+    }
+
     public void viewApptOutRec() {
         model.getApptOutRecord();
     }

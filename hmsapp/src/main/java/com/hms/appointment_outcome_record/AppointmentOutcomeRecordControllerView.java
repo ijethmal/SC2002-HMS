@@ -77,8 +77,12 @@ public class AppointmentOutcomeRecordControllerView {
         System.out.println("Enter medicine name: ");
         String medicineName = scanner.nextLine();
         MedicineController medicine = inventoryController.getMedicine(medicineName);
-        if (medicine == null) { return; }
+        if (medicine == null) { 
+            System.out.println("Medicine not found in inventory. Please try again.");
+            return;  }
+
         System.out.println("Enter quantity: ");
+        
         int quantity = scanner.nextInt();
         PrescriptionModel prescription = new PrescriptionModel(patientId, medicine, "Pending", quantity);
         PrescriptionController prescriptionController = new PrescriptionController(prescription);
