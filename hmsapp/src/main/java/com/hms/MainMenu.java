@@ -32,6 +32,7 @@ import com.hms.medicine.MedicineModel;
 import com.hms.medicine.MedicineView;
 import com.hms.patient.PatientController;
 import com.hms.pharmacist.PharmacistController;
+import com.hms.replenishmentrequest.ReplenishmentRequestController;
 import com.hms.user.*;
 import com.hms.util.SerializationUtil;
 import com.hms.appointment_management.Appointment_ManagementController;
@@ -148,6 +149,7 @@ public class MainMenu {
                     doctorController.handleViewPatientRecords(appointments);
                 case 7:
                     // log out
+                    System.out.println("Logging out...");
                     return;
                 default:
                     System.out.println("Invalid choice. Please try again.");
@@ -227,6 +229,7 @@ public class MainMenu {
                     break;
                 case 8:
                     // log out
+                    System.out.println("Logging out...");
                     return;
                 default:
                     System.out.println("Invalid choice. Please try again.");
@@ -236,6 +239,7 @@ public class MainMenu {
 
     //display administrator menu
     public void displayAdministratorMenu(AdministratorController administratorController, List<UserController> allControllers){
+        Scanner scanner = new Scanner(System.in);
         System.out.println("1. View and Manage Hospital Staff");
         System.out.println("2. View Appointments Details");
         System.out.println("3. View and Manage Medication Inventory");
@@ -246,10 +250,75 @@ public class MainMenu {
         int choice = scanner.nextInt();
         scanner.nextLine();
 
-        switch(choice){
-            
+        switch (choice) {
+            case 1:
+                // View and Manage Hospital Staff
+                System.out.println("\n=== Hospital Staff ===");
+                administratorController.displayStaffList(); // Assuming model handles staff details
+                System.out.println("Enter staff ID to update or press Enter to go back:");
+                String staffId = scanner.nextLine();
+                if (!staffId.isEmpty()) {
+                    System.out.println("Enter new name for staff (or leave blank to skip):");
+                    String newName = scanner.nextLine();
+                    System.out.println("Enter new role for staff (or leave blank to skip):");
+                    String newRole = scanner.nextLine();
+                    administratorController.model.updateStaff(staffId, newName, newRole); // Method in model
+                }
+                break;
+
+            case 2:
+                // View Appointments Details
+                administratorController.displayAppointments(); 
+                break;
+
+                case 3:
+                // View and Manage Medication Inventory
+                administratorController.displayInventory(); 
+                System.out.println("Enter medicine ID to update stock or press Enter to go back:");
+                String medicineId = scanner.nextLine().trim();
+                if (!medicineId.isEmpty()) {
+                    MedicineController medicine = administratorController.findMedicineById(medicineId); // Add method to find medicine
+                    if (medicine != null) {
+                        System.out.println("Enter new stock quantity:");
+                        int newQty = scanner.nextInt();
+                        scanner.nextLine(); // Consume newline
+                        administratorController.updateMedicineStock(medicine, newQty); 
+                    } else {
+                        System.out.println("Medicine not found.");
+                    }
+                }
+                break;
+
+                case 4:
+                // Approve Replenishment Requests
+                System.out.println("\n=== Replenishment Requests ===");
+                administratorController.displayReplenishmentRequests(); 
+                System.out.println("Enter request ID to approve or press Enter to go back:");
+                String requestId = scanner.nextLine().trim();
+                if (!requestId.isEmpty()) {
+                    ReplenishmentRequestController request = administratorController.findReplenishmentRequestById(requestId); // Method to locate request
+                    if (request != null) {
+                        MedicineController medicine = request.model.getMedicine();
+                        System.out.println("Enter quantity to approve:");
+                        int replenishQty = scanner.nextInt();
+                        scanner.nextLine(); // Consume newline
+                        administratorController.approveReplenishment(medicine, replenishQty); 
+                    } else {
+                        System.out.println("Request not found.");
+                    }
+                }
+                break;
+
+            case 5:
+                // Logout
+                System.out.println("Logging out...");
+                return;
+
+            default:
+                System.out.println("Invalid choice. Please try again.");
         }
     }
+
 
     // display doctor schedules
     public void displayDoctorSchedules(List<UserController> allControllers) {

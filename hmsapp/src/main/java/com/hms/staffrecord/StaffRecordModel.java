@@ -1,11 +1,10 @@
 package com.hms.staffrecord;
 
-import com.hms.user.UserController;
-import com.hms.user.UserModel;
+import com.hms.user.*;
 
 public class StaffRecordModel {
     private String staffId;
-    protected UserController userController;
+    public UserController userController;
 
     public StaffRecordModel(String userId, UserController userController) {
         this.staffId = userId;

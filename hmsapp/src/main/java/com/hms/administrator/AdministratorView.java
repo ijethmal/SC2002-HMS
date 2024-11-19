@@ -34,7 +34,7 @@ public class AdministratorView extends UserView{
     public void displayStaff(List<StaffRecordController> staffList) {
         System.out.println("=== Staff List ===");
         for (StaffRecordController staffcontroller : staffList) {
-            staffcontroller.view.displayRecord(staffcontroller.model);
+            staffcontroller.view.printStaffRecord();
         }
         System.out.println("==================");
     }

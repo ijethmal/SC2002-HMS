@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.hms.appointment_management.*;
 import com.hms.replenishmentrequest.*;
+import com.hms.staffrecord.StaffRecordController;
 import com.hms.user.*;
 import com.hms.medicine.*;
 
@@ -20,6 +21,12 @@ public class AdministratorController extends UserController{
         super(model, view); // Explicitly call the superclass constructor
         this.model = model;
         this.view = view;
+    }
+
+    //Display Staff in View
+    public void displayStaffList(){
+        List<StaffRecordController> stafflist = model.getStaffList();
+        view.displayStaff(stafflist);
     }
 
     // Display Appointments in the View
@@ -55,5 +62,23 @@ public class AdministratorController extends UserController{
     public void updateMedicineStock(MedicineController medicine, int newQty) {
         model.updateMedicineStock(medicine, newQty); // Update stock in model
         view.displayMedicineStockUpdated(medicine); // Notify view of update
+    }
+
+    public MedicineController findMedicineById(String medicineId) {
+        for (MedicineController medicine : model.getAllMedicines()) {
+            if (medicine.model.getMedicineId() == Integer.parseInt(medicineId)) {
+                return medicine;
+            }
+        }
+        return null;
+    }
+
+    public ReplenishmentRequestController findReplenishmentRequestById(String requestId) {
+        for (ReplenishmentRequestController request : model.getReplenishmentRequests()) {
+            if (request.model.getRequestId().equals(requestId)) {
+                return request;
+            }
+        }
+        return null;
     }
 }
