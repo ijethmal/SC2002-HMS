@@ -32,6 +32,7 @@ import com.hms.medicine.MedicineModel;
 import com.hms.medicine.MedicineView;
 import com.hms.patient.PatientController;
 import com.hms.pharmacist.PharmacistController;
+import com.hms.prescription.PrescriptionModel;
 import com.hms.replenishmentrequest.ReplenishmentRequestController;
 import com.hms.user.*;
 import com.hms.util.SerializationUtil;
@@ -318,6 +319,68 @@ public class MainMenu {
                 System.out.println("Invalid choice. Please try again.");
         }
     }
+
+
+    public void displayPharmacistMenu(PharmacistController pharmacistController, InventoryController inventoryController,
+                                   MedicineController medicineController, AdministratorController administratorController,
+                                   Map<Integer, PrescriptionModel> allPrescriptions) {
+    Scanner scanner = new Scanner(System.in);
+    while (true) {
+        System.out.println("\nPlease select an option:");
+        System.out.println("1. View appointment outcome records");
+        System.out.println("2. Update prescription status");
+        System.out.println("3. View inventory");
+        System.out.println("4. Check for low stock levels");
+        System.out.println("5. Submit replenishment request");
+        System.out.println("6. Log out");
+        int choice = scanner.nextInt();
+        scanner.nextLine(); // Consume the newline character
+
+        switch (choice) {
+            case 1:
+                pharmacistController.viewApptOutRec();
+                break;
+
+            case 2:
+                // Update prescription status
+                System.out.println("Enter prescription ID: ");
+                int prescriptionId = scanner.nextInt();
+                scanner.nextLine(); // Consume the newline
+
+                // Fetch the PrescriptionModel from the collection
+                PrescriptionModel prescription = allPrescriptions.get(prescriptionId);
+                if (prescription != null) {
+                    System.out.println("Enter new status for the prescription:");
+                    String status = scanner.nextLine();
+                    pharmacistController.updatePrescriptionStatus(prescription, status);
+                    System.out.println("Prescription status updated successfully.");
+                } else {
+                    System.out.println("Prescription not found. Please try again.");
+                }
+                break;
+
+            case 3:
+                pharmacistController.viewInventory(inventoryController);
+                break;
+
+            case 4:
+                pharmacistController.checkForLowStockLevel(medicineController);
+                break;
+
+            case 5:
+                pharmacistController.submitReplenishmentRequest(administratorController, medicineController);
+                System.out.println("Replenishment request submitted successfully.");
+                break;
+
+            case 6:
+                return;
+
+            default:
+                System.out.println("Invalid choice. Please try again.");
+        }
+    }
+}
+
 
 
     // display doctor schedules
