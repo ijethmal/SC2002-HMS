@@ -241,7 +241,8 @@ public class MainMenu {
     }
 
     //display administrator menu
-    public void displayAdministratorMenu(AdministratorController administratorController, InventoryController inventoryController, ReplenishmentRequestController repenishmentrequestController, PharmacistController pharmacistcontroller, MedicineController medicinecontroller){
+    //display administrator menu
+    public void displayAdministratorMenu(AdministratorController administratorController, InventoryController inventoryController, List<ReplenishmentRequestController> requests, List<UserController> allControllers){
         Scanner scanner = new Scanner(System.in);
         System.out.println("1. View and Manage Hospital Staff");
         System.out.println("2. View Appointments Details");
@@ -296,8 +297,8 @@ public class MainMenu {
 
             case 4:
                 // Approve Replenishment Requests
-                List<ReplenishmentRequestController> requests = administratorController.model.getReplenishmentRequests();
-                administratorController.view.displayReplenishmentRequests(requests, pharmacistcontroller);
+                
+                administratorController.view.displayReplenishmentRequests(requests);
                 System.out.println("Enter request ID to approve: ");
                 int requestId = scanner.nextInt();
                 if (requestId>0) {
@@ -325,6 +326,7 @@ public class MainMenu {
                 System.out.println("Invalid choice. Please try again.");
         }
     }
+
 
     public void displayPharmacistMenu(PharmacistController pharmacistController, InventoryController inventoryController, List<Appointment_ManagementController> appts) {
         Scanner scanner = new Scanner(System.in);
