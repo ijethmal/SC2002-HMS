@@ -16,6 +16,7 @@ public class AdministratorModel extends UserModel {
     private List<ReplenishmentRequestController> replenishmentRequests; // List of replenishment requests
     private InventoryController inventory; // Inventory object
     private int age;
+    
 
     public AdministratorModel() {
         super();
@@ -56,8 +57,8 @@ public class AdministratorModel extends UserModel {
         for (StaffRecordController staff : staffList) {
             StaffRecordModel staffModel = staff.getModel(); // Correct way to access model
             if (staffModel.getStaffId().equals(staffId)) {
-                staffModel.setName(newName);
-                staffModel.setRole(newRole);
+                staffModel.UserController.setName(newName);
+                staffModel.UserController.setRole(newRole);
 
                 System.out.println("Staff record updated.");
                 return;

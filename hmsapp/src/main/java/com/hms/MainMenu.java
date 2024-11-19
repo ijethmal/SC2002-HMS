@@ -82,7 +82,7 @@ public class MainMenu {
                 // displayPharmacistMenu();
             } else if (loggedInController.model.getRole().equals("Administrator")) {
                 AdministratorController administratorController = (AdministratorController) loggedInController;
-                // displayAdministratorMenu();
+                displayAdministratorMenu(administratorController, allControllers);
             } else if (loggedInController.model.getRole().equals("Patient")) {
                 PatientController patientController = (PatientController) loggedInController;
                 displayPatientMenu(patientController, allControllers);
@@ -234,6 +234,23 @@ public class MainMenu {
         }
     }
 
+    //display administrator menu
+    public void displayAdministratorMenu(AdministratorController administratorController, List<UserController> allControllers){
+        System.out.println("1. View and Manage Hospital Staff");
+        System.out.println("2. View Appointments Details");
+        System.out.println("3. View and Manage Medication Inventory");
+        System.out.println("4. Approve Replenishment Requests");
+        System.out.println("5. Logout");
+        System.out.print("Please select an option: ");
+
+        int choice = scanner.nextInt();
+        scanner.nextLine();
+
+        switch(choice){
+            
+        }
+    }
+
     // display doctor schedules
     public void displayDoctorSchedules(List<UserController> allControllers) {
         for (UserController controller : allControllers) {
@@ -345,5 +362,4 @@ public class MainMenu {
         return inventoryController;
     }
 
-        
 }
