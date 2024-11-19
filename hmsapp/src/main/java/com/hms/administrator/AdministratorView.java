@@ -9,6 +9,7 @@ import com.hms.replenishmentrequest.*;
 import com.hms.medicine.*;
 import com.hms.staffrecord.*;
 import com.hms.inventory.*;
+import com.hms.pharmacist.*;
 
 public class AdministratorView extends UserView{
 
@@ -53,11 +54,11 @@ public class AdministratorView extends UserView{
         System.out.println("====================");
     }
 
-    public void displayReplenishmentRequests(List<ReplenishmentRequestController> requests) {
+    public void displayReplenishmentRequests(List<ReplenishmentRequestController> requests, PharmacistController pharmacist) {
         System.out.println("=== Replenishment Requests ===");
         for (ReplenishmentRequestController request : requests) {
             System.out.println("Medicine: " + request.model.getMedicine().model.getMedicineName() +
-                               ", Requested Quantity: " + model.getQuantityRequested() +
+                               ", Requested Quantity: " + pharmacist.model.getQuantityRequested() +
                                ", Status: " + request.model.getStatus());
         }
         System.out.println("=============================");

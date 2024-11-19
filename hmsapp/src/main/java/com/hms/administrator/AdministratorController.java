@@ -3,6 +3,7 @@ package com.hms.administrator;
 import java.util.List;
 
 import com.hms.appointment_management.*;
+import com.hms.inventory.InventoryController;
 import com.hms.replenishmentrequest.*;
 import com.hms.staffrecord.StaffRecordController;
 import com.hms.user.*;
@@ -41,10 +42,10 @@ public class AdministratorController extends UserController{
     }
 
     // Display Replenishment Requests in the View, is this not even sppsd to be in controller??
-    public void displayReplenishmentRequests() {
+    /*public void displayReplenishmentRequests() {
         List<ReplenishmentRequestController> replenishmentRequests = model.getReplenishmentRequests();
         view.displayReplenishmentRequests(replenishmentRequests); // Display in view
-    }
+    }*/
 
     // Approve Replenishment Request
     public void approveReplenishment(MedicineController medicine, int replenishQty) {
@@ -53,9 +54,10 @@ public class AdministratorController extends UserController{
     }
 
     // Display Inventory in the View
-    public void displayInventory() {
-        List<MedicineController> inventory = model.getAllMedicines(); // Retrieve from model
-        view.displayInventory(inventory); 
+    public void displayInventory(InventoryController inventoryController) {
+        //List<MedicineController> inventory = model.getAllMedicines(); // Retrieve from model
+        inventoryController.view.showInventory();
+        //view.displayInventory(inventory); 
     }
 
     // Update Stock for a Specific Medicine
@@ -73,12 +75,4 @@ public class AdministratorController extends UserController{
         return null;
     }
 
-    public ReplenishmentRequestController findReplenishmentRequestById(String requestId) {
-        for (ReplenishmentRequestController request : model.getReplenishmentRequests()) {
-            if (request.model.getRequestId().equals(requestId)) {
-                return request;
-            }
-        }
-        return null;
-    }
 }

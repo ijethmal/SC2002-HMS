@@ -56,8 +56,8 @@ public class AdministratorModel extends UserModel {
     public void updateStaff(String staffId, String newName, String newRole) {
         for (StaffRecordController staff : staffList) {
             if (staff.model.getStaffId().equals(staffId)) {
-               staff.model.userController.setName(newName);
-                staffModel.UserController.model.setRole(newRole);
+                staff.model.userController.model.setName(newName);
+                staff.model.userController.model.setRole(newRole);
 
                 System.out.println("Staff record updated.");
                 return;
@@ -88,17 +88,8 @@ public class AdministratorModel extends UserModel {
         return replenishmentRequests; 
     }
 
-    /*public void approveReplenishment(MedicineController medicine, int replenishQty) {
-        inventory.decrementMedicine(medicine, -replenishQty); // Increment by negative decrement
-    }*/
-
     public void approveReplenishment(MedicineController medicine, int replenishQty) {
-        if (medicine != null && replenishQty > 0) {
-            inventory.incrementStock(medicine, replenishQty); // Increment stock
-            System.out.println("Replenishment approved.");
-        } else {
-            System.out.println("Invalid replenishment request.");
-        }
+        inventory.decrementMedicine(medicine, -replenishQty); // Increment by negative decrement
     }
 
     public List<MedicineController> getAllMedicines() {

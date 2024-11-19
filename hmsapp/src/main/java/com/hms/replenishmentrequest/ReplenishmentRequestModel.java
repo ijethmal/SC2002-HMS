@@ -3,6 +3,9 @@ package com.hms.replenishmentrequest;
 import java.util.Date;
 import java.util.List;
 
+//import UUID for prescriptionId
+import java.util.UUID;
+
 import com.hms.medicine.*;
 import com.hms.pharmacist.*;
 import com.hms.administrator.*;
@@ -16,6 +19,7 @@ public class ReplenishmentRequestModel {
     private String status;
     private Date requestDate;
     private Date approvalDate;
+    public int requestId;
 
     public ReplenishmentRequestModel(MedicineController medicine, PharmacistController requester, AdministratorController admin) {
         this.medicine = medicine;
@@ -23,6 +27,8 @@ public class ReplenishmentRequestModel {
         this.status = "Pending..."; // Default status
         this.requestDate = new Date(); // Set to current date
         this.admin = admin;
+        //uuid for id
+        this.requestId = Math.abs(UUID.randomUUID().hashCode() % 100000);
     }
     
     // Overloaded constructor without AdministratorController
@@ -31,6 +37,10 @@ public class ReplenishmentRequestModel {
         this.requester = requester;
         this.status = "Pending"; // Default status
         this.requestDate = new Date(); // Set to current date
+    }
+
+    public int getRequestId() {
+        return requestId;
     }
 
     public void approveRequest(AdministratorController admin) {
