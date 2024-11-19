@@ -6,16 +6,16 @@ import com.hms.administrator.*;
 
 public class ReplenishmentRequestController {
     public ReplenishmentRequestModel model;
-    protected ReplenishmentRequestView view;
+    public ReplenishmentRequestView view;
 
     public ReplenishmentRequestController(ReplenishmentRequestModel model, ReplenishmentRequestView view) {
         this.model = model;
         this.view = view;
     }
 
-    public void createAndSubmitRequest(MedicineController medicine, PharmacistController requester) {
-        model = new ReplenishmentRequestModel(medicine, requester);
-        view.viewRequest(medicine, requester);
+    public void createAndSubmitRequest(MedicineController medicine, PharmacistController requester, AdministratorController admin) {
+        model = new ReplenishmentRequestModel(medicine, requester, admin);
+        view.viewRequest();
     }
 
     public void approveRequest(AdministratorController admin) {

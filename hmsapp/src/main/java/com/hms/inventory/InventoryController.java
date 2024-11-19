@@ -39,4 +39,12 @@ public class InventoryController {
         System.out.println("Medicine not found");
         return null;
     }
+
+    public void checkStockLevels() {
+        for (MedicineController medicine : model.getMedicines()) {
+            if (medicine.model.isStockBelowAlert()) {
+                System.out.println("Alert: Stock below threshold for " + medicine.model.getMedicineName());
+            }
+        }
+    }
 }

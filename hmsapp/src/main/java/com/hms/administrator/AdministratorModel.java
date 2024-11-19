@@ -89,7 +89,8 @@ public class AdministratorModel extends UserModel {
     }
 
     public void approveReplenishment(MedicineController medicine, int replenishQty) {
-        inventory.decrementMedicine(medicine, -replenishQty); // Increment by negative decrement
+        //inventory.decrementMedicine(medicine, -replenishQty); // Increment by negative decrement
+        medicine.model.setStock(100);
     }
 
     public List<MedicineController> getAllMedicines() {

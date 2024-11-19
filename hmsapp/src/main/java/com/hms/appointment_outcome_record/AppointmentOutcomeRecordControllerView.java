@@ -8,7 +8,7 @@ import com.hms.inventory.*;
 import com.hms.medicine.MedicineController;
 
 public class AppointmentOutcomeRecordControllerView {
-    private AppointmentOutcomeRecordModel model;
+    public AppointmentOutcomeRecordModel model;
 
     public AppointmentOutcomeRecordControllerView(AppointmentOutcomeRecordModel model) {
         this.model = model;

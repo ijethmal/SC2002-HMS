@@ -15,7 +15,7 @@ public class ReplenishmentRequestModel {
     private MedicineController medicine;
     private PharmacistController requester;
     private AdministratorController admin;
-    private PrescriptionController prescription;
+    //private PrescriptionController prescription;
     private String status;
     private Date requestDate;
     private Date approvalDate;
@@ -24,7 +24,7 @@ public class ReplenishmentRequestModel {
     public ReplenishmentRequestModel(MedicineController medicine, PharmacistController requester, AdministratorController admin) {
         this.medicine = medicine;
         this.requester = requester;
-        this.status = "Pending..."; // Default status
+        this.status = "Pending"; // Default status
         this.requestDate = new Date(); // Set to current date
         this.admin = admin;
         //uuid for id
@@ -32,12 +32,12 @@ public class ReplenishmentRequestModel {
     }
     
     // Overloaded constructor without AdministratorController
-    public ReplenishmentRequestModel(MedicineController medicine, PharmacistController requester) {
+    /*public ReplenishmentRequestModel(MedicineController medicine, PharmacistController requester) {
         this.medicine = medicine;
         this.requester = requester;
         this.status = "Pending"; // Default status
         this.requestDate = new Date(); // Set to current date
-    }
+    }*/
 
     public int getRequestId() {
         return requestId;
@@ -71,7 +71,7 @@ public class ReplenishmentRequestModel {
     }
 
     public String getStatus(){
-        return prescription.model.getStatus();
+        return status;
     }
 
 }

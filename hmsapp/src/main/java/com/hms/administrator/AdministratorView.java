@@ -54,12 +54,10 @@ public class AdministratorView extends UserView{
         System.out.println("====================");
     }
 
-    public void displayReplenishmentRequests(List<ReplenishmentRequestController> requests, PharmacistController pharmacist) {
+    public void displayReplenishmentRequests(List<ReplenishmentRequestController> requests) {
         System.out.println("=== Replenishment Requests ===");
         for (ReplenishmentRequestController request : requests) {
-            System.out.println("Medicine: " + request.model.getMedicine().model.getMedicineName() +
-                               ", Requested Quantity: " + pharmacist.model.getQuantityRequested() +
-                               ", Status: " + request.model.getStatus());
+            System.out.println(request.view.viewRequest());
         }
         System.out.println("=============================");
     }

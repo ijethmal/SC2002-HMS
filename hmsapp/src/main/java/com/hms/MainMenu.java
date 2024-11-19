@@ -43,9 +43,11 @@ import com.hms.prescription.PrescriptionController;
 public class MainMenu {
 
     private List<Appointment_ManagementController> appointments;
+    private List<ReplenishmentRequestController> requests;
 
     public MainMenu() {
         this.appointments = new ArrayList<>();
+        this.requests = new ArrayList<>();
     }
 
     public static void main(String[] args) {
@@ -83,10 +85,10 @@ public class MainMenu {
                 displayDoctorMenu(doctorController, appointments, inventoryController, allControllers);
             } else if (loggedInController.model.getRole().equals("Pharmacist")) {
                 PharmacistController pharmacistController = (PharmacistController) loggedInController;
-                // displayPharmacistMenu();
+                displayPharmacistMenu(pharmacistController, inventoryController, appointments, requests, allControllers);
             } else if (loggedInController.model.getRole().equals("Administrator")) {
                 AdministratorController administratorController = (AdministratorController) loggedInController;
-                displayAdministratorMenu(administratorController, allControllers);
+                displayAdministratorMenu(administratorController, inventoryController, requests, allControllers);
             } else if (loggedInController.model.getRole().equals("Patient")) {
                 PatientController patientController = (PatientController) loggedInController;
                 displayPatientMenu(patientController, allControllers);
@@ -328,7 +330,7 @@ public class MainMenu {
     }
 
 
-    public void displayPharmacistMenu(PharmacistController pharmacistController, InventoryController inventoryController, List<Appointment_ManagementController> appts) {
+    public void displayPharmacistMenu(PharmacistController pharmacistController, InventoryController inventoryController, List<Appointment_ManagementController> appts, List<ReplenishmentRequestController> requests, List<UserController> allControllers) {
         Scanner scanner = new Scanner(System.in);
         while (true) {
             System.out.println("\nPlease select an option:");
@@ -343,58 +345,34 @@ public class MainMenu {
     
             switch (choice) {
                 case 1:
-                    pharmacistController.viewApptOutRec();
+                    pharmacistController.viewApptOutRec(appointments);
                     break;
      
                 case 2:
-                    // Update prescription status
-                    System.out.println("Enter prescription ID: ");
-                    int prescriptionId = scanner.nextInt();
-                    scanner.nextLine(); // Consume the newline
-    
-                    // Fetch the PrescriptionModel from the collection
-                    //PrescriptionModel prescription = allPrescriptions.get(prescriptionId);
-                    //get appt outcome record from each appt where its not null
-                    //then you get prescriptioncontroller from that outcome record
-    
-                    List<AppointmentOutcomeRecordControllerView> apptOutcomeRecords = pharmacistController.getModel().getApptOutRecord();
-    
-                    // Find the PrescriptionController associated with the given prescription ID
-                    PrescriptionController prescriptionController = null;
-                        for (AppointmentOutcomeRecordControllerView record : apptOutcomeRecords) {
-                            if (record != null && record.getPrescription() != null) {
-                                PrescriptionController currentPrescription = record.getPrescription();
-                            if (currentPrescription.getModel().getPrescriptionId() == prescriptionId) {
-                                prescriptionController = currentPrescription;
-                        break; // Found the matching prescription
-        }
-    }
-}
-
-// Ensure prescriptionController is assigned before using it
-        if (prescriptionController != null) {
-             System.out.println("Enter new status for the prescription:");
-            String status = scanner.nextLine();
-            pharmacistController.updatePrescriptionStatus(prescriptionController.getModel(), status);
-            System.out.println("Prescription status updated successfully.");
-    }        else {
-            System.out.println("Prescription not found. Please try again.");
-    }
+                    pharmacistController.updatePrescriptionStatus(appointments);
                     break;
-    
+                    
                 case 3:
                     pharmacistController.viewInventory(inventoryController);
                     break;
     
                 case 4:
-                //ask for medicine name
-                //find the medicine in the list of inventory
-                    pharmacistController.checkForLowStockLevel(MedicineController medicineController);
+                    //get low stock alerts
+                    pharmacistController.checkForLowStockLevel(inventoryController);
                     break;
     
                 case 5:
-                    pharmacistController.submitReplenishmentRequest(administratorController, medicineController);
-                    System.out.println("Replenishment request submitted successfully.");
+                    System.out.println("Enter administrator ID to approve request: ");
+                    String adminId = scanner.nextLine();
+                    for (UserController controller : allControllers) {
+                        if (controller.model.getRole().equals("Administrator") && controller.model.getUserId().equals(adminId)) {
+                            AdministratorController admin = (AdministratorController) controller;
+                            pharmacistController.submitReplenishmentRequest(requests, allControllers, inventoryController, pharmacistController, admin);
+                            System.out.println("Replenishment request submitted successfully.");
+                            break;
+                        }
+                    }
+                    //System.out.println("Administrator not found. Please try again.");
                     break;
     
                 case 6:
