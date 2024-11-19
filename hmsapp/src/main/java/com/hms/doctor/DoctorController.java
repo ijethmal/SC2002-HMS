@@ -13,7 +13,6 @@ import com.hms.user.*;
 import com.hms.appointment_management.*;
 import com.hms.appointment_outcome_record.AppointmentOutcomeRecordControllerView;
 import com.hms.appointment_outcome_record.AppointmentOutcomeRecordModel;
-import com.hms.diagnosis.Diagnosis;
 import com.hms.patient.PatientController;
 import com.hms.prescription.PrescriptionModel;
 
@@ -80,10 +79,10 @@ public class DoctorController extends UserController implements Serializable {
         ((DoctorModel) model).setSchedule(newSchedule);
     }
 
-    public void viewApptRequests() {
-        for (Appointment_ManagementController app : ((DoctorModel) model).getAppointments()) {
-            if (app.getStatus().equals("Pending")) {
-                System.out.println(app);
+    public void viewApptRequests(List<Appointment_ManagementController> appointments) {
+        for (Appointment_ManagementController app : appointments) {
+            if (app.model.getStatusAppt().equals("Pending") && app.model.getDoctorId().equals(model.getUserId())) {
+                app.view.displayAppointmentDetails();
             }
         }
     }
@@ -97,8 +96,28 @@ public class DoctorController extends UserController implements Serializable {
         }
     }
 
-    public void manageAppRequests() {
-        ((DoctorModel) model).manageAppRequests();
+    public void manageAppRequests(List<Appointment_ManagementController> appointments) {
+        viewApptRequests(appointments);
+        System.out.println("Enter appointment ID to manage: ");
+        Scanner scanner = new Scanner(System.in);
+        String apptId = scanner.nextLine();
+
+        for (Appointment_ManagementController app : appointments) {
+            if (app.model.getApptId().equals(apptId)) {
+                System.out.println("Enter 'accept' or 'reject': ");
+                String response = scanner.nextLine();
+                if (response.equals("accept")) {
+                    app.model.setStatusAppt("Confirmed");
+                    System.out.println("Appointment accepted.");
+                } else if (response.equals("reject")) {
+                    app.model.setStatusAppt("Canceled");
+                    model.cancelAppointment(app.model.getDateTime());
+                    System.out.println("Appointment rejected.");
+                } else {
+                    System.out.println("Invalid response.");
+                }
+            }
+        }
     }
 
     public void handleCancelAppt(Date dateTime) {
@@ -124,6 +143,32 @@ public class DoctorController extends UserController implements Serializable {
 
     public void handleSetAvailability(Date date, String avail) {
         ((DoctorModel) model).setAvailability(date, avail);
+    }
+
+    public void showUpcomingAppts(List<Appointment_ManagementController> appointments) {
+        view.displayUpcomingAppts(appointments);
+    }
+
+    public void handleUpdateApptOutcome(List<Appointment_ManagementController> appointments) {
+        System.out.println("Confirmed appointments:");
+        for (Appointment_ManagementController app : appointments) {
+            if (app.model.getStatusAppt().equals("Confirmed")) {
+                app.view.displayAppointmentDetails();
+            }
+        }
+        System.out.println("\nEnter appointment ID to update outcome: ");
+        Scanner scanner = new Scanner(System.in);
+        String apptId = scanner.nextLine();
+
+        //get appt
+        for (Appointment_ManagementController app : appointments) {
+            if (app.model.getApptId().equals(apptId)) {
+                app.handleUpdateApptOutcome();
+                app.handleUpdateStatus("Completed");
+            }
+        }
+
+        System.out.println("Appointment outcome updated.");
     }
 
     

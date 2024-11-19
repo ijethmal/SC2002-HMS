@@ -112,15 +112,15 @@ public class MainMenu {
                     break;
                 case 3:
                     // manage appointment requests
-                    //doctorController.view.displayApptRequests();
-                    //doctorController.handleManageAppRequests();
+                    doctorController.manageAppRequests(appointments);
                     break;
                 case 4:
                     // view upcoming appointments
-                    //doctorController.view.displayAppts();
+                    doctorController.showUpcomingAppts(appointments);
                     break;
                 case 5:
                     // update appointment outcome
+                    doctorController.handleUpdateApptOutcome(appointments);
                     //doctorController.handleUpdateApptOutcome(appointments);
                     break;
                 case 6:

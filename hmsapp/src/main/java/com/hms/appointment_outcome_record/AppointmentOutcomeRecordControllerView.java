@@ -1,7 +1,11 @@
 package com.hms.appointment_outcome_record;
 
-import com.hms.diagnosis.Diagnosis;
+import java.util.Scanner;
+
+import com.hms.prescription.PrescriptionController;
 import com.hms.prescription.PrescriptionModel;
+import com.hms.inventory.*;
+import com.hms.medicine.MedicineController;
 
 public class AppointmentOutcomeRecordControllerView {
     private AppointmentOutcomeRecordModel model;
@@ -24,7 +28,7 @@ public class AppointmentOutcomeRecordControllerView {
         if (model.getDiagnoses().isEmpty()) {
             System.out.println("No diagnoses available.");
         } else {
-            for (Diagnosis diagnosis : model.getDiagnoses()) {
+            for (String diagnosis : model.getDiagnoses()) {
                 System.out.println(diagnosis);
             }
         }
@@ -36,8 +40,8 @@ public class AppointmentOutcomeRecordControllerView {
         if (model.getPrescriptions().isEmpty()) {
             System.out.println("No prescriptions available.");
         } else {
-            for (PrescriptionModel prescription : model.getPrescriptions()) {
-                System.out.println(prescription);
+            for (PrescriptionController prescription : model.getPrescriptions()) {
+                prescription.printPrescriptionDetails();
             }
         }
         System.out.println("-----------------------");
@@ -50,4 +54,36 @@ public class AppointmentOutcomeRecordControllerView {
         viewPrescriptions(); // Display prescription details
         System.out.println("=============================================");
     }
+
+    public void handleUpdateOutcome(String patientId, InventoryController inventoryController) {
+        System.out.println("Enter new type of service: ");
+        Scanner scanner = new Scanner(System.in);
+        String newTypeOfService = scanner.nextLine();
+        model.setTypeOfService(newTypeOfService);
+        
+        System.out.println("Add new diagnosis (Y/N)?");
+        String addDiagnosis = scanner.nextLine();
+        if (addDiagnosis.equalsIgnoreCase("Y")) {
+            System.out.println("Enter diagnosis: ");
+            String diagnosisName = scanner.nextLine();
+            model.addDiagnosis(diagnosisName);
+        }
+
+        System.out.println("Add new prescription (Y/N)?");
+        String addPrescription = scanner.nextLine();
+        //create prescription
+        //ask for which medicine - show from inventory
+        inventoryController.view.showInventory();
+        //which medicine
+        System.out.println("Enter medicine name: ");
+        String medicineName = scanner.nextLine();
+        MedicineController medicine = inventoryController.getMedicine(medicineName);
+        if (medicine == null) { return; }
+        System.out.println("Enter quantity: ");
+        int quantity = scanner.nextInt();
+        PrescriptionModel prescription = new PrescriptionModel(patientId, medicine, "Pending", quantity);
+        PrescriptionController prescriptionController = new PrescriptionController(prescription);
+        model.addPrescription(prescriptionController);
+    }
+
 }

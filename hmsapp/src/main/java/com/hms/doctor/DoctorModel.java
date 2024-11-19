@@ -94,10 +94,6 @@ public class DoctorModel extends UserModel implements Serializable {
         //...
     }
 
-    public void manageAppRequests() {
-        //...
-    }
-
     public void updateApptOutcome() {
         //...
     }

@@ -2,8 +2,10 @@ package com.hms.doctor;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
+import com.hms.appointment_management.Appointment_ManagementController;
 import com.hms.patient.PatientController;
 import com.hms.user.*;
 
@@ -42,6 +44,17 @@ public class DoctorView extends UserView implements Serializable {
         for (PatientController patient : model.patients) {
             patient.view.displayPatientDetails(patient.model);
         }
+    }
+
+    public void displayUpcomingAppts(List<Appointment_ManagementController> appointments) {
+        System.out.println("Upcoming Appointments:");
+        for (Appointment_ManagementController app : appointments) {
+            if (app.model.getStatusAppt().equals("Confirmed")) {
+                app.view.displayAppointmentDetails();
+                System.out.println("---------------------------");
+            }
+        }
+        System.out.println("");
     }
 
 

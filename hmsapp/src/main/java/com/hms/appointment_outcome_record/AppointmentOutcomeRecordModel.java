@@ -5,7 +5,7 @@ import java.util.List;
 //generate uuid for medicineid
 import java.util.UUID;
 
-import com.hms.diagnosis.Diagnosis;
+import com.hms.prescription.PrescriptionController;
 import com.hms.prescription.PrescriptionModel;
 
 import java.util.ArrayList;
@@ -15,16 +15,16 @@ public class AppointmentOutcomeRecordModel {
     private String patientId;
     private Date dateTime;
     private String typeOfService;
-    private Diagnosis[] diagnoses;
-    private PrescriptionModel[] prescriptions;
+    private List<String> diagnoses;
+    private PrescriptionController[] prescriptions;
 
-    public AppointmentOutcomeRecordModel(String patientId, Date dateTime, String typeOfService, Diagnosis[] diagnoses, PrescriptionModel[] prescriptions) {
+    public AppointmentOutcomeRecordModel(String patientId, Date dateTime, String typeOfService, List<String> diagnoses, PrescriptionController[] prescriptions) {
         this.recordID = UUID.randomUUID().toString().replace("-", "").substring(0, 10);
         //this.recordID = Math.abs(UUID.randomUUID().hashCode() % 100000);
         this.patientId = patientId;
         this.dateTime = dateTime;
         this.typeOfService = typeOfService;
-        this.diagnoses = diagnoses;
+        this.diagnoses = new ArrayList<>();
         this.prescriptions = prescriptions;
     }
 
@@ -44,20 +44,18 @@ public class AppointmentOutcomeRecordModel {
         return typeOfService;
     }
 
-    public List<Diagnosis> getDiagnoses() {
-        List<Diagnosis> diagnosisList = new ArrayList<>();
-        if (diagnoses != null) {
-            for (Diagnosis diagnosis : diagnoses) {
-                diagnosisList.add(diagnosis);
-            }
-        }
-        return diagnosisList;
+    public List<String> getDiagnoses() {
+        return diagnoses;
     }
 
-    public List<PrescriptionModel> getPrescriptions() {
-        List<PrescriptionModel> prescriptionList = new ArrayList<>();
+    public void addDiagnosis(String diagnosis) {
+        diagnoses.add(diagnosis);
+    }
+
+    public List<PrescriptionController> getPrescriptions() {
+        List<PrescriptionController> prescriptionList = new ArrayList<>();
         if (prescriptions != null) {
-            for (PrescriptionModel prescription : prescriptions) {
+            for (PrescriptionController prescription : prescriptions) {
                 prescriptionList.add(prescription);
             }
         }
@@ -84,14 +82,22 @@ public class AppointmentOutcomeRecordModel {
         //notifyObservers("Type of service updated.");
     }
 
-    public void setDiagnoses(Diagnosis[] diagnoses) {
-        this.diagnoses = diagnoses;
-        //notifyObservers("Diagnoses updated.");
-    }
 
-    public void setPrescriptions(PrescriptionModel[] prescriptions) {
+    public void setPrescriptions(PrescriptionController[] prescriptions) {
         this.prescriptions = prescriptions;
         //notifyObservers("Prescriptions updated.");
+    }
+
+    public void addPrescription(PrescriptionController prescription) {
+        List<PrescriptionController> prescriptionList = new ArrayList<>();
+        if (prescriptions != null) {
+            for (PrescriptionController p : prescriptions) {
+                prescriptionList.add(p);
+            }
+        }
+        prescriptionList.add(prescription);
+        prescriptions = prescriptionList.toArray(new PrescriptionController[0]);
+        //notifyObservers("Prescription added.");
     }
 
     /*

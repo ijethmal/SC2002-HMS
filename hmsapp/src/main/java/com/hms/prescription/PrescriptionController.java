@@ -27,4 +27,8 @@ public class PrescriptionController {
         System.out.println(model.toString());
     }
 
+    public int getPrescriptionId() {
+        return model.getPrescriptionId();
+    }
+
 }

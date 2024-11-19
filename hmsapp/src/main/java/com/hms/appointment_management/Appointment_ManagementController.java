@@ -7,7 +7,6 @@ import java.util.List;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 import com.hms.appointment_outcome_record.*;
-import com.hms.diagnosis.Diagnosis;
 import com.hms.doctor.DoctorController;
 import com.hms.prescription.PrescriptionModel;
 import com.hms.user.UserController;
@@ -69,8 +68,7 @@ public class Appointment_ManagementController implements Serializable {
         view.displayScheduleSuccess("Appointment scheduled successfully with ID: " + apptId);
     }*/
 
-    public void handleUpdateStatus() {
-        String newStatus = getInput("Enter new status for the appointment: ");
+    public void handleUpdateStatus(String newStatus) {
         model.updateStatus(newStatus);
         view.displayStatusUpdateResponse("Status updated to: " + newStatus);
     }
@@ -127,6 +125,13 @@ public class Appointment_ManagementController implements Serializable {
     private static String getInput(String prompt) {
         System.out.print(prompt);
         return scanner.nextLine();
+    }
+
+    public void handleUpdateApptOutcome() {
+        if (model.getOutcome() == null) {
+            model.setOutcome(
+        }
+        model.getOutcome().handleUpdateOutcome();
     }
 
     // get input as a date and time (LocalDateTime)

@@ -2,27 +2,31 @@ package com.hms.prescription;
 
 import com.hms.medicine.*;
 
+//import UUID for prescriptionId
+import java.util.UUID;
+
 public class PrescriptionModel {
     
     private String patientId;
-    private String prescriptionId;
+    private int prescriptionId;
     private MedicineController medicine;
     private String status;
     private int quantity;
 
-    public PrescriptionModel(String patientId, String prescriptionId, MedicineController medicine, String status, int quantity) {
+    public PrescriptionModel(String patientId, MedicineController medicine, String status, int quantity) {
         this.patientId = patientId;
-        this.prescriptionId = prescriptionId;
+        //uuid for id
+        this.prescriptionId = Math.abs(UUID.randomUUID().hashCode() % 100000);
         this.medicine = medicine;
         this.status = status;
         this.quantity = quantity;
     }
 
-    public String getPrescriptionId() {
+    public int getPrescriptionId() {
         return prescriptionId;
     }
 
-    public void setPrescriptionId(String prescriptionId) {
+    public void setPrescriptionId(int prescriptionId) {
         this.prescriptionId = prescriptionId;
     }
 

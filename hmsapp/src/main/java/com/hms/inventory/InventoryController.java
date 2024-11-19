@@ -29,4 +29,14 @@ public class InventoryController {
         model.updateStock(medicine, newQty);
         updateView();
     }
+
+    public MedicineController getMedicine(String name) {
+        for (MedicineController medicine : model.getMedicines()) {
+            if (medicine.model.getMedicineName().equals(name)) {
+                return medicine;
+            }
+        }
+        System.out.println("Medicine not found");
+        return null;
+    }
 }
