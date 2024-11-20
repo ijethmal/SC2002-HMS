@@ -377,10 +377,10 @@ public class MainMenu {
                         scanner.nextLine(); // Consume newline
                         //find medicine in inventorycontroller
                         for (MedicineController medicine : inventoryController.model.getMedicines()) {
-                            if (medicine.model.getMedicineName() == medicinename) {
-                                administratorController.updateMedicineStock(medicine, newQty);
+                            if ( medicine.model.getMedicineName().equals(medicinename)) {
+                                medicine.model.setStock(newQty);
                             }
-                        } 
+                        }
                         administratorController.displayInventory(inventoryController); 
                     } else {
                         System.out.println("Medicine not found.");
