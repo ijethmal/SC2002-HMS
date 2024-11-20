@@ -2,6 +2,7 @@ package com.hms;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -51,12 +52,52 @@ public class MainMenu {
     }
     public void displayMainMenu() {
         System.out.println("Welcome to Hospital Management System!");
+
         List<UserController> allControllers = deserialiseUsers();
         InventoryController inventoryController = loadInventory();
         Scanner scanner = new Scanner(System.in);
 
+        System.out.println("Are you a new user? (yes/no)");
+        String response1 = scanner.nextLine().trim().toLowerCase();
+        
+        if (response1.equals("yes")) {
+            // Step 1: Check Excel for Existing IDs and Assign New Unique ID
+            String excelFilePath = "hmsapp\\db\\Patient_List.xlsx"; // Path to the Excel file
+            String newUserId = generateUniqueId(excelFilePath);
+            if (newUserId == null) {
+                System.out.println("Unable to generate a unique ID. Please contact the administrator.");
+                return;
+            }
+    
+            // Step 2: Register New User with Default Password
+            System.out.println("Your unique ID is: " + newUserId);
+            System.out.print("Enter your name: ");
+            String name = scanner.nextLine();
+            System.out.print("Enter your role (Patient): ");
+            String role = scanner.nextLine();
+            System.out.print("Enter your contact information: ");
+            String contactInfo = scanner.nextLine();
+    
+            // Add user to Excel file
+            boolean added = addNewUserToExcel(excelFilePath, newUserId, "password", name, role, contactInfo);
+            if (!added) {
+                System.out.println("Failed to register. Please try again.");
+                return;
+            }
+    
+            System.out.println("You have been registered successfully with the default password 'password'.");
+    
+            // Step 3: Ask New User to Reset Password
+            System.out.print("Please reset your password: ");
+            String newPassword = scanner.nextLine().trim();
+            updatePasswordInExcel(excelFilePath, newUserId, newPassword);
+            System.out.println("Password updated successfully. You can now log in.");
+            return;
+        }
+    
         while (true) {
             UserController loggedInController = null;
+
             while (loggedInController == null) {
                 System.out.println("Please login:");
                 System.out.println("Enter your user ID: ");
@@ -585,5 +626,81 @@ public class MainMenu {
         }
         return inventoryController;
     }
+
+    // helper methods 
+    private String generateUniqueId(String filePath) {
+        try (FileInputStream file = new FileInputStream(filePath)) {
+            Workbook workbook = new XSSFWorkbook(file);
+            Sheet sheet = workbook.getSheetAt(0);
+            int maxId = 1000;
+    
+            for (Row row : sheet) {
+                if (row.getRowNum() == 0) continue; // Skip header
+                String id = row.getCell(0).getStringCellValue();
+                if (id.startsWith("P")) {
+                    int idNumber = Integer.parseInt(id.substring(1));
+                    maxId = Math.max(maxId, idNumber);
+                }
+            }
+    
+            workbook.close();
+            return "P" + (maxId + 1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    private boolean addNewUserToExcel(String filePath, String userId, String password, String name, String role, String contactInfo) {
+    try (FileInputStream file = new FileInputStream(filePath);
+         Workbook workbook = new XSSFWorkbook(file)) {
+        Sheet sheet = workbook.getSheetAt(0);
+
+        // Add new row
+        int lastRowNum = sheet.getLastRowNum();
+        Row newRow = sheet.createRow(lastRowNum + 1);
+
+        newRow.createCell(0).setCellValue(userId);
+        newRow.createCell(1).setCellValue(password);
+        newRow.createCell(2).setCellValue(name);
+        newRow.createCell(3).setCellValue(role);
+        newRow.createCell(4).setCellValue(contactInfo);
+
+        // Save changes
+        try (FileOutputStream outFile = new FileOutputStream(filePath)) {
+            workbook.write(outFile);
+        }
+
+        workbook.close();
+        return true;
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+    return false;
+}
+private void updatePasswordInExcel(String filePath, String userId, String newPassword) {
+    try (FileInputStream file = new FileInputStream(filePath);
+         Workbook workbook = new XSSFWorkbook(file)) {
+        Sheet sheet = workbook.getSheetAt(0);
+
+        for (Row row : sheet) {
+            if (row.getRowNum() == 0) continue; // Skip header
+            String id = row.getCell(0).getStringCellValue();
+            if (id.equals(userId)) {
+                row.getCell(1).setCellValue(newPassword); // Update password
+                break;
+            }
+        }
+
+        // Save changes
+        try (FileOutputStream outFile = new FileOutputStream(filePath)) {
+            workbook.write(outFile);
+        }
+
+        workbook.close();
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
+
 
 }
