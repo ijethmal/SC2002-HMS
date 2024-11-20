@@ -144,10 +144,17 @@ public class PatientController extends UserController implements Serializable {
     }
 
     public void handleViewApptOutcomeRec(List<Appointment_ManagementController> appointments) {
+        boolean hasPastAppointments = false;
         for (Appointment_ManagementController appt : appointments) {
             if (appt.model.getPatientId().equals(model.getPatientId())) {
-                appt.model.getOutcome().viewApptOutcomeRec();
+                if (appt.model.getOutcome() != null) {
+                    appt.model.getOutcome().viewApptOutcomeRec();
+                    hasPastAppointments = true;
+                }
             }
+        }
+        if (!hasPastAppointments) {
+            System.out.println("No past appointments.");
         }
     }
     public void RegisterPatient() {
