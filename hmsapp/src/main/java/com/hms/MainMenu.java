@@ -16,7 +16,6 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.poi.ss.usermodel.Sheet;
 
-import com.hms.administrator.AdministratorController;
 import com.hms.doctor.*;
 import com.hms.inventory.InventoryController;
 import com.hms.inventory.InventoryModel;
@@ -158,6 +157,7 @@ public class MainMenu {
                 case 6:
                     // view patient's medical records
                     doctorController.handleViewPatientRecords(appointments);
+                    break;
                 case 7:
                     // log out
                     System.out.println("Logging out...");
@@ -351,8 +351,12 @@ public class MainMenu {
             case 2:
                 // View Appointments Details
                 System.out.println("\n=== Appointments ===");
-                for (Appointment_ManagementController appointment : appointments) {
-                    appointment.view.displayAppointmentDetails();
+                if (appointments != null) {
+                    for (Appointment_ManagementController appointment : appointments) {
+                        appointment.view.displayAppointmentDetails();
+                    }
+                } else {
+                    System.out.println("No appointments available.");
                 }
                 break;
 
@@ -409,7 +413,7 @@ public class MainMenu {
     }
 
 
-    public void displayPharmacistMenu(PharmacistController pharmacistController, InventoryController inventoryController, List<Appointment_ManagementController> appts, List<ReplenishmentRequestController> requests, List<UserController> allControllers) {
+    public void displayPharmacistMenu(PharmacistController pharmacistController, InventoryController inventoryController, List<Appointment_ManagementController> appointments, List<ReplenishmentRequestController> requests, List<UserController> allControllers) {
         Scanner scanner = new Scanner(System.in);
         while (true) {
             System.out.println("\nPlease select an option:");
