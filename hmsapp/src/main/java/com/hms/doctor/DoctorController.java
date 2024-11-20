@@ -160,22 +160,7 @@ public class DoctorController extends UserController implements Serializable {
     }
 
     public void showUpcomingAppts(List<Appointment_ManagementController> appointments) {
-        //view.displayUpcomingAppts(appointments);
-
-        boolean hasUpcoming = false;
-        Date now = new Date(); // Current date and time
-
-        for (Appointment_ManagementController app : appointments) {
-            if (app.model.getDoctorId().equals(model.getUserId()) && app.model.getDateTime().after(now)) {
-                hasUpcoming = true;
-                app.view.displayAppointmentDetails(); // Display appointment details
-            }
-        }
-
-        if (!hasUpcoming) {
-            System.out.println("No upcoming appointments.");
-        }
-        
+        view.displayUpcomingAppts(appointments);
     }
 
     public void handleUpdateApptOutcome(List<Appointment_ManagementController> appointments, InventoryController inventoryController) {
