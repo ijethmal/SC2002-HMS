@@ -292,6 +292,8 @@ public class MainMenu {
                             }
                         }
                     }
+                    System.out.println("\n=== Hospital Staff ===");
+                    administratorController.displayStaffList();
                 } else if (staffChoice == 2) {
                     // Add New Staff
                     System.out.println("Enter new staff ID:");
@@ -338,11 +340,15 @@ public class MainMenu {
                     } catch (Exception e) {
                         System.out.println("Invalid input. Please try again.");
                     }
+                    System.out.println("\n=== Hospital Staff ===");
+                    administratorController.displayStaffList();
                 } else if (staffChoice == 3) {
                     // Remove Staff
                     System.out.println("Enter staff ID to remove:");
                     String removeStaffId = scanner.nextLine();
                     allControllers.removeIf(controller -> controller.model.getUserId().equals(removeStaffId));
+                    System.out.println("\n=== Hospital Staff ===");
+                    administratorController.displayStaffList();
                 } else {
                     System.out.println("Invalid choice. Please try again.");
                 }
@@ -363,18 +369,19 @@ public class MainMenu {
             case 3:
                 // View and Manage Medication Inventory
                 administratorController.displayInventory(inventoryController); 
-                System.out.println("Enter medicine ID to update stock: ");
-                int medicineId = scanner.nextInt();
-                if (medicineId > 0) {
+                System.out.println("Enter medicine name to update stock: ");
+                String medicinename = scanner.nextLine();
+                if (medicinename != null) {
                         System.out.println("Enter new stock quantity:");
                         int newQty = scanner.nextInt();
                         scanner.nextLine(); // Consume newline
                         //find medicine in inventorycontroller
                         for (MedicineController medicine : inventoryController.model.getMedicines()) {
-                            if (medicine.model.getMedicineId() == medicineId) {
+                            if (medicine.model.getMedicineName() == medicinename) {
                                 administratorController.updateMedicineStock(medicine, newQty);
                             }
                         } 
+                        administratorController.displayInventory(inventoryController); 
                     } else {
                         System.out.println("Medicine not found.");
                     }
