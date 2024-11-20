@@ -14,5 +14,9 @@ public class StaffRecordModel {
     public String getStaffId() {
         return staffId;
     }
+
+    public void setStaffId(String userId) {
+        this.staffId = userId;
+    }
 }
 

@@ -15,7 +15,6 @@ public class DoctorModel extends UserModel implements Serializable {
     private static final long serialVersionUID = 1L; // Define serialVersionUID
     //userid from user
     //password from user
-    protected String specialization;
     private List<Appointment_ManagementController> appointments;
     //private List<String> schedule;
     private Map<Date, String> schedule;

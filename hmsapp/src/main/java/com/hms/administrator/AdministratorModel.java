@@ -1,5 +1,6 @@
 package com.hms.administrator;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.hms.inventory.*;
@@ -25,6 +26,7 @@ public class AdministratorModel extends UserModel {
     public AdministratorModel(String adminId, String password, int age, String name, String gender) {
         super(adminId, password, "Administrator", name, gender);
         this.age = age;
+        this.staffList = new ArrayList<>();
     }
 
     public int getAge() {

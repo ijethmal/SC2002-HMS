@@ -15,15 +15,9 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.text.ParseException;
 
 import com.hms.administrator.AdministratorController;
-import com.hms.doctor.DoctorController;
+import com.hms.doctor.*;
 import com.hms.inventory.InventoryController;
 import com.hms.inventory.InventoryModel;
 import com.hms.inventory.InventoryView;
@@ -31,13 +25,15 @@ import com.hms.medicine.MedicineController;
 import com.hms.medicine.MedicineModel;
 import com.hms.medicine.MedicineView;
 import com.hms.patient.PatientController;
-import com.hms.pharmacist.PharmacistController;
+import com.hms.pharmacist.*;
+import com.hms.administrator.*;
 import com.hms.replenishmentrequest.ReplenishmentRequestController;
 import com.hms.user.*;
 import com.hms.util.SerializationUtil;
 import com.hms.appointment_management.Appointment_ManagementController;
 import com.hms.appointment_outcome_record.AppointmentOutcomeRecordControllerView;
 import com.hms.prescription.PrescriptionController;
+import com.hms.staffrecord.*;
 
 
 public class MainMenu {
@@ -54,7 +50,6 @@ public class MainMenu {
         MainMenu mainMenu = new MainMenu();
         mainMenu.displayMainMenu();
     }
-
     public void displayMainMenu() {
         System.out.println("Welcome to Hospital Management System!");
         List<UserController> allControllers = deserialiseUsers();
@@ -88,6 +83,17 @@ public class MainMenu {
                 displayPharmacistMenu(pharmacistController, inventoryController, appointments, requests, allControllers);
             } else if (loggedInController.model.getRole().equals("Administrator")) {
                 AdministratorController administratorController = (AdministratorController) loggedInController;
+                //init staff records 
+                for (UserController controller : allControllers) {
+                    if (!controller.model.getRole().equals("Patient")) {
+                        StaffRecordModel staffRecordModel = new StaffRecordModel(controller.model.getUserId(),  controller);
+                        StaffRecordView staffRecordView = new StaffRecordView(staffRecordModel);
+                        StaffRecordController staffRecord = new StaffRecordController(staffRecordModel, staffRecordView);
+                        staffRecordModel.setStaffId(controller.model.getUserId());
+                        administratorController.model.addStaff(staffRecord);
+                    }
+                }
+
                 displayAdministratorMenu(administratorController, inventoryController, requests, allControllers);
             } else if (loggedInController.model.getRole().equals("Patient")) {
                 PatientController patientController = (PatientController) loggedInController;
@@ -159,8 +165,8 @@ public class MainMenu {
                 default:
                     System.out.println("Invalid choice. Please try again.");
             }
+        }
     }
-}
 
     public void displayPatientMenu(PatientController patientController, List<UserController> allControllers) {
         Scanner scanner = new Scanner(System.in);
@@ -261,20 +267,91 @@ public class MainMenu {
                 // View and Manage Hospital Staff
                 System.out.println("\n=== Hospital Staff ===");
                 administratorController.displayStaffList(); // Assuming model handles staff details
-                System.out.println("Enter staff ID to update or press Enter to go back:");
-                String staffId = scanner.nextLine();
-                if (!staffId.isEmpty()) {
-                    System.out.println("Enter new name for staff (or leave blank to skip):");
-                    String newName = scanner.nextLine();
-                    System.out.println("Enter new role for staff (or leave blank to skip):");
-                    String newRole = scanner.nextLine();
-                    administratorController.model.updateStaff(staffId, newName, newRole); // Method in model
+                //micromenu
+                System.out.println("1. Update Staff Details");
+                System.out.println("2. Add New Staff");
+                System.out.println("3. Remove Staff");
+                int staffChoice = scanner.nextInt();
+                
+                if (staffChoice == 1) {
+                    // Update Staff Details
+                    System.out.println("Enter staff ID to update or press Enter to go back:");
+                    scanner.nextLine(); // consume the leftover newline
+                    String staffId = scanner.nextLine();
+                    if (!staffId.isEmpty()) {
+                        System.out.println("Enter new name for staff (or leave blank to skip):");
+                        String newName = scanner.nextLine();
+                        System.out.println("Enter new role for staff (or leave blank to skip):");
+                        String newRole = scanner.nextLine();
+                        administratorController.model.updateStaff(staffId, newName, newRole); // Method in model
+                        //edit in allcontrollers
+                        for (UserController controller : allControllers) {
+                            if (controller.model.getUserId().equals(staffId)) {
+                                controller.model.setName(newName);
+                                controller.model.setRole(newRole);
+                            }
+                        }
+                    }
+                } else if (staffChoice == 2) {
+                    // Add New Staff
+                    System.out.println("Enter new staff ID:");
+                    String newStaffId = scanner.nextLine();
+                    System.out.println("Enter new staff name:");
+                    String newStaffName = scanner.nextLine();
+                    System.out.println("Enter new staff age:");
+                    try {
+                        int newStaffAge = scanner.nextInt();
+                        scanner.nextLine(); // consume the leftover newline
+                        System.out.println("Enter new staff role:");
+                        String newStaffRole = scanner.nextLine();
+                        System.out.println("Enter new staff gender (M/F):");
+                        String newStaffGender = scanner.nextLine();
+                        if (newStaffGender.equals("M") || newStaffGender.equals("F")) {
+                            //if new user is doctor
+                            if (newStaffRole.equals("Doctor")) {
+                                DoctorModel newDoctor = new DoctorModel(newStaffId, "defaultpassword", newStaffAge, newStaffName, newStaffGender);    
+                                DoctorView newDoctorView = new DoctorView(newDoctor);
+                                DoctorController newDoctorController = new DoctorController(newDoctor, newDoctorView);
+                                allControllers.add(newDoctorController);
+
+                            } 
+                            else if (newStaffRole.equals("Pharmacist")) {
+                                PharmacistModel newPharmacist = new PharmacistModel(newStaffId, "defaultpassword", newStaffAge, newStaffName, newStaffGender);    
+                                PharmacistView newPharmacistView = new PharmacistView(newPharmacist);
+                                PharmacistController newPharmacistController = new PharmacistController(newPharmacist, newPharmacistView);
+                                allControllers.add(newPharmacistController);
+                            } 
+                            else if (newStaffRole.equals("Administrator")) {
+                                AdministratorModel newAdmin = new AdministratorModel(newStaffId, "defaultpassword", newStaffAge, newStaffName, newStaffGender);    
+                                AdministratorView newAdminView = new AdministratorView(newAdmin);
+                                AdministratorController newAdminController = new AdministratorController(newAdmin, newAdminView);
+                                allControllers.add(newAdminController);
+                            } 
+                            else {
+                                System.out.println("Invalid role. Please try again.");
+                            }
+                        } else {
+                            throw new Exception(); //this should be caught below
+                        }
+                    } catch (Exception e) {
+                        System.out.println("Invalid age. Please try again.");
+                    }
+                } else if (staffChoice == 3) {
+                    // Remove Staff
+                    System.out.println("Enter staff ID to remove:");
+                    String removeStaffId = scanner.nextLine();
+                    allControllers.removeIf(controller -> controller.model.getUserId().equals(removeStaffId));
+                } else {
+                    System.out.println("Invalid choice. Please try again.");
                 }
                 break;
 
             case 2:
                 // View Appointments Details
-                administratorController.displayAppointments(); 
+                System.out.println("\n=== Appointments ===");
+                for (Appointment_ManagementController appointment : appointments) {
+                    appointment.view.displayAppointmentDetails();
+                }
                 break;
 
             case 3:
@@ -419,45 +496,44 @@ public class MainMenu {
     }
     
     public List<UserController> deserialiseUsers() {
-        List<UserController> allControllers = new ArrayList<>();
-        // Deserialize doctor controllers
-        try {
-            List<DoctorController> deserializedDoctorControllers = (List<DoctorController>) SerializationUtil.deserialize("hmsapp\\db\\Doctor_Controllers.ser");
-            allControllers.addAll(deserializedDoctorControllers);
-            System.out.println("Deserialized Doctor Controllers: " + deserializedDoctorControllers.size());
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-    
-        // Deserialize administrator controllers
-        try {
-            List<AdministratorController> deserializedAdministratorControllers = (List<AdministratorController>) SerializationUtil.deserialize("hmsapp\\db\\Administrator_Controllers.ser");
-            allControllers.addAll(deserializedAdministratorControllers);
-            System.out.println("Deserialized Administrator Controllers: " + deserializedAdministratorControllers.size());
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-    
-        // Deserialize pharmacist controllers
-        try {
-            List<PharmacistController> deserializedPharmacistControllers = (List<PharmacistController>) SerializationUtil.deserialize("hmsapp\\db\\Pharmacist_Controllers.ser");
-            allControllers.addAll(deserializedPharmacistControllers);
-            System.out.println("Deserialized Pharmacist Controllers: " + deserializedPharmacistControllers.size());
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        
-        // Deserialize patient controllers
-        try {
-            List<PatientController> deserializedPatientControllers = (List<PatientController>) SerializationUtil.deserialize("hmsapp\\db\\Patient_Controllers.ser");
-            allControllers.addAll(deserializedPatientControllers);
-            System.out.println("Deserialized Patient Controllers: " + deserializedPatientControllers.size());
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-    
-        return allControllers;
+    List<UserController> allControllers = new ArrayList<>();
+    // Deserialize doctor controllers
+    try {
+        List<DoctorController> deserializedDoctorControllers = (List<DoctorController>) SerializationUtil.deserialize("hmsapp\\db\\Doctor_Controllers.ser");
+        allControllers.addAll(deserializedDoctorControllers);
+        System.out.println("Deserialized Doctor Controllers: " + deserializedDoctorControllers.size());
+    } catch (IOException | ClassNotFoundException e) {
+        e.printStackTrace();
     }
+
+    try {
+        List<AdministratorController> deserializedAdministratorControllers = (List<AdministratorController>) SerializationUtil.deserialize("hmsapp\\db\\Administrator_Controllers.ser");
+        allControllers.addAll(deserializedAdministratorControllers);
+        System.out.println("Deserialized Administrator Controllers: " + deserializedAdministratorControllers.size());
+    } catch (IOException | ClassNotFoundException e) {
+        e.printStackTrace();
+    }
+
+    // Deserialize pharmacist controllers
+    try {
+        List<PharmacistController> deserializedPharmacistControllers = (List<PharmacistController>) SerializationUtil.deserialize("hmsapp\\db\\Pharmacist_Controllers.ser");
+        allControllers.addAll(deserializedPharmacistControllers);
+        System.out.println("Deserialized Pharmacist Controllers: " + deserializedPharmacistControllers.size());
+    } catch (IOException | ClassNotFoundException e) {
+        e.printStackTrace();
+    }
+
+    // Deserialize patient controllers
+    try {
+        List<PatientController> deserializedPatientControllers = (List<PatientController>) SerializationUtil.deserialize("hmsapp\\db\\Patient_Controllers.ser");
+        allControllers.addAll(deserializedPatientControllers);
+        System.out.println("Deserialized Patient Controllers: " + deserializedPatientControllers.size());
+    } catch (IOException | ClassNotFoundException e) {
+        e.printStackTrace();
+    }
+
+    return allControllers;
+}
 
     //load medicine
     // Create inventory object
