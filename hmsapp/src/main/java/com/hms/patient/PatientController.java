@@ -20,6 +20,7 @@ public class PatientController extends UserController implements Serializable {
     private static final long serialVersionUID = 1L; // Define serialVersionUID
     public PatientModel model;
     public PatientView view;
+    int count=0;
     
     // No-argument constructor for deserialization
     public PatientController() {
@@ -133,7 +134,11 @@ public class PatientController extends UserController implements Serializable {
         for (Appointment_ManagementController appt : appointments) {
             if (appt.model.getPatientId().equals(model.getPatientId())) {
                 appt.view.displayAppointmentDetails();
+                count++;
             }
+        }
+        if (count ==0){
+            view.displayAppointmentStatus("No appointment scheduled.");
         }
         view.displayAppointmentStatus("Appointment status displayed.");
     }
