@@ -295,6 +295,8 @@ public class MainMenu {
                 } else if (staffChoice == 2) {
                     // Add New Staff
                     System.out.println("Enter new staff ID:");
+                    //consume newline
+                    scanner.nextLine();
                     String newStaffId = scanner.nextLine();
                     System.out.println("Enter new staff name:");
                     String newStaffName = scanner.nextLine();
@@ -334,7 +336,7 @@ public class MainMenu {
                             throw new Exception(); //this should be caught below
                         }
                     } catch (Exception e) {
-                        System.out.println("Invalid age. Please try again.");
+                        System.out.println("Invalid input. Please try again.");
                     }
                 } else if (staffChoice == 3) {
                     // Remove Staff
