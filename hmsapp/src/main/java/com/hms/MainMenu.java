@@ -264,6 +264,9 @@ public class MainMenu {
                             System.out.println("Date is available for scheduling.");
                             // handle schedule appointment
                             patientController.handleScheduleAppt(docController, chosenDate, appointments);
+                            System.out.println("BILL:-");
+                            System.out.println("Consultation fees is $25");
+                            System.out.println("In case of any additional costs, contact the main desk after the scheduled appointment.");
                         } else {
                             System.out.println("Date is not available. Please choose another date.");
                         }
