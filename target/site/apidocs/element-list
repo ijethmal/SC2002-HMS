@@ -1,0 +1,14 @@
+com.hms
+com.hms.administrator
+com.hms.appointment_management
+com.hms.appointment_outcome_record
+com.hms.doctor
+com.hms.inventory
+com.hms.medicine
+com.hms.patient
+com.hms.pharmacist
+com.hms.prescription
+com.hms.replenishmentrequest
+com.hms.staffrecord
+com.hms.user
+com.hms.util

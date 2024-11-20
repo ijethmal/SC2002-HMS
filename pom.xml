@@ -30,7 +30,18 @@
     <build>
         <sourceDirectory>hmsapp/src/main/java</sourceDirectory>
         <plugins>
-            <!-- Add your build plugins here -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.3.1</version> <!-- Use the latest version available -->
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>javadoc</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 
