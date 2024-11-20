@@ -493,7 +493,7 @@ public class MainMenu {
     public UserController login(String userId, String password, List<UserController> allControllers) {
        // System.out.println("Attempting login with UserID: " + userId + " and Password: " + password);
         for (UserController controller : allControllers) {
-            System.out.println("Checking against UserID: " + controller.model.getUserId() + " and Password: " + controller.model.getPassword());
+           // System.out.println("Checking against UserID: " + controller.model.getUserId() + " and Password: " + controller.model.getPassword());
             if (controller.model.getUserId().equals(userId) && controller.model.getPassword().equals(password)) {
                 return controller;
             }
