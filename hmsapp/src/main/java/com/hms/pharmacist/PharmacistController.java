@@ -36,7 +36,7 @@ public class PharmacistController extends UserController implements Serializable
     public void viewApptOutRec(List<Appointment_ManagementController> appointments) {
         for (Appointment_ManagementController appointment : appointments) {
             if (appointment.model.getOutcome() != null) {
-                appointment.model.getOutcome().viewRecord();
+                appointment.model.getOutcome().viewApptOutcomeRec();
             }
         }
     }

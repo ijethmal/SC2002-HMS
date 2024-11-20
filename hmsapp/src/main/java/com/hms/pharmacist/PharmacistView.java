@@ -32,8 +32,4 @@ public class PharmacistView extends UserView implements Serializable{
         System.out.println("Prescription Status: " + model.getPrescriptionStatus());
     }
 
-    public void viewInventory(InventoryController inventory) {
-        inventory.view.showInventory();
-    }
-
 }
