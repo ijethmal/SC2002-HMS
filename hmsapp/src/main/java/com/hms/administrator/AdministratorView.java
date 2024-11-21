@@ -21,6 +21,7 @@ public class AdministratorView extends UserView{
 
     public AdministratorView (AdministratorModel model) {
         super(model);
+        this.model = model;
     }
 
     public void displayAdministratorDetails(AdministratorModel model) {
@@ -32,12 +33,12 @@ public class AdministratorView extends UserView{
         System.out.println("---------------------------");
     }
 
-    public void displayStaff(List<StaffRecordController> staffList) {
-        System.out.println("=== Staff List ===");
-        for (StaffRecordController staffcontroller : staffList) {
-            staffcontroller.view.printStaffRecord();
+    public void displayStaff() {
+        System.out.println("===== Staff List =====");
+        for (StaffRecordController staff : model.getStaffList()) {
+            staff.view.printStaffRecord();
         }
-        System.out.println("==================");
+        System.out.println("=========================");
     }
 
 

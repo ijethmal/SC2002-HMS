@@ -52,8 +52,14 @@ public class AdministratorModel extends UserModel {
     public void addStaff(StaffRecordController staff) {
         staffList.add(staff);
     }
-    public void removeStaff(StaffRecordController staff) {
-        staffList.remove(staff);
+    public void removeStaff(String staffId) {
+        for (StaffRecordController staff : staffList) {
+            if (staff.model.getStaffId().equals(staffId)) {
+                staffList.remove(staff);
+                System.out.println("Staff record removed.");
+                return;
+            }
+        }
     }
     public void updateStaff(String staffId, String newName, String newRole) {
         for (StaffRecordController staff : staffList) {

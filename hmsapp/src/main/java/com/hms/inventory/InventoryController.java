@@ -13,7 +13,6 @@ public class InventoryController {
 
     public void addMedicine(MedicineController medicine) {
         model.addMedicine(medicine);
-        updateView();
     }
 
     public void updateView() {

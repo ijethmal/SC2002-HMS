@@ -24,7 +24,7 @@ import com.hms.inventory.InventoryView;
 import com.hms.medicine.MedicineController;
 import com.hms.medicine.MedicineModel;
 import com.hms.medicine.MedicineView;
-import com.hms.patient.PatientController;
+import com.hms.patient.*;
 import com.hms.pharmacist.*;
 import com.hms.administrator.*;
 import com.hms.replenishmentrequest.ReplenishmentRequestController;
@@ -73,26 +73,45 @@ public class MainMenu {
             System.out.println("Your unique ID is: " + newUserId);
             System.out.print("Enter your name: ");
             String name = scanner.nextLine();
-            System.out.print("Enter your role (Patient): ");
-            String role = scanner.nextLine();
             System.out.print("Enter your contact information: ");
             String contactInfo = scanner.nextLine();
-    
-            // Add user to Excel file
-            boolean added = addNewUserToExcel(excelFilePath, newUserId, "password", name, role, contactInfo);
-            if (!added) {
-                System.out.println("Failed to register. Please try again.");
+            System.out.println("Enter your date of birth (yyyy-MM-dd): ");
+            String dobStr = scanner.nextLine();
+            try {
+                Date dob = new SimpleDateFormat("yyyy-MM-dd").parse(dobStr);
+                System.out.println("Enter your gender (Male/Female)");
+                String gender = scanner.nextLine();
+                if (gender.equals("Male") || gender.equals("Female") ) {
+                    //blood type 
+                    System.out.println("Enter your blood type (A+, A-, B+, B-, AB+, AB-, O+, O-): ");
+                    String bloodType = scanner.nextLine();
+                    if (bloodType.equals("A+") || bloodType.equals("A-") || bloodType.equals("B+") || bloodType.equals("B-") || bloodType.equals("AB+") || bloodType.equals("AB-") || bloodType.equals("O+") || bloodType.equals("O-")) {
+                        // Step 3: Ask New User to Reset Password
+                        System.out.print("Please reset your password: ");
+                        String newPassword = scanner.nextLine().trim();
+                        updatePasswordInExcel(excelFilePath, newUserId, newPassword);
+                        System.out.println("Password updated successfully. You can now log in.");
+                        // Add user to allControllers
+                        PatientModel newPatient = new PatientModel(newUserId, newPassword, name, dob, gender, contactInfo, bloodType);
+                        PatientView newPatientView = new PatientView(newPatient);
+                        PatientController newPatientController = new PatientController(newPatient, newPatientView);
+                        allControllers.add(newPatientController);
+                    }
+                    else {
+                        System.out.println("Invalid blood type.");
+                        System.out.println("Exiting Register...");
+                        return;
+                    }
+                } else {
+                    System.out.println("Invalid input.");
+                    System.out.println("Exiting Register...");
+                    return;
+                }
+            } catch (ParseException e) {
+                System.out.println("Invalid date format.");
+                System.out.println("Exiting Register...");
                 return;
-            }
-    
-            System.out.println("You have been registered successfully with the default password 'password'.");
-    
-            // Step 3: Ask New User to Reset Password
-            System.out.print("Please reset your password: ");
-            String newPassword = scanner.nextLine().trim();
-            updatePasswordInExcel(excelFilePath, newUserId, newPassword);
-            System.out.println("Password updated successfully. You can now log in.");
-            return;
+            }   
         }
     
         while (true) {
@@ -109,6 +128,13 @@ public class MainMenu {
                 loggedInController = login(userId, password, allControllers);
                 if (loggedInController != null) {
                     System.out.println("Welcome, " + loggedInController.model.getRole() + " " + loggedInController.model.getName() + "!");
+                    
+                    //first time login: change password
+                    if (loggedInController.model.getPassword().equals("defaultpassword")) {
+                        System.out.println("Please reset your password: ");
+                        String newPassword = scanner.nextLine().trim();
+                        loggedInController.model.setPassword(newPassword);
+                    }
                 } else {
                     System.out.println("Login failed. Please try again.");
                 }
@@ -292,9 +318,7 @@ public class MainMenu {
         }
     }
 
-    //display administrator menu
-    //display administrator menu
-    public void displayAdministratorMenu(AdministratorController administratorController, InventoryController inventoryController, List<ReplenishmentRequestController> requests, List<UserController> allControllers){
+    public void displayAdministratorMenu(AdministratorController administratorController, InventoryController inventoryController, List<ReplenishmentRequestController> requests, List<UserController> allControllers) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("1. View and Manage Hospital Staff");
         System.out.println("2. View Appointments Details");
@@ -302,10 +326,10 @@ public class MainMenu {
         System.out.println("4. Approve Replenishment Requests");
         System.out.println("5. Logout");
         System.out.print("Please select an option: ");
-
+    
         int choice = scanner.nextInt();
         scanner.nextLine();
-
+    
         switch (choice) {
             case 1:
                 // View and Manage Hospital Staff
@@ -316,33 +340,35 @@ public class MainMenu {
                 System.out.println("2. Add New Staff");
                 System.out.println("3. Remove Staff");
                 int staffChoice = scanner.nextInt();
-                
+                scanner.nextLine(); // consume the leftover newline
+    
                 if (staffChoice == 1) {
                     // Update Staff Details
                     System.out.println("Enter staff ID to update or press Enter to go back:");
-                    scanner.nextLine(); // consume the leftover newline
                     String staffId = scanner.nextLine();
                     if (!staffId.isEmpty()) {
                         System.out.println("Enter new name for staff (or leave blank to skip):");
                         String newName = scanner.nextLine();
                         System.out.println("Enter new role for staff (or leave blank to skip):");
                         String newRole = scanner.nextLine();
-                        administratorController.model.updateStaff(staffId, newName, newRole); // Method in model
-                        //edit in allcontrollers
+    
+                        // Find the user in the allControllers list
                         for (UserController controller : allControllers) {
                             if (controller.model.getUserId().equals(staffId)) {
-                                controller.model.setName(newName);
-                                controller.model.setRole(newRole);
+                                // Update the user's details
+                                if (!newName.isEmpty()) {
+                                    controller.model.setName(newName);
+                                }
+                                if (!newRole.isEmpty()) {
+                                    controller.model.setRole(newRole);
+                                }
+                                break;
                             }
                         }
                     }
-                    System.out.println("\n=== Hospital Staff ===");
-                    administratorController.displayStaffList();
                 } else if (staffChoice == 2) {
                     // Add New Staff
                     System.out.println("Enter new staff ID:");
-                    //consume newline
-                    scanner.nextLine();
                     String newStaffId = scanner.nextLine();
                     System.out.println("Enter new staff name:");
                     String newStaffName = scanner.nextLine();
@@ -361,19 +387,36 @@ public class MainMenu {
                                 DoctorView newDoctorView = new DoctorView(newDoctor);
                                 DoctorController newDoctorController = new DoctorController(newDoctor, newDoctorView);
                                 allControllers.add(newDoctorController);
-
+    
+                                //new staff record
+                                StaffRecordModel staffRecordModel = new StaffRecordModel(newStaffId, newDoctorController);
+                                StaffRecordView staffRecordView = new StaffRecordView(staffRecordModel);
+                                StaffRecordController staffRecord = new StaffRecordController(staffRecordModel, staffRecordView);
+                                administratorController.model.addStaff(staffRecord);
                             } 
                             else if (newStaffRole.equals("Pharmacist")) {
                                 PharmacistModel newPharmacist = new PharmacistModel(newStaffId, "defaultpassword", newStaffAge, newStaffName, newStaffGender);    
                                 PharmacistView newPharmacistView = new PharmacistView(newPharmacist);
                                 PharmacistController newPharmacistController = new PharmacistController(newPharmacist, newPharmacistView);
                                 allControllers.add(newPharmacistController);
+    
+                                //new staff record
+                                StaffRecordModel staffRecordModel = new StaffRecordModel(newStaffId, newPharmacistController);
+                                StaffRecordView staffRecordView = new StaffRecordView(staffRecordModel);
+                                StaffRecordController staffRecord = new StaffRecordController(staffRecordModel, staffRecordView);
+                                administratorController.model.addStaff(staffRecord);
                             } 
                             else if (newStaffRole.equals("Administrator")) {
                                 AdministratorModel newAdmin = new AdministratorModel(newStaffId, "defaultpassword", newStaffAge, newStaffName, newStaffGender);    
                                 AdministratorView newAdminView = new AdministratorView(newAdmin);
                                 AdministratorController newAdminController = new AdministratorController(newAdmin, newAdminView);
                                 allControllers.add(newAdminController);
+    
+                                //new staff record
+                                StaffRecordModel staffRecordModel = new StaffRecordModel(newStaffId, newAdminController);
+                                StaffRecordView staffRecordView = new StaffRecordView(staffRecordModel);
+                                StaffRecordController staffRecord = new StaffRecordController(staffRecordModel, staffRecordView);
+                                administratorController.model.addStaff(staffRecord);
                             } 
                             else {
                                 System.out.println("Invalid role. Please try again.");
@@ -382,34 +425,27 @@ public class MainMenu {
                             throw new Exception(); //this should be caught below
                         }
                     } catch (Exception e) {
-                        System.out.println("Invalid input. Please try again.");
+                        System.out.println("Invalid age. Please try again.");
                     }
-                    System.out.println("\n=== Hospital Staff ===");
-                    administratorController.displayStaffList();
                 } else if (staffChoice == 3) {
                     // Remove Staff
                     System.out.println("Enter staff ID to remove:");
                     String removeStaffId = scanner.nextLine();
                     allControllers.removeIf(controller -> controller.model.getUserId().equals(removeStaffId));
-                    System.out.println("\n=== Hospital Staff ===");
-                    administratorController.displayStaffList();
+                    administratorController.model.removeStaff(removeStaffId); // Method in model
                 } else {
                     System.out.println("Invalid choice. Please try again.");
                 }
                 break;
-
+    
             case 2:
                 // View Appointments Details
                 System.out.println("\n=== Appointments ===");
-                if (appointments != null) {
-                    for (Appointment_ManagementController appointment : appointments) {
-                        appointment.view.displayAppointmentDetails();
-                    }
-                } else {
-                    System.out.println("No appointments available.");
+                for (Appointment_ManagementController appointment : appointments) {
+                    appointment.view.displayAppointmentDetails();
                 }
                 break;
-
+    
             case 3:
                 // View and Manage Medication Inventory
                 administratorController.displayInventory(inventoryController); 
@@ -430,7 +466,7 @@ public class MainMenu {
                         System.out.println("Medicine not found.");
                     }
                 break;
-
+    
             case 4:
                 // Approve Replenishment Requests
                 
@@ -452,15 +488,19 @@ public class MainMenu {
                     }
                 
                 break;
-
+    
             case 5:
                 // Logout
                 System.out.println("Logging out...");
                 return;
-
+    
             default:
                 System.out.println("Invalid choice. Please try again.");
         }
+    
+        // Display the updated staff list after any changes
+        System.out.println("\n=== Hospital Staff ===");
+        administratorController.displayStaffList();
     }
 
 
@@ -558,7 +598,7 @@ public class MainMenu {
     try {
         List<DoctorController> deserializedDoctorControllers = (List<DoctorController>) SerializationUtil.deserialize("hmsapp\\db\\Doctor_Controllers.ser");
         allControllers.addAll(deserializedDoctorControllers);
-        System.out.println("Deserialized Doctor Controllers: " + deserializedDoctorControllers.size());
+        //System.out.println("Deserialized Doctor Controllers: " + deserializedDoctorControllers.size());
     } catch (IOException | ClassNotFoundException e) {
         e.printStackTrace();
     }
@@ -566,7 +606,7 @@ public class MainMenu {
     try {
         List<AdministratorController> deserializedAdministratorControllers = (List<AdministratorController>) SerializationUtil.deserialize("hmsapp\\db\\Administrator_Controllers.ser");
         allControllers.addAll(deserializedAdministratorControllers);
-        System.out.println("Deserialized Administrator Controllers: " + deserializedAdministratorControllers.size());
+        //System.out.println("Deserialized Administrator Controllers: " + deserializedAdministratorControllers.size());
     } catch (IOException | ClassNotFoundException e) {
         e.printStackTrace();
     }
@@ -575,7 +615,7 @@ public class MainMenu {
     try {
         List<PharmacistController> deserializedPharmacistControllers = (List<PharmacistController>) SerializationUtil.deserialize("hmsapp\\db\\Pharmacist_Controllers.ser");
         allControllers.addAll(deserializedPharmacistControllers);
-        System.out.println("Deserialized Pharmacist Controllers: " + deserializedPharmacistControllers.size());
+        //System.out.println("Deserialized Pharmacist Controllers: " + deserializedPharmacistControllers.size());
     } catch (IOException | ClassNotFoundException e) {
         e.printStackTrace();
     }
@@ -584,7 +624,7 @@ public class MainMenu {
     try {
         List<PatientController> deserializedPatientControllers = (List<PatientController>) SerializationUtil.deserialize("hmsapp\\db\\Patient_Controllers.ser");
         allControllers.addAll(deserializedPatientControllers);
-        System.out.println("Deserialized Patient Controllers: " + deserializedPatientControllers.size());
+        //System.out.println("Deserialized Patient Controllers: " + deserializedPatientControllers.size());
     } catch (IOException | ClassNotFoundException e) {
         e.printStackTrace();
     }
@@ -595,7 +635,7 @@ public class MainMenu {
     //load medicine
     // Create inventory object
     public InventoryController loadInventory() {
-        System.out.println("Loading inventory...");
+        //System.out.println("Loading inventory...");
         InventoryModel inventory = new InventoryModel();
         InventoryView inventoryView = new InventoryView(inventory);
         InventoryController inventoryController = new InventoryController(inventory, inventoryView);

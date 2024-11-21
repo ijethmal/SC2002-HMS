@@ -26,8 +26,7 @@ public class AdministratorController extends UserController{
 
     //Display Staff in View
     public void displayStaffList(){
-        List<StaffRecordController> stafflist = model.getStaffList();
-        view.displayStaff(stafflist);
+        view.displayStaff();
     }
 
     // Display Appointments in the View
@@ -75,4 +74,7 @@ public class AdministratorController extends UserController{
         return null;
     }
 
+    public void removeStaff(String staffId) {
+        model.removeStaff(staffId);
+    }
 }
